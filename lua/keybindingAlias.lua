@@ -57,6 +57,8 @@ local M = {
 	},
 	-- visual 模式下键盘映射
 	visul = {
+		-- goto command mode from visual mode
+		goto_command_mode = "<F1>",
 		-- cursor move in visual mode
 		go_up_5line = "<C-k>",
 		go_down_5line = "<C-j>",
@@ -80,6 +82,8 @@ local M = {
 		window_down = "s<down>",
 		window_up = "s<up>",
 		window_right = "s<right>",
+		-- go to command mode
+		goto_command_mode = "<F1>",
 	},
 	------------------------------------------
 	--插件键位映射
@@ -172,6 +176,11 @@ local M = {
 	yanky = {
 		yanky_after = "p",
 		yanky_before = "P",
+	},
+	hop = {
+		hop_word = "<leader>gg",
+		hop_line = "<leader>gv",
+		hop_pattern = "<leader>gb",
 	},
 }
 

@@ -4,10 +4,11 @@ if not status then
 	return
 end
 autopairs.setup({
+	disable_filetype = { "TelescopePrompt", "vim" },
 	-- Don't add pairs if it already has a close pair in the same line
-	enable_check_bracket_line = true,
-	-- Don't add pairs if the next char is alphanumeric
-	ignored_next_char = "[%w%.]",
+	enable_check_bracket_line = false,
+	-- Don't add pairs if the next char is in pattern "%w%%%'%[%"%."
+	ignored_next_char = [=[[%w%%%'%[%"%.]]=],
 	-- use treesitter to check for a pair
 	check_ts = true,
 	ts_config = {
@@ -20,5 +21,25 @@ autopairs.setup({
 
 -- If you want insert `(` after select function or method item
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+local handlers = require("nvim-autopairs.completion.handlers")
 local cmp = require("cmp")
-cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+-- cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+cmp.event:on(
+	"confirm_done",
+	cmp_autopairs.on_confirm_done({
+		filetypes = {
+			-- "*" is a alias to all filetypes
+			["*"] = {
+				["("] = {
+					kind = {
+						cmp.lsp.CompletionItemKind.Function,
+						cmp.lsp.CompletionItemKind.Method,
+					},
+					handler = handlers["*"],
+				},
+			},
+			-- Disable for tex
+			tex = false,
+		},
+	})
+)

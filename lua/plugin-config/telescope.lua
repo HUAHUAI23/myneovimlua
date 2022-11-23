@@ -52,7 +52,6 @@ pcall(telescope.load_extension, "i42")
 local actions = require("telescope.actions")
 local action_state = require("telescope.actions.state")
 
-vim.keymap.set("n", "<space>s", "<cmd>Telescope xray23 list<cr>")
 vim.api.nvim_create_user_command("SessionSv", function()
 	vim.api.nvim_cmd(vim.api.nvim_parse_cmd("Telescope xray23 save", {}), {})
 end, { desc = "load user session,like workspace" })

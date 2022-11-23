@@ -50,6 +50,7 @@ treesitter.setup({
 
 	-- https://github.com/nvim-treesitter/nvim-treesitter-refactor
 	refactor = {
+		-- the illuminate plugin is better than this
 		highlight_definitions = {
 			enable = false,
 			disable = filesize_hundle,
@@ -94,6 +95,6 @@ treesitter.setup({
 	},
 })
 
--- 开启 Folding 模块
+-- use tressitter to fold code
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

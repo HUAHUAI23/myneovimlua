@@ -24,6 +24,8 @@ return require("packer").startup({
 		-- Packer can manage itself
 		use("wbthomason/packer.nvim")
 
+		-- UI
+		-- ---------------------------------------------------------
 		-- icon,使neovim支持展示更多的icon
 		use({ "kyazdani42/nvim-web-devicons" })
 
@@ -44,8 +46,23 @@ return require("packer").startup({
 			config = function()
 				require("plugin-config.lualine")
 			end,
+			after = "nvim-web-devicons",
 		})
 
+		-- 顶部状态栏 bufferline
+		use({
+			"akinsho/bufferline.nvim",
+			tag = "v2.*",
+			requires = "kyazdani42/nvim-web-devicons",
+			event = "BufEnter",
+			config = function()
+				require("plugin-config.bufferline")
+			end,
+			after = "nvim-web-devicons",
+		})
+
+		-- sytax highlight
+		-- ---------------------------------------------------------
 		-- nvim-treesitter,基于语法语义生成代码高亮
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -57,17 +74,26 @@ return require("packer").startup({
 				{ "windwp/nvim-ts-autotag" },
 				{ "nvim-treesitter/nvim-treesitter-refactor" },
 			},
+			config = function()
+				require("plugin-config.nvim-treesitter")
+			end,
 		})
 
+		-- Editor
+		-- ---------------------------------------------------------
 		-- 文件浏览器
 		use({
-			"kyazdani42/nvim-tree.lua",
+			"nvim-tree/nvim-tree.lua",
 			requires = {
-				"kyazdani42/nvim-web-devicons", -- optional, for file icons
+				"nvim-tree/nvim-web-devicons", -- optional, for file icons
 			},
 			tag = "nightly", -- optional, updated every week. (see issue #1193)
+			cmd = "NvimTreeToggle",
+			config = function()
+				require("plugin-config.nvim-tree")
+			end,
+			after = "nvim-web-devicons",
 		})
-
 		-- 禅意模式
 		use({
 			"folke/zen-mode.nvim",
@@ -81,41 +107,65 @@ return require("packer").startup({
 			config = function()
 				require("plugin-config.twilight")
 			end,
+			-- first load zen-mode then load twilight
+			after = "zen-mode.nvim",
 		})
-
-		-- 顶部状态栏 bufferline
-		use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" })
 
 		-- 更好看的命令终端
-		use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
+		use({
+			"akinsho/toggleterm.nvim",
+			tag = "*",
+			config = function()
+				require("plugin-config.toggleterm")
+			end,
+		})
 
 		-- 注释插件
-		use({ "numToStr/Comment.nvim" })
+		use({
+			"numToStr/Comment.nvim",
+			config = function()
+				require("plugin-config.comment")
+			end,
+		})
 
 		-- 括号自动补全插件
-		use({ "windwp/nvim-autopairs" })
+		use({
+			"windwp/nvim-autopairs",
+			config = function()
+				require("plugin-config.nvim-autopairs")
+			end,
+		})
 
 		-- 对齐线插件
-		use("lukas-reineke/indent-blankline.nvim")
+		use({
+			"lukas-reineke/indent-blankline.nvim",
+			config = function()
+				require("plugin-config.indent-blankline")
+			end,
+		})
 
 		-- Project
-		use({ "ahmedkhalf/project.nvim" })
+		use({
+			"ahmedkhalf/project.nvim",
+			config = function()
+				require("plugin-config.project")
+			end,
+		})
 
 		--  dashboard-nvim
-		use("glepnir/dashboard-nvim")
-
-		-- TODO Comments
 		use({
-			"folke/todo-comments.nvim",
-			requires = "nvim-lua/plenary.nvim",
-		})
-		-- Trouble
-		use({
-			"folke/trouble.nvim",
-			requires = "kyazdani42/nvim-web-devicons",
+			"glepnir/dashboard-nvim",
+			config = function()
+				require("plugin-config.dashboard")
+			end,
 		})
 		-- neocroll.nvim
-		use("karb94/neoscroll.nvim")
+		use({
+			"karb94/neoscroll.nvim",
+			config = function()
+				require("plugin-config.neoscrolL")
+			end,
+		})
 		-- yank
 		use({
 			"gbprod/yanky.nvim",
@@ -126,6 +176,45 @@ return require("packer").startup({
 		-- undo tree
 		-- use({ "dinhhuy258/vim-local-history" })
 		use({ "mbbill/undotree" })
+
+		-- easy motion hop
+		use({
+			"phaazon/hop.nvim",
+			branch = "v2", -- optional but strongly recommended
+			config = function()
+				require("plugin-config.hop")
+			end,
+			cmd = { "HopWord", "HopPattern", "HopLine" },
+		})
+
+		-- which key
+		use({
+			"folke/which-key.nvim",
+			config = function()
+				require("plugin-config.whichkey")
+			end,
+		})
+
+		-- something like lsp
+		-- ---------------------------------------------------------
+		-- TODO Comments
+		use({
+			"folke/todo-comments.nvim",
+			requires = "nvim-lua/plenary.nvim",
+			config = function()
+				require("plugin-config.todo-comments")
+			end,
+		})
+		-- Trouble
+		use({
+			"folke/trouble.nvim",
+			requires = "kyazdani42/nvim-web-devicons",
+			cmd = { "Trouble", "TroubleToggle", "Trouble loclist" },
+			config = function()
+				require("plugin-config.trouble")
+			end,
+			after = "nvim-web-devicons",
+		})
 
 		-- --------git-------------------
 		use({
@@ -140,6 +229,8 @@ return require("packer").startup({
 		-- markdown preview
 		use({
 			"iamcco/markdown-preview.nvim",
+			ft = "markdown",
+			cmd = "MarkdownPreview",
 			run = function()
 				vim.fn["mkdp#util#install"]()
 			end,
@@ -150,6 +241,7 @@ return require("packer").startup({
 		-- markdown work flow
 		use({
 			"jakewvincent/mkdnflow.nvim",
+			ft = "markdown",
 			-- 通过lua包管理器下载一些lua依赖包
 			rocks = "luautf8",
 			config = function()
@@ -163,6 +255,9 @@ return require("packer").startup({
 			-- tag = "0.1.0",
 			branch = "0.1.x",
 			requires = { { "nvim-lua/plenary.nvim" } },
+			config = function()
+				require("plugin-config.telescope")
+			end,
 		})
 		-- improve telescope performance
 		use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })

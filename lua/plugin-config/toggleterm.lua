@@ -21,23 +21,28 @@ local lazygit = Terminal:new({
 	cmd = "lazygit",
 	dir = "git_dir",
 	direction = "float",
+	-- hidden = true,
 	float_opts = {
 		border = "rounded",
 		width = math.floor(vim.o.columns * 0.9),
 		height = math.floor(vim.o.lines * 0.9),
 	},
 	-- function to run on opening the terminal
+	---@diagnostic disable-next-line: unused-local
 	on_open = function(term)
 		vim.cmd("startinsert!")
 		--q | <leader>tg 关闭terminal
-		vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-		vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<leader>tg", "<cmd>close<CR>", { noremap = true, silent = true })
+		-- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
+		-- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<leader>tg", "<cmd>close<CR>", { noremap = true, silent = true })
+
 		-- ESC 键取消，留给lazygit
+		-- https://neovim.io/doc/user/builtin.html   #mapcheck
 		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
 			vim.api.nvim_del_keymap("t", "<Esc>")
 		end
 	end,
 	-- function to run on closing the terminal
+	---@diagnostic disable-next-line: unused-local
 	on_close = function(term)
 		-- 添加回来, 前面取消了<Esc>的映射
 		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
@@ -53,16 +58,70 @@ local ta = Terminal:new({
 		border = "rounded",
 	},
 	close_on_exit = true,
+	-- function to run on opening the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_open = function(term)
+		vim.cmd("startinsert!")
+		-- ESC 键取消，留给terminal
+		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
+			vim.api.nvim_del_keymap("t", "<Esc>")
+		end
+	end,
+	-- function to run on closing the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_close = function(term)
+		-- 添加回来, 前面取消了<Esc>的映射
+		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
+			noremap = true,
+			silent = true,
+		})
+	end,
 })
 
 local tb = Terminal:new({
 	direction = "vertical",
 	close_on_exit = true,
+	-- function to run on opening the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_open = function(term)
+		vim.cmd("startinsert!")
+		-- ESC 键取消，留给terminal
+		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
+			vim.api.nvim_del_keymap("t", "<Esc>")
+		end
+	end,
+	-- function to run on closing the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_close = function(term)
+		-- 添加回来, 前面取消了<Esc>的映射
+		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
+			noremap = true,
+			silent = true,
+		})
+	end,
 })
 
 local tc = Terminal:new({
 	direction = "horizontal",
 	close_on_exit = true,
+	-- function to run on opening the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_open = function(term)
+		vim.cmd("startinsert!")
+		-- ESC 键取消，留给terminal
+		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
+			vim.api.nvim_del_keymap("t", "<Esc>")
+		end
+	end,
+	-- function to run on closing the terminal
+	---@diagnostic disable-next-line: unused-local
+	on_close = function(term)
+		-- 添加回来, 前面取消了<Esc>的映射
+		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
+			noremap = true,
+			silent = true,
+		})
+	end,
 })
 
 local M = {}

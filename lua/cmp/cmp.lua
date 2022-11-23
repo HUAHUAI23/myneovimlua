@@ -293,8 +293,14 @@ vim.api.nvim_create_autocmd("BufRead", {
 -- leader cv
 -- -- FIX: https://github.com/mfussenegger/nvim-dap/issues/562
 vim.api.nvim_set_var("copilot_filetypes", {
-	["dap-repl"] = false,
+	["*"] = false,
+	-- ["dap-repl"] = false,
+	["python"] = true,
+	["lua"] = true,
+	["javascript"] = true,
+	["sh"] = true,
 })
 
 vim.api.nvim_set_keymap("i", ";cc", "copilot#Accept('')", { noremap = true, silent = true, expr = true })
 vim.g.copilot_no_tab_map = true
+vim.api.nvim_set_keymap("i", ";cv", "<cmd>:Copilot panel<cr>", { noremap = true, silent = true })

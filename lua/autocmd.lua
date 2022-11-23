@@ -122,6 +122,7 @@ autocmd("BufReadPost", {
 		if ok and stats and stats.size < max_filesize then
 			-- require("plugin-config.todo-comments")
 			require("indent_blankline.commands").enable()
+			require("nvim-autopairs").enable()
 		end
 	end,
 })
@@ -132,6 +133,7 @@ autocmd("BufReadPre", {
 	callback = function()
 		-- vim.api.nvim_cmd(vim.api.nvim_parse_cmd("IndentBlanklineDisable", {}), {})
 		require("indent_blankline.commands").disable()
+		require("nvim-autopairs").disable()
 	end,
 })
 
@@ -141,6 +143,7 @@ autocmd("BufReadPre", {
 -- 	pattern = "*",
 -- 	callback = function()
 -- 		if api.nvim_buf_line_count(0) > commConf.lspLargefileEdge then
+-- 			-- https://neovim.io/doc/user/lua.html#vim.defer_fn()
 -- 			vim.defer_fn(function()
 -- 				vim.lsp.stop_client(lsp.get_active_clients())
 -- 			end, 1000)

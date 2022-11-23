@@ -15,7 +15,8 @@ vim.wo.cursorline = true
 vim.wo.signcolumn = "yes"
 -- vim.wo.signcolumn = "yes:1"
 -- 右侧参考线，超过表示代码太长了，考虑换行
-vim.wo.colorcolumn = "80"
+-- vim.wo.colorcolumn = "80"
+vim.o.colorcolumn = "80"
 
 -- TODO: sessionoptions
 -- -- indent
@@ -60,12 +61,14 @@ vim.o.whichwrap = "<,>,[,]"
 vim.o.hidden = true
 
 -- 禁止创建备份文件
+-- don't create backup file (swap file)
 vim.o.backup = false
 vim.o.writebackup = false
 vim.o.swapfile = false
 
--- smaller updatetime
-vim.o.updatetime = 500 --300  default 4000
+-- default 4000 -- if no type in 1000ms, then write the swap file to disk
+-- also a wait time for the CursorHold event
+-- vim.o.updatetime = 1000 --1000
 -- 设置 timeoutlen 为等待键盘快捷键连击时间500毫秒，可根据需要设置,例如快捷键shift+q
 -- map映射的组合键，输入一个键 最长等待时间500秒 等待下一个键输入
 -- 遇到问题详见：https://github.com/nshen/learn-neovim-lua/issues/1

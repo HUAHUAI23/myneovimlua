@@ -2,6 +2,7 @@ local api = vim.api
 -- command open dapui float
 -- refer: https://github.com/rcarriga/nvim-dap-ui
 api.nvim_create_user_command("DapFloatWin", function()
+	---@diagnostic disable-next-line: missing-parameter
 	require("dapui").float_element()
 end, { desc = "load dapui float" })
 
@@ -9,6 +10,11 @@ end, { desc = "load dapui float" })
 -- refer: https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt
 api.nvim_create_user_command("DapCloseWin", function()
 	local ok, dap = pcall(require, "dap")
+	if not ok then
+		vim.notify("没有找到 dap")
+		return
+	end
+	---@diagnostic disable-next-line: missing-parameter
 	require("dapui").close()
 	dap.close()
 	dap.terminate()
@@ -32,6 +38,7 @@ local function setUndotreeWinSize()
 		end
 	end
 end
+
 api.nvim_create_user_command("Ut", function()
 	api.nvim_cmd(api.nvim_parse_cmd("UndotreeToggle", {}), {})
 	setUndotreeWinSize()

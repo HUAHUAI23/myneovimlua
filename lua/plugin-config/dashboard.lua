@@ -4,6 +4,16 @@ if not status then
 	return
 end
 db.session_directory = vim.fn.stdpath("data") .. "/vimSession"
+-- it will auto-save the current session on neovim exit if a session exists and more than one buffer is loaded
+-- db.session_auto_save_on_exit = true
+-- Example: Close NvimTree buffer before auto-saving the current session
+local autocmd = vim.api.nvim_create_autocmd
+-- autocmd("User", {
+-- 	pattern = "DBSessionSavePre",
+-- 	callback = function()
+-- 		pcall(vim.cmd, "NvimTreeClose")
+-- 	end,
+-- })
 db.custom_footer = {
 	-- "",
 	"千里之行，始于足下                     ",
