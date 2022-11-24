@@ -62,12 +62,8 @@ M.capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- lsp keybinding
 M.keyAttach = function(bufnr)
-	local function buf_set_keymap(mode, lhs, rhs)
-		vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, buffer = bufnr })
-	end
-
 	-- 绑定快捷键
-	require("keybindings").mapLSP(buf_set_keymap)
+	require("keybindings").pluginKeys.mapLSP(bufnr)
 end
 
 -- 禁用lsp格式化功能，交给专门插件处理

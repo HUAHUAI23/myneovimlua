@@ -75,7 +75,7 @@ map("n", norl.quit_buffer, ":bd<CR>", opt)
 -- 定义快捷键关闭当前分割窗口
 map("n", norl.quit_window, ":q<CR>", opt)
 -- 定义快捷键保存当前窗口内容
-map("n", norl.save_window, "<cmd>w<CR>", opt)
+map("n", norl.save_buffer, "<cmd>w<CR>", opt)
 -- 定义快捷键保存所有窗口内容并退出 vim
 map("n", norl.saveALL_and_exitALL, ":wa<CR>:q<CR>", opt)
 -- 不做任何保存，直接退出 vim

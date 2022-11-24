@@ -42,14 +42,15 @@ dap.listeners.before.event_terminated["dapui_config"] = function()
 	dapui.close({})
 	local repl = dap.repl
 	repl.close()
-	vim.api.nvim_command([[exe "normal \<c-w>o"]])
+	-- close the remaining windows
+	-- vim.api.nvim_command([[exe "normal \<c-w>o"]])
 	vim.cmd("stopinsert")
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
 	dapui.close({})
 	local repl = dap.repl
 	repl.close()
-	vim.api.nvim_command([[exe "normal \<c-w>o"]])
+	-- vim.api.nvim_command([[exe "normal \<c-w>o"]])
 	vim.cmd("stopinsert")
 end
 
@@ -128,4 +129,4 @@ for _, language in ipairs({ "typescript", "javascript" }) do
 end
 
 -- dap keybindings
-require("keybindings").mapDAP()
+require("keybindings").pluginKeys.mapDAP()

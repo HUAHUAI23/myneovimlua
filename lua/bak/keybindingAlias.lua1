@@ -10,10 +10,10 @@ local M = {
 	--   command_mode = "c",
 	--   select_mode = "s"
 
-	-- 前导键
-	leader_key = ";",
 	-- normal模式下键盘映射
 	norl = {
+		-- 前导键
+		leader_key = ";",
 
 		goto_command_mode = "<F1>",
 		undo = "<leader>u",
@@ -90,10 +90,7 @@ local M = {
 	------------------------------------------
 	--插件键位映射
 	nvimTree = {
-		NvimTreeToggle = "<space>1",
-	},
-	undotree = {
-		UndotreeToggle = "<space>2",
+		NvimTreeToggle = "<space>f",
 	},
 	lsp = {
 		--treesitter rename
@@ -111,8 +108,6 @@ local M = {
 		goto_next = "gj",
 		goto_prev = "gk",
 		format = "<leader>f",
-		-- outline
-		LSoutline = "<space>3",
 	},
 	bufferline = {
 		BufferLineCyclePrev = "<Leader>j",
@@ -144,9 +139,8 @@ local M = {
 		cmp_select_next_item = "<C-j>",
 		cmp_trigge = "<C-Space>",
 		cmp_abort = "<leader>ee",
+
 		-- luasnip
-		luasnip_node_next = "<C-j>",
-		luasnip_node_prev = "<C-k>",
 	},
 	toggerterm = {
 		toggleA = "<leader>ta",
@@ -198,14 +192,6 @@ local M = {
 		iline_comment = [[<C-_>]],
 		vline_comment = [[<C-_>]],
 		nline_comment = [[<C-_>]],
-	},
-	copilot = {
-		copilotAccept = ";cc",
-		copilotPanel = ";cv",
-	},
-	switch = {
-		vmagicSearch = "on",
-		nmagicSearch = "on",
 	},
 }
 

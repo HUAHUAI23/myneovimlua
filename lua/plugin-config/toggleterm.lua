@@ -173,4 +173,4 @@ M.toggleG = function()
 	lazygit:open()
 end
 
-require("keybindings").mapToggleTerm(M)
+require("keybindings").pluginKeys.mapToggleTerm(M)

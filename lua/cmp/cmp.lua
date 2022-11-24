@@ -11,7 +11,8 @@ if not status then
 	return
 end
 
-local mapping = require("keybindings").cmp(luasnip, cmp)
+local mapping = require("keybindings").pluginKeys.cmp(luasnip, cmp)
+local keybindingAlias = require("keybindingAlias")
 
 local commConf = require("commConf")
 local ifEnable = function()
@@ -98,6 +99,7 @@ cmp.setup({
 	-- },
 	formatting = {
 		format = function(entry, vim_item)
+			-- https://github.com/tzachar/cmp-tabnine#pretty-printing-menu-items
 			-- if you have lspkind installed, you can use it like
 			-- in the following line:
 			vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
@@ -222,13 +224,13 @@ require("luasnip.loaders.from_lua").load({ paths = { config_path .. "/lua/cmp/sn
 
 -- For changing choices in choiceNodes (not strictly necessary for a basic setup).
 -- { "i", "s" } Indicates insertion mode and selection mode, respectively
-vim.keymap.set({ "i", "s" }, "<C-j>", function()
+vim.keymap.set({ "i", "s" }, keybindingAlias.cmp.luasnip_node_next, function()
 	if luasnip.choice_active() then
 		luasnip.change_choice(1)
 	end
 end)
 
-vim.keymap.set({ "i", "s" }, "<C-k>", function()
+vim.keymap.set({ "i", "s" }, keybindingAlias.cmp.luasnip_node_prev, function()
 	if luasnip.choice_active() then
 		luasnip.change_choice(-1)
 	end
@@ -301,6 +303,16 @@ vim.api.nvim_set_var("copilot_filetypes", {
 	["sh"] = true,
 })
 
-vim.api.nvim_set_keymap("i", ";cc", "copilot#Accept('')", { noremap = true, silent = true, expr = true })
+vim.api.nvim_set_keymap(
+	"i",
+	keybindingAlias.copilot.copilotAccept,
+	"copilot#Accept('')",
+	{ noremap = true, silent = true, expr = true, desc = "accept copilot suggestion" }
+)
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", ";cv", "<cmd>:Copilot panel<cr>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+	"i",
+	keybindingAlias.copilot.copilotPanel,
+	"<cmd>:Copilot panel<cr>",
+	{ noremap = true, silent = true, desc = "open copilot panel" }
+)

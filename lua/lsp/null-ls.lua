@@ -8,6 +8,7 @@ if not status then
 end
 -- builtin sources
 -- code action sources
+---@diagnostic disable-next-line: unused-local
 local code_actions = null_ls.builtins.code_actions
 -- diagnostic sources
 local diagnostics = null_ls.builtins.diagnostics
@@ -78,7 +79,7 @@ local function lsp_formatting(bufnr)
 				return client.name == "null-ls"
 			end,
 			bufnr = bufnr,
-			-- timeout_ms = 2000,
+			-- timeout_ms = 20000,
 			async = true,
 		})
 	end
@@ -92,7 +93,7 @@ null_ls.setup({
 	-- null-ls will wait for results from the source util the maximum waiting time of null-ls,
 	-- if this time be exceeded and the source does not return a result,null-ls will return the default value
 	-- The null-ls's maximum waiting time should be greater than or equal to the maximum processing time of sources
-	default_timeout = 20000, -- 10 seconds
+	default_timeout = 20000, -- 20 seconds
 	-- #{m}: message  #{s}: source name (defaults to null-ls if not specified)  #{c}: code (if available)
 	-- diagnostics_format = "[#{c}] #{m} (#{s})",
 	diagnostics_format = "[#{s}] #{m}",
@@ -114,27 +115,57 @@ null_ls.setup({
 		end
 
 		local lspKey = require("keybindingAlias").lsp
-		local function mapbuf(mode, lhs, rhs)
-			vim.keymap.set(mode, lhs, rhs, { noremap = true, silent = true, buffer = vim.api.nvim_get_current_buf() })
-		end
 
-		mapbuf("n", lspKey.definition, function()
+		-- TODO: fix markdown file
+		-- there are some lsp keymap the markdown file don't need
+
+		vim.keymap.set("n", lspKey.definition, function()
 			require("telescope.builtin").lsp_definitions(
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
-		end)
-		mapbuf("n", lspKey.references, function()
+		end, { noremap = true, silent = true, desc = "goto lsp definition", buffer = bufnr })
+		vim.keymap.set("n", lspKey.references, function()
 			require("telescope.builtin").lsp_references(
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
-		end)
-		mapbuf("n", lspKey.hover, "<cmd>lua vim.lsp.buf.hover()<CR>")
-		mapbuf("n", lspKey.open_flow, "<cmd>lua vim.diagnostic.open_float()<CR>")
-		mapbuf("n", lspKey.goto_next, "<cmd>lua vim.diagnostic.goto_next()<CR>")
-		mapbuf("n", lspKey.goto_prev, "<cmd>lua vim.diagnostic.goto_prev()<CR>")
-		mapbuf("n", lspKey.rename, "<cmd>lua vim.lsp.buf.rename()<CR>")
-		mapbuf("n", lspKey.code_action, "<cmd>lua vim.lsp.buf.code_action()<CR>")
-		mapbuf("n", lspKey.format, function()
+		end, { noremap = true, silent = true, desc = "goto lsp references", buffer = bufnr })
+		vim.keymap.set(
+			"n",
+			lspKey.hover,
+			"<cmd>lua vim.lsp.buf.hover()<CR>",
+			{ noremap = true, silent = true, desc = "open lsp hover", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			lspKey.open_flow,
+			"<cmd>lua vim.diagnostic.open_float()<CR>",
+			{ noremap = true, silent = true, desc = "open lsp diagnostic", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			lspKey.goto_next,
+			"<cmd>lua vim.diagnostic.goto_next()<CR>",
+			{ noremap = true, silent = true, desc = "goto next diagnostic", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			lspKey.goto_prev,
+			"<cmd>lua vim.diagnostic.goto_prev()<CR>",
+			{ noremap = true, silent = true, desc = "goto prev diagnostic", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			lspKey.rename,
+			"<cmd>lua vim.lsp.buf.rename()<CR>",
+			{ noremap = true, silent = true, desc = "variable lsp rename", buffer = bufnr }
+		)
+		vim.keymap.set(
+			"n",
+			lspKey.code_action,
+			"<cmd>lua vim.lsp.buf.code_action()<CR>",
+			{ noremap = true, silent = true, desc = "lsp code action", buffer = bufnr }
+		)
+		vim.keymap.set("n", lspKey.format, function()
 			vim.lsp.buf.format({
 				filter = function()
 					-- apply whatever logic you want (in this example, we'll only use null-ls)
@@ -143,20 +174,25 @@ null_ls.setup({
 				end,
 				bufnr = api.nvim_get_current_buf(),
 				-- NOTE: the maximum time that vim.lsp.buf.format will wait for
-				-- timeout_ms = 2000,
+				-- timeout_ms = 20000
 				async = true,
 			})
-		end)
-		mapbuf("n", lspKey.signature_help, "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-		mapbuf("n", lspKey.implementations, function()
+		end, { noremap = true, silent = true, desc = "lsp code format", buffer = bufnr })
+		vim.keymap.set(
+			"n",
+			lspKey.signature_help,
+			"<cmd>lua vim.lsp.buf.signature_help()<CR>",
+			{ noremap = true, silent = true, desc = "open function signature help", buffer = bufnr }
+		)
+		vim.keymap.set("n", lspKey.implementations, function()
 			require("telescope.builtin").lsp_implementations(
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
-		end)
-		mapbuf("n", lspKey.type_definitions, function()
+		end, { noremap = true, silent = true, desc = "goto interface implementation", buffer = bufnr })
+		vim.keymap.set("n", lspKey.type_definitions, function()
 			require("telescope.builtin").lsp_type_definitions(
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
-		end)
+		end, { noremap = true, silent = true, desc = "goto type definition", buffer = bufnr })
 	end,
 })

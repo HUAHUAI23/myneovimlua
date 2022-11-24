@@ -4,7 +4,7 @@ if not status then
 	return
 end
 
-local keybindings = require("keybindings")
+local keybindings = require("keybindings").pluginKeys
 local commConf = require("commConf")
 
 comment.setup({
