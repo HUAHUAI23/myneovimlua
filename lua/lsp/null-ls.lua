@@ -25,11 +25,15 @@ local sources = {
 	formatting.clang_format,
 	formatting.fixjson,
 	formatting.prettier.with({
-		disabled_filetypes = { "markdown" },
+		disabled_filetypes = { "markdown", "javascript" },
 		prefer_local = "node_modules/.bin",
 		-- milliseconds
 		-- NOTE: The maximum processing time of prettier,
 		-- if file size is very large,the maximum processing time should be more longer
+		timeout = 20000,
+	}),
+	formatting.deno_fmt.with({
+		filetypes = { "javascript", "typescript", "typescriptreact", "typescript.tsx" },
 		timeout = 20000,
 	}),
 	formatting.sql_formatter,
@@ -78,7 +82,7 @@ local function lsp_formatting(bufnr)
 				-- apply whatever logic you want (in this example, we'll only use null-ls)
 				return client.name == "null-ls"
 			end,
-			bufnr = bufnr,
+			bufnr = bufnr or vim.api.nvim_get_current_buf(),
 			-- timeout_ms = 20000,
 			async = true,
 		})
@@ -172,7 +176,7 @@ null_ls.setup({
 					-- NOTE: the client.name is the name of the client attached to this buffer
 					return client.name == "null-ls"
 				end,
-				bufnr = api.nvim_get_current_buf(),
+				bufnr = bufnr or vim.api.nvim_get_current_buf(),
 				-- NOTE: the maximum time that vim.lsp.buf.format will wait for
 				-- timeout_ms = 20000
 				async = true,

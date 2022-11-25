@@ -24,6 +24,7 @@ mason_lspconfig.setup({
 		"tsserver",
 		"gopls",
 		"clangd",
+		"vimls",
 	},
 	automatic_installation = true,
 })
@@ -99,6 +100,8 @@ local servers = {
 	jsonls = require("lsp.config.json"),
 	clangd = require("lsp.config.clangd"),
 	gopls = require("lsp.config.gopls"),
+	-- vim
+	vimls = require("lsp.config.vimls"),
 }
 for name, config in pairs(servers) do
 	if config ~= nil and type(config) == "table" then

@@ -6,6 +6,7 @@ end
 
 local commConf = require("commConf")
 local lsp = require("keybindingAlias").lsp
+---@diagnostic disable-next-line: unused-local
 local filesize_hundle = function(lang, buf)
 	local max_filesize = commConf.largefileEdge -- 100 KB
 	local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
@@ -15,10 +16,12 @@ local filesize_hundle = function(lang, buf)
 end
 
 treesitter.setup({
-	-- 安装 language parser
-	-- :TSInstallInfo 命令查看支持的语言
+	-- A list of parser names, or "all"
 	ensure_installed = { "html", "css", "vim", "lua", "javascript", "python", "json", "bash", "markdown", "go" },
+	-- Install parsers synchronously (only applied to `ensure_installed`)
+	sync_install = false,
 	-- Automatically install missing parsers when entering buffer
+	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 	auto_install = true,
 
 	-- 启用代码高亮模块

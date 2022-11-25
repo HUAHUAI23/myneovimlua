@@ -532,7 +532,7 @@ local function lsp_formatting()
 	vim.lsp.buf.format({
 		filter = function(client)
 			-- apply whatever logic you want (in this example, we'll only use null-ls)
-			-- NOTE: the client.name is the name of the client attached to this buffer
+			-- NOTE: the client.name is name of the clients attached to this buffer
 			return client.name == "null-ls"
 		end,
 		bufnr = vim.api.nvim_get_current_buf(),
