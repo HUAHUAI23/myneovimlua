@@ -19,7 +19,25 @@ toggleterm.setup({
 		},
 	},
 })
-
+local keybind = require("keybindings")
+local keybindingAlias = require("keybindingAlias")
+local unsetMap = { t = { keybindingAlias.term.horizontal_split, keybindingAlias.term.vertical_split } }
+local setMap = {
+	{
+		mode = "t",
+		lhs = keybindingAlias.term.horizontal_split,
+		rhs = [[:sp | terminal<CR>]],
+		opts = { silent = false },
+		description = "open terminal horizontal split",
+	},
+	{
+		mode = "t",
+		lhs = keybindingAlias.term.vertical_split,
+		rhs = [[:vsp | terminal<CR>]],
+		opts = { silent = false },
+		description = "open terminal vertical split",
+	},
+}
 local Terminal = require("toggleterm.terminal").Terminal
 
 local lazygit = Terminal:new({
@@ -45,6 +63,20 @@ local lazygit = Terminal:new({
 		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
 			vim.api.nvim_del_keymap("t", "<Esc>")
 		end
+
+		for k, v in pairs(unsetMap) do
+			if type(v) == "string" then
+				if vim.fn.mapcheck(v, k) ~= "" then
+					vim.api.nvim_del_keymap(k, v)
+				end
+			else
+				for _, vv in ipairs(v) do
+					if vim.fn.mapcheck(vv, k) ~= "" then
+						vim.api.nvim_del_keymap(k, vv)
+					end
+				end
+			end
+		end
 	end,
 	-- function to run on closing the terminal
 	---@diagnostic disable-next-line: unused-local
@@ -54,6 +86,7 @@ local lazygit = Terminal:new({
 			noremap = true,
 			silent = true,
 		})
+		keybind.bulk_register_keymaps(setMap)
 	end,
 })
 
@@ -71,6 +104,19 @@ local ta = Terminal:new({
 		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
 			vim.api.nvim_del_keymap("t", "<Esc>")
 		end
+		for k, v in pairs(unsetMap) do
+			if type(v) == "string" then
+				if vim.fn.mapcheck(v, k) ~= "" then
+					vim.api.nvim_del_keymap(k, v)
+				end
+			else
+				for _, vv in ipairs(v) do
+					if vim.fn.mapcheck(vv, k) ~= "" then
+						vim.api.nvim_del_keymap(k, vv)
+					end
+				end
+			end
+		end
 	end,
 	-- function to run on closing the terminal
 	---@diagnostic disable-next-line: unused-local
@@ -80,6 +126,7 @@ local ta = Terminal:new({
 			noremap = true,
 			silent = true,
 		})
+		keybind.bulk_register_keymaps(setMap)
 	end,
 })
 
