@@ -121,8 +121,10 @@ local M = {
 		BufferLineMoveNext = "<Leader>l",
 	},
 	telescope = {
-		find_files = "<C-f>",
-		find_files_insertmode = "<C-f>",
+		fuzzy_find = "<C-f>",
+		fuzzy_find_insertmode = "<C-f>",
+		find_files = "<space>4",
+		buffer_select = "<space>5",
 	},
 	dap = {
 		debugg = "<F5>",

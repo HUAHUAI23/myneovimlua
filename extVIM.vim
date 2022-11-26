@@ -7,9 +7,11 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 :autocmd BufNewFile,BufRead *.html setlocal nowrap
 
 " Auto change directory to current dir
-" project 插件会做这件事件，不需要再设置了
-" autocmd BufEnter * silent! lcd %:p:h
-" set autochdir
+" project 插件会做这件事件，不需要再设置了 (if the pattern file(project.md) is
+" not in project root dir, the project plugin will not auto change root directory to
+" current dir)
+autocmd BufEnter * silent! lcd %:p:h
+set autochdir
 
 "get crrect comment highlighting for json
 autocmd FileType json syntax match Comment +\/\/.\+$+

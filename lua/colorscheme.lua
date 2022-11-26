@@ -39,10 +39,17 @@ end
 --     hi SignColumn ctermbg=None guibg=None
 --     hi VertSplit ctermfg=None ctermbg=None cterm=None guibg=None guifg=None
 --     ]])
+
+-- editor
 api.nvim_set_hl(0, "NonText", { ctermfg = 142, fg = "grey50", bold = true })
+
 api.nvim_set_hl(0, "SignColumn", { ctermbg = "none", bg = "none" })
 api.nvim_set_hl(0, "VertSplit", { bg = "none", ctermbg = "none", ctermfg = 246, fg = "#a89984" })
 api.nvim_set_hl(0, "CursorLineNr", { ctermfg = 208, ctermbg = 239, bg = "#242a32", fg = "#fe8019", bold = true })
+
+-- gitsigns
+api.nvim_set_hl(0, "deusGreenSign", { ctermfg = 142, ctermbg = 239, bg = "none", fg = "#98c379" })
+api.nvim_set_hl(0, "deusAquaSign", { ctermfg = 108, ctermbg = 239, bg = "none", fg = "#8ec07c" })
 
 -- sytax hightlight
 -- local style = {

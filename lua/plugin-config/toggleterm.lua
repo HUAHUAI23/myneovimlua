@@ -7,12 +7,17 @@ end
 toggleterm.setup({
 	size = function(term)
 		if term.direction == "horizontal" then
-			return 10
+			return vim.o.lines * 0.35
 		elseif term.direction == "vertical" then
 			return vim.o.columns * 0.3
 		end
 	end,
 	start_in_insert = true,
+	highlights = {
+		FloatBorder = {
+			link = "FloatBorder",
+		},
+	},
 })
 
 local Terminal = require("toggleterm.terminal").Terminal

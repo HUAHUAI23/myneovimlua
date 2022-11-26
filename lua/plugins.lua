@@ -195,6 +195,16 @@ return require("packer").startup({
 			end,
 		})
 
+		-- something toolkit
+		-- ---------------------------------------------------------
+		use({
+			"norcalli/nvim-colorizer.lua",
+			config = function()
+				require("plugin-config.nvim-colorizer")
+			end,
+			cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer" },
+		})
+
 		-- something like lsp
 		-- ---------------------------------------------------------
 		-- TODO Comments

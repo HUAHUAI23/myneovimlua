@@ -420,15 +420,27 @@ keybind.comment = {
 keybind.telescope = {
 	{
 		mode = "n",
-		lhs = telesp.find_files,
+		lhs = telesp.fuzzy_find,
 		rhs = [[<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find({initial_mode = 'insert'})<CR>]],
 		description = "telescope-current buffer fuzzy find",
 	},
 	{
 		mode = "i",
-		lhs = telesp.find_files_insertmode,
+		lhs = telesp.fuzzy_find_insertmode,
 		rhs = [[<Esc>:lua require('telescope.builtin').current_buffer_fuzzy_find({initial_mode = 'insert'})<CR>]],
 		description = "telescope-current buffer fuzzy find",
+	},
+	{
+		mode = "n",
+		lhs = telesp.find_files,
+		rhs = [[<cmd>lua require('telescope.builtin').find_files({initial_mode = 'insert'})<CR>]],
+		description = "telescope-find files",
+	},
+	{
+		mode = "n",
+		lhs = telesp.buffer_select,
+		rhs = [[<cmd>lua require('telescope.builtin').buffers({initial_mode = 'insert'})<CR>]],
+		description = "telescope-find buffer select",
 	},
 }
 
@@ -836,12 +848,13 @@ keybind.pluginKeys.gitsigns_on_attach = function(bufnr)
 	mappp({ "o", "x" }, gitsignss.select_hunk, ":<C-U>Gitsigns select_hunk<CR>")
 end
 
-local keymap_set = {
+keybind.keymap_set = {
 	"editorInsert",
 	"editorNormal",
 	"editorVisual",
 	"editorCommand",
 	"editorTerminal",
+
 	"nvimTree",
 	"bufferline",
 	"comment",
@@ -852,13 +865,13 @@ local keymap_set = {
 	"LSoutline",
 }
 
-local function editorKeyRegister(keymapSet)
+function keybind.editorKeyRegister(keymapSet)
 	for _, v in ipairs(keymapSet) do
 		keybind.bulk_register_keymaps(keybind[v])
 	end
 end
 
-local function unsetKey(unsetmap)
+function keybind.unsetKey(unsetmap)
 	for k, v in pairs(unsetmap) do
 		if type(v) == "string" then
 			vim.api.nvim_set_keymap(k, v, "", { noremap = true, silent = false })
@@ -870,12 +883,9 @@ local function unsetKey(unsetmap)
 	end
 end
 
-unsetKey(keybind.unsetmap)
-editorKeyRegister(keymap_set)
-local magiceSearch = {
+keybind.magiceSearch = {
 	vmagicSearch = keybindingAlias.switch.vmagicSearch,
 	nmagicSearch = keybindingAlias.switch.nmagicSearch,
 }
-require("commConf").switches(magiceSearch)
 
 return keybind

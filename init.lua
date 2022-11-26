@@ -1,4 +1,3 @@
-local loop, api = vim.loop, vim.api
 -- TODO: use loop to disable bulks of plugins
 -- disable some builtin plugins
 vim.g.loaded_netrw = 1
@@ -17,7 +16,9 @@ require("plugins")
 vim.cmd("source ${HOME1}/.config/nvim/extVIM.vim")
 
 -- 快捷键映射
-require("keybindings")
+local keybind = require("keybindings")
+keybind.unsetKey(keybind.unsetmap)
+keybind.editorKeyRegister(keybind.keymap_set)
 
 -- 自动命令
 require("autocmd")
