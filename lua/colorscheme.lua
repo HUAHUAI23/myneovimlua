@@ -44,7 +44,8 @@ end
 api.nvim_set_hl(0, "NonText", { ctermfg = 142, fg = "grey50", bold = true })
 
 api.nvim_set_hl(0, "SignColumn", { ctermbg = "none", bg = "none" })
-api.nvim_set_hl(0, "VertSplit", { bg = "none", ctermbg = "none", ctermfg = 246, fg = "#a89984" })
+api.nvim_set_hl(0, "VertSplit", { bg = "#2C323B", ctermbg = "none", ctermfg = 246, fg = "#ebdbb2" })
+-- api.nvim_set_hl(0, "VertSplit", { bg = "none", ctermbg = "none", ctermfg = 246, fg = "#a89984" })
 api.nvim_set_hl(0, "CursorLineNr", { ctermfg = 208, ctermbg = 239, bg = "#242a32", fg = "#fe8019", bold = true })
 
 -- gitsigns

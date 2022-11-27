@@ -8,6 +8,7 @@ if not status then
 end
 
 local commConf = require("commConf")
+-- TODO: only work at startup, because NvimTreeToggle will not call setup() again
 local function largefileHundle()
 	if vim.api.nvim_buf_line_count(0) > commConf.lspLargefileEdge then
 		return false

@@ -79,6 +79,9 @@ local source_mapping = {
 
 --cmp config
 -- https://github.com/hrsh7th/nvim-cmp
+local winhighlight = {
+	winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual",
+}
 cmp.setup({
 	-- UI
 	-- formatting = {
@@ -129,8 +132,9 @@ cmp.setup({
 		end,
 	},
 	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
+		completion = cmp.config.window.bordered(winhighlight),
+		-- completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(winhighlight),
 	},
 	-- keybindings
 	mapping = mapping,
