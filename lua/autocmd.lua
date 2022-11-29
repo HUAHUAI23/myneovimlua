@@ -85,6 +85,7 @@ end
 --     ]])
 -- end
 
+-- NOTE: the vim lsp do this, it more quick and smooth
 -- markdown文件，当行字数达到78时，自动换行
 -- autocmd("CursorMovedI", {
 -- 	group = myAutoGroup,

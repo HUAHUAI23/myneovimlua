@@ -509,14 +509,8 @@ keybind.hop = {
 -- ------------
 -- whick-key
 --
-local wk = require("which-key")
--- vim.keymap.set("n", "<space>s", "<cmd>Telescope xray23 list<cr>")
-wk.register({
-	["<space>"] = {
-		name = "+Telescope session",
-		s = { "<cmd>Telescope xray23 list<cr>", "vim session list" },
-	},
-})
+-- NOTE: register in which-key
+-- vim.keymap.set("n", keybindingAlias.telescope.session_load, "<cmd>Telescope xray23 list<cr>")
 
 -- ------------
 -- plugs-others
@@ -744,8 +738,8 @@ keybind.pluginKeys.cmp = function(luasnip, cmp)
 				fallback()
 			end
 		end, { "i", "s" }),
-		[cmpp.cmp_scroll_doc_down] = cmp.mapping.scroll_docs(-4),
-		[cmpp.cmp_scroll_doc_up] = cmp.mapping.scroll_docs(4),
+		[cmpp.cmp_scroll_doc_down] = cmp.mapping.scroll_docs(4),
+		[cmpp.cmp_scroll_doc_up] = cmp.mapping.scroll_docs(-4),
 		[cmpp.cmp_select_next_item] = cmp.mapping(
 			cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior }),
 			{ "i", "c" }
@@ -796,7 +790,7 @@ end
 
 -- gitsigns
 keybind.pluginKeys.gitsigns_on_attach = function(bufnr)
-	local gitsignss = require("keybindingAlias").gitsigns
+	local gitsignss = keybindingAlias.gitsigns
 	local gs = package.loaded.gitsigns
 
 	local function mappp(mode, l, r, opts)
@@ -883,9 +877,11 @@ function keybind.unsetKey(unsetmap)
 	end
 end
 
-keybind.magiceSearch = {
+keybind.magicSearch = {
 	vmagicSearch = keybindingAlias.switch.vmagicSearch,
 	nmagicSearch = keybindingAlias.switch.nmagicSearch,
 }
+
+require("commConf").magiceSearchSwitches(keybind.magicSearch)
 
 return keybind

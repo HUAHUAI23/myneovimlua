@@ -205,6 +205,24 @@ return require("packer").startup({
 			cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer" },
 		})
 
+		-- the more powerful %
+		-- matchup
+		use({
+			"andymass/vim-matchup",
+			setup = function()
+				-- may set any options here
+				vim.g.matchup_matchparen_offscreen = { method = "popup" }
+			end,
+		})
+
+		-- vim.notify
+		use({
+			"rcarriga/nvim-notify",
+			config = function()
+				require("plugin-config.nvim-notify")
+			end,
+		})
+
 		-- something like lsp
 		-- ---------------------------------------------------------
 		-- TODO Comments
@@ -280,7 +298,7 @@ return require("packer").startup({
 		-- telescope-session
 		use("HUAHUAI23/telescope-session.nvim")
 		-- telescope-color
-		use("HUAHUAI23/telescope-color.nvim")
+		use({ "HUAHUAI23/telescope-color.nvim" })
 
 		-- --------LSP-------------------
 		-- https://github.com/neovim/nvim-lspconfig
@@ -296,12 +314,13 @@ return require("packer").startup({
 			requires = { "nvim-lua/plenary.nvim" },
 		})
 		-- ui-lsp_signature
-		use({
-			"ray-x/lsp_signature.nvim",
-			config = function()
-				require("lsp.lsp-signature")
-			end,
-		})
+		-- TODO: request feature for auto adjust position
+		-- use({
+		-- 	"ray-x/lsp_signature.nvim",
+		-- 	config = function()
+		-- 		require("lsp.lsp-signature")
+		-- 	end,
+		-- })
 		-- ui-lspsaga
 		use({
 			"glepnir/lspsaga.nvim",

@@ -90,16 +90,16 @@ local servers = {
 	bashls = require("lsp.config.bash"),
 	pyright = require("lsp.config.pyright"),
 	tsserver = require("lsp.config.tsserver"),
+	clangd = require("lsp.config.clangd"),
+	gopls = require("lsp.config.gopls"),
 	-- quick_lint_js = require("lsp.config.quick-lint-js"),
-	-- sqls = require("lsp.config.sqls"),
+	sqls = require("lsp.config.sqls"),
 	-- css html
 	emmet_ls = require("lsp.config.emmet-ls"),
 	html = require("lsp.config.html"),
 	cssls = require("lsp.config.css"),
-	-- css html
+	-- json
 	jsonls = require("lsp.config.json"),
-	clangd = require("lsp.config.clangd"),
-	gopls = require("lsp.config.gopls"),
 	-- vim
 	vimls = require("lsp.config.vimls"),
 }

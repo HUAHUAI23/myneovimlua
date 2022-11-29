@@ -39,6 +39,7 @@ if vim.fn.isdirectory(install_path) == 0 then
 	load_plugins()
 	require("packer").sync()
 	local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
+	-- ensure plugins is synced and then load config
 	vim.api.nvim_create_autocmd(
 		"User",
 		{ pattern = "PackerComplete", callback = load_config, group = packer_group, once = true }

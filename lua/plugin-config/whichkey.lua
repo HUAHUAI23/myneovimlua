@@ -23,3 +23,11 @@ whichkey.setup({
 		filetypes = { "TelescopePrompt" },
 	},
 })
+
+local wk = require("which-key")
+wk.register({
+	[require("keybindingAlias").telescope.session_load] = {
+		"<cmd>Telescope xray23 list<cr>",
+		"vim session list",
+	},
+})
