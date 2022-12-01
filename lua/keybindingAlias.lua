@@ -17,6 +17,7 @@ local M = {
 
 		goto_command_mode = "<F1>",
 		undo = "<leader>u",
+		paste = "<leader>p",
 
 		go_left35 = "H",
 		go_right35 = "L",
@@ -97,9 +98,9 @@ local M = {
 	},
 	lsp = {
 		--treesitter rename
-		tsRename = "ra",
-		rename = "rn",
-		code_action = "ca",
+		tsRename = "<leader>ra",
+		rename = "<leader>rn",
+		code_action = "<leader>ca",
 		definition = "gd",
 		hover = "gh",
 		references = "gr",
@@ -108,8 +109,8 @@ local M = {
 		implementations = "<leader>gi",
 		-- diagnostic
 		open_flow = "gl",
-		goto_next = "gj",
-		goto_prev = "gk",
+		goto_next = "g<left>",
+		goto_prev = "g<right>",
 		format = "<leader>f",
 		-- outline
 		LSoutline = "<space>3",
@@ -185,7 +186,7 @@ local M = {
 		mkdnTablePrevCell = "<Leader>mk",
 	},
 	yanky = {
-		yanky_after = "p",
+		yanky_after = "<leader>p",
 		yanky_before = "P",
 		iopen_yank_history = "<leader>yy",
 		nopen_yank_history = "<leader>yy",

@@ -1,7 +1,11 @@
 -- TODO: use loop to disable bulks of plugins
 -- disable some builtin plugins
+-- nvim-tree builtin file explorer
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+-- matchup need this, can make a very slight start-up time improvement
+vim.g.loaded_matchit = 1
 
 -- 基础配置
 require("basic")

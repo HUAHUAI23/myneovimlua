@@ -71,6 +71,7 @@ keybind.unsetmap = {
 		keybindingAlias.telescope.find_files,
 		"s",
 		"u",
+		"p",
 		norl.go_left35,
 		norl.go_right35,
 		norl.goto_command_mode,
@@ -91,6 +92,8 @@ keybind.editorNormal = {
 	{ mode = "n", lhs = norl.goto_command_mode, rhs = [[:]], opts = { silent = false } },
 	-- undo
 	{ mode = "n", lhs = norl.undo, rhs = [[u]], opts = { silent = false } },
+	-- paste
+	{ mode = "n", lhs = norl.paste, rhs = [[p]], opts = { silent = false } },
 	-- go and out paste mode
 	{
 		mode = "n",

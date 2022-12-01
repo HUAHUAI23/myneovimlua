@@ -41,7 +41,7 @@ pcall(telescope.load_extension, "xray23")
 -- extension telescope-color
 pcall(telescope.load_extension, "i42")
 -- extension telescope-notify
--- pcall(telescope.load_extension, "notify")
+pcall(telescope.load_extension, "notify")
 
 -- load session
 local actions = require("telescope.actions")

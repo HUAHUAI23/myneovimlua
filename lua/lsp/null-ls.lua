@@ -38,8 +38,9 @@ local sources = {
 	}),
 	formatting.sql_formatter,
 	formatting.stylua,
-	formatting.markdownlint,
-
+	formatting.markdownlint.with({
+		timeout = 20000,
+	}),
 	-- Code action  eslint_d  shellcheck gitsigns(need https://github.com/lewis6991/gitsigns.nvim)
 	-- code_actions.shellcheck,
 	-- code_actions.eslint.with({
@@ -65,6 +66,7 @@ local sources = {
 	diagnostics.shellcheck,
 	diagnostics.markdownlint.with({
 		method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+		extra_args = { "--config", commConf.markdownlintConfig },
 	}),
 
 	--Hover
