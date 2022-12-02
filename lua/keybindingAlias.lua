@@ -56,7 +56,7 @@ local M = {
 	-- insert 模式下键盘映射
 	insert = {
 		goto_command_mode = "<F1>",
-		goto_normal_mode = "<Leader><Leader>",
+		goto_normal_mode = "<space>vv",
 	},
 	-- visual 模式下键盘映射
 	visul = {
@@ -147,7 +147,7 @@ local M = {
 		cmp_select_prev_item = "<C-k>",
 		cmp_select_next_item = "<C-j>",
 		cmp_trigge = "<C-Space>",
-		cmp_abort = "<leader>ee",
+		cmp_abort = "<space>ee",
 		-- luasnip
 		luasnip_node_next = "<C-j>",
 		luasnip_node_prev = "<C-k>",
@@ -188,15 +188,15 @@ local M = {
 	yanky = {
 		yanky_after = "<leader>p",
 		yanky_before = "P",
-		iopen_yank_history = "<leader>yy",
-		nopen_yank_history = "<leader>yy",
+		iopen_yank_history = "<space>yy",
+		nopen_yank_history = "<space>yy",
 	},
 	hop = {
-		ihop_word = "<leader>gg",
-		nhop_word = "<leader>gg",
-		ihop_line = "<leader>gv",
-		nhop_line = "<leader>gv",
-		ihop_pattern = "<leader>gb",
+		ihop_word = "<space>gg",
+		nhop_word = "<space>gg",
+		ihop_line = "<space>gv",
+		nhop_line = "<space>gv",
+		ihop_pattern = "<space>gb",
 	},
 	comment = {
 		iline_comment = [[<C-_>]],
@@ -204,8 +204,8 @@ local M = {
 		nline_comment = [[<C-_>]],
 	},
 	copilot = {
-		copilotAccept = ";cc",
-		copilotPanel = ";cv",
+		copilotAccept = "<space>cc",
+		copilotPanel = "<space>cv",
 	},
 	switch = {
 		vmagicSearch = "on",
