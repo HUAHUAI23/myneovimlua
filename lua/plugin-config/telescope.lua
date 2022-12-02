@@ -43,43 +43,6 @@ pcall(telescope.load_extension, "i42")
 -- extension telescope-notify
 pcall(telescope.load_extension, "notify")
 
--- load session
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
-
 vim.api.nvim_create_user_command("SessionSv", function()
 	vim.api.nvim_cmd(vim.api.nvim_parse_cmd("Telescope xray23 save", {}), {})
 end, { desc = "load user session,like workspace" })
-
--- --------load DAP launch
-local function load_launch(prompt_bufnr)
-	actions.close(prompt_bufnr)
-	local selection = action_state.get_selected_entry()
-	-- vim.cmd([[echo "]] .. selection[1] .. [["]])
-	local vscodeDir = vim.fn.getcwd() .. "/.vscode/"
-	-- local adapterAndFt = [[{cppdbg = { "c", "cpp" }}]]
-	-- loadstring 将字符串转变成table https://blog.csdn.net/yuanfengyun/article/details/23408549
-	-- local typeConf = loadstring("return " .. adapterAndFt)()
-	local adapter = vim.fn.input("adapter: ", "")
-	local typeConf = {}
-	typeConf[adapter] = {}
-	local filetype = vim.fn.input("filetype: ", "")
-	table.insert(typeConf[adapter], filetype)
-	-- print(vim.inspect(typeConf))
-	require("dap.ext.vscode").load_launchjs(nil, typeConf)
-	-- require("dap.ext.vscode").load_launchjs(nil, { cppdbg = { "c", "cpp" } })
-	vim.cmd([[edit ]] .. vscodeDir .. selection[1])
-end
-
-local _manage_launch = function()
-	local opts = {
-		attach_mappings = function(_, map)
-			map("n", "<cr>", load_launch)
-			return true
-		end,
-		find_command = { "ls", ".vscode" },
-		prompt_title = "Manage launch",
-	}
-	require("telescope.builtin").find_files(opts)
-end
-vim.api.nvim_create_user_command("LoadCodeLaunch", _manage_launch, { desc = "load vscode like launch" })
