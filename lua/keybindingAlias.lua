@@ -16,8 +16,8 @@ local M = {
 	norl = {
 
 		goto_command_mode = "<F1>",
-		undo = "<leader>u",
-		paste = "<leader>p",
+		undo = "<space>u",
+		paste = "<space>p",
 
 		go_left35 = "H",
 		go_right35 = "L",
@@ -56,7 +56,7 @@ local M = {
 	-- insert 模式下键盘映射
 	insert = {
 		goto_command_mode = "<F1>",
-		goto_normal_mode = "<space>vv",
+		goto_normal_mode = "<leader><leader>",
 	},
 	-- visual 模式下键盘映射
 	visul = {
@@ -147,7 +147,7 @@ local M = {
 		cmp_select_prev_item = "<C-k>",
 		cmp_select_next_item = "<C-j>",
 		cmp_trigge = "<C-Space>",
-		cmp_abort = "<space>ee",
+		cmp_abort = "<leader>ee",
 		-- luasnip
 		luasnip_node_next = "<C-j>",
 		luasnip_node_prev = "<C-k>",
@@ -188,15 +188,15 @@ local M = {
 	yanky = {
 		yanky_after = "<leader>p",
 		yanky_before = "P",
-		iopen_yank_history = "<space>yy",
-		nopen_yank_history = "<space>yy",
+		iopen_yank_history = "<leader>yy",
+		nopen_yank_history = "<leader>yy",
 	},
 	hop = {
-		ihop_word = "<space>gg",
-		nhop_word = "<space>gg",
-		ihop_line = "<space>gv",
-		nhop_line = "<space>gv",
-		ihop_pattern = "<space>gb",
+		ihop_word = "<leader>gg",
+		nhop_word = "<leader>gg",
+		ihop_line = "<leader>gv",
+		nhop_line = "<leader>gv",
+		ihop_pattern = "<leader>gb",
 	},
 	comment = {
 		iline_comment = [[<C-_>]],
@@ -204,8 +204,8 @@ local M = {
 		nline_comment = [[<C-_>]],
 	},
 	copilot = {
-		copilotAccept = "<space>cc",
-		copilotPanel = "<space>cv",
+		copilotAccept = "<leader>cc",
+		copilotPanel = "<leader>cv",
 	},
 	switch = {
 		vmagicSearch = "on",
