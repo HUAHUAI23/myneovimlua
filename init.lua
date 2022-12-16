@@ -12,6 +12,7 @@ require("basic")
 
 -- 定义颜色主题
 require("colorscheme")
+-- require("colorscheme-test")
 
 -- Packer插件管理
 require("plugins")

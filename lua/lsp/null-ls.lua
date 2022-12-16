@@ -63,6 +63,7 @@ local sources = {
 		end,
 	}),
 	-- diagnostics.pylint,  -- lsp_server pyright
+	diagnostics.jsonlint,
 	diagnostics.shellcheck,
 	diagnostics.markdownlint.with({
 		method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
@@ -107,6 +108,8 @@ null_ls.setup({
 	sources = sources,
 	root_dir = require("null-ls.utils").root_pattern(".null-ls-root", "Makefile", ".git", "project.md"),
 	on_attach = function(client, bufnr)
+		local lspKey = require("keybindingAlias").lsp
+
 		-- format document before save
 		-- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Formatting-on-save
 		if client.supports_method("textDocument/formatting") then
@@ -120,11 +123,8 @@ null_ls.setup({
 			})
 		end
 
-		local lspKey = require("keybindingAlias").lsp
-
 		-- TODO: fix markdown file
 		-- there are some lsp keymap the markdown file don't need
-
 		vim.keymap.set("n", lspKey.definition, function()
 			require("telescope.builtin").lsp_definitions(
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
@@ -135,6 +135,7 @@ null_ls.setup({
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
 		end, { noremap = true, silent = true, desc = "goto lsp references", buffer = bufnr })
+
 		vim.keymap.set(
 			"n",
 			lspKey.hover,

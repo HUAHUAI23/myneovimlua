@@ -11,7 +11,8 @@ local M = {
 	--   select_mode = "s"
 
 	-- 前导键
-	leader_key = ";",
+	-- leader_key = ";",
+	leader_key = " ",
 	-- normal模式下键盘映射
 	norl = {
 
@@ -56,7 +57,7 @@ local M = {
 	-- insert 模式下键盘映射
 	insert = {
 		goto_command_mode = "<F1>",
-		goto_normal_mode = "<leader><leader>",
+		goto_normal_mode = "<space>vv",
 	},
 	-- visual 模式下键盘映射
 	visul = {
@@ -131,12 +132,14 @@ local M = {
 	dap = {
 		debugg = "<F5>",
 		debugg_step_over = "<F6>",
-		debugg_end = "<space>w",
-		clear_breakpoints = "<space>T",
-		toggle_breakpoint = "<space>t",
+		-- if use ; switch to <space>
+		debugg_end = ";w",
+		clear_breakpoints = ";T",
+		-- if use ; switch to <space>
+		toggle_breakpoint = ";t",
 		-- dapUI
-		eval_expression = "<space>h",
-		eval_expression_visual = "<Leader><Leader>",
+		eval_expression = ";h",
+		eval_expression_visual = ";;",
 	},
 	cmp = {
 		cmp_next = "<Tab>",
@@ -147,7 +150,7 @@ local M = {
 		cmp_select_prev_item = "<C-k>",
 		cmp_select_next_item = "<C-j>",
 		cmp_trigge = "<C-Space>",
-		cmp_abort = "<leader>ee",
+		cmp_abort = "<space>e",
 		-- luasnip
 		luasnip_node_next = "<C-j>",
 		luasnip_node_prev = "<C-k>",
@@ -159,8 +162,8 @@ local M = {
 		toggleG = "<Leader>tg",
 	},
 	gitsigns = {
-		gs_next_hunk = "<leader>gj",
-		gs_pre_hunk = "<leader>gk",
+		gs_next_hunk = "<space>gj",
+		gs_pre_hunk = "<space>gk",
 		stage_hunk = "<leader>gs",
 		reset_hunk = "<leader>gr",
 		stage_buffer = "<leader>gS",
@@ -192,11 +195,11 @@ local M = {
 		nopen_yank_history = "<leader>yy",
 	},
 	hop = {
-		ihop_word = "<leader>gg",
-		nhop_word = "<leader>gg",
-		ihop_line = "<leader>gv",
-		nhop_line = "<leader>gv",
-		ihop_pattern = "<leader>gb",
+		ihop_word = "<space>gg",
+		nhop_word = "<space>gg",
+		ihop_line = "<space>gv",
+		nhop_line = "<space>gv",
+		ihop_pattern = "<space>gb",
 	},
 	comment = {
 		iline_comment = [[<C-_>]],
@@ -204,8 +207,8 @@ local M = {
 		nline_comment = [[<C-_>]],
 	},
 	copilot = {
-		copilotAccept = "<leader>cc",
-		copilotPanel = "<leader>cv",
+		copilotAccept = "<space>cc",
+		copilotPanel = "<space>cv",
 	},
 	switch = {
 		vmagicSearch = "on",

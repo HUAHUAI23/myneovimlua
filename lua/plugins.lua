@@ -36,6 +36,10 @@ return require("packer").startup({
 
 		use({ "sainnhe/everforest" })
 
+		-- use({ "ellisonleao/gruvbox.nvim" })
+
+		-- use({ "alexanderjeurissen/lumiere.vim" })
+
 		-- use({ "Avimitin/neovim-deus" })
 
 		-- 底部状态栏 statusline
@@ -295,6 +299,10 @@ return require("packer").startup({
 		use({ "nvim-telescope/telescope-project.nvim" })
 		-- telesocpe-dap
 		use("nvim-telescope/telescope-dap.nvim")
+		-- telesope http
+		use({ "barrett-ruth/telescope-http.nvim" })
+		-- telesocpe-dapzzzz
+		use("HUAHUAI23/telescope-dapzzzz")
 		-- telescope-session
 		use("HUAHUAI23/telescope-session.nvim")
 		-- telescope-color
@@ -322,6 +330,7 @@ return require("packer").startup({
 		-- 	end,
 		-- })
 		-- ui-lspsaga
+		-- TODO: cmd
 		use({
 			"glepnir/lspsaga.nvim",
 			branch = "main",

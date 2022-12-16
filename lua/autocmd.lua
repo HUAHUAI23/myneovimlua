@@ -113,7 +113,7 @@ end
 -- 		end
 -- 	end,
 -- })
--- NOTE: after file loaded,determine whether to load indentline
+-- NOTE: after file is loaded,determine whether to load indentline and autopair
 autocmd("BufReadPost", {
 	group = myAutoGroup,
 	pattern = "*",
@@ -124,10 +124,11 @@ autocmd("BufReadPost", {
 			-- require("plugin-config.todo-comments")
 			require("indent_blankline.commands").enable()
 			require("nvim-autopairs").enable()
+			-- vim.cmd("setlocal spell spelllang=en_us")
 		end
 	end,
 })
--- NOTE: disable indentline before loading file, this time the buffer is loaded but file is still not loaded
+-- NOTE: disable indentline,autopair before loading file, this time the buffer is loaded but file is still not loaded
 autocmd("BufReadPre", {
 	group = myAutoGroup,
 	pattern = "*",
@@ -135,6 +136,7 @@ autocmd("BufReadPre", {
 		-- vim.api.nvim_cmd(vim.api.nvim_parse_cmd("IndentBlanklineDisable", {}), {})
 		require("indent_blankline.commands").disable()
 		require("nvim-autopairs").disable()
+		-- vim.cmd("setlocal nospell")
 	end,
 })
 

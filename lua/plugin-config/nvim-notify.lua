@@ -3,6 +3,7 @@ if not status then
 	vim.notify("没有找到 nvim-notify 插件", "error")
 	return
 end
+-- NOTE: anther configuration in lua/plugin-config/telescope.lua
 -- https://github.com/rcarriga/nvim-notify/blob/master/doc/nvim-notify.txt
 notify.setup({
 	timeout = 3000,

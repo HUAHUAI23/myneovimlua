@@ -70,7 +70,7 @@ vim.o.swapfile = false
 -- also a wait time for the CursorHold event
 -- vim.o.updatetime = 1000 --1000
 -- 设置 timeoutlen 为等待键盘快捷键连击时间500毫秒，可根据需要设置,例如快捷键shift+q
--- map映射的组合键，输入一个键 最长等待时间500秒 等待下一个键输入
+-- map映射的组合键，输入一个键 最长等待时间500毫秒 等待下一个键输入
 -- 遇到问题详见：https://github.com/nshen/learn-neovim-lua/issues/1
 vim.o.timeoutlen = 500 --500
 

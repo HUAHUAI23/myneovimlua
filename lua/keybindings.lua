@@ -14,6 +14,8 @@
 local keybind = {}
 local keybindingAlias = require("keybindingAlias")
 
+local commConf = require("commConf")
+
 local inser = keybindingAlias.insert
 local norl = keybindingAlias.norl
 local visul = keybindingAlias.visul
@@ -885,6 +887,6 @@ keybind.magicSearch = {
 	nmagicSearch = keybindingAlias.switch.nmagicSearch,
 }
 
-require("commConf").magiceSearchSwitches(keybind.magicSearch)
+commConf.magiceSearchSwitches(keybind.magicSearch)
 
 return keybind

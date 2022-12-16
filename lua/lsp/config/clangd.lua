@@ -4,7 +4,7 @@ local opts = {
 	capabilities = capabilities,
 	on_attach = function(client, bufnr)
 		local lspComm = require("lsp.common-config")
-		lspComm.keyAttach(bufnr)
+		-- lspComm.keyAttach(bufnr)
 		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
 		-- lspComm.shwLinDiaAtom(bufnr)
 		-- lspComm.hlSymUdrCursor(client, bufnr)

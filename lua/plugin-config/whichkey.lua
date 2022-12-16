@@ -23,7 +23,7 @@ whichkey.setup({
 		-- this is mostly relevant for key maps that start with a native binding
 		-- most people should not need to change this
 		-- i = { "j", "k", "<space>", "<leader>" },
-		i = { "j", "k", "<leader>" },
+		i = { "j", "k", "<leader>", "<space>" },
 		v = { "j", "k" },
 	},
 	disable = {

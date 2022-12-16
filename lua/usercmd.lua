@@ -46,7 +46,7 @@ end, { desc = "close dap session" })
 -- end, { desc = "load undotree" })
 
 -- TODO: add some description
---
+-- use vim.tbl.contains to simpfy this
 local ftAndCmandLeft = {
 	undotree = "UndotreeToggle",
 	NvimTree = "NvimTreeToggle",

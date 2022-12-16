@@ -10,11 +10,25 @@ if not status then
 	vim.notify("没有找到 luasnip")
 	return
 end
+-- UI
+-- add icons for choice node
+local types = require("luasnip.util.types")
+luasnip.config.set_config({
+	ext_opts = {
+		[types.choiceNode] = {
+			active = {
+				virt_text = { { "●", "DiagnosticError" } },
+			},
+		},
+	},
+})
 
 local mapping = require("keybindings").pluginKeys.cmp(luasnip, cmp)
 local keybindingAlias = require("keybindingAlias")
 
 local commConf = require("commConf")
+-- in large file not use treesitter
+-- TODO: add filetype check, not enable in specific filetype
 local ifEnable = function()
 	local context = require("cmp.config.context")
 	local max_filesize = commConf.largefileEdge -- 100 KB
@@ -79,6 +93,7 @@ local source_mapping = {
 
 --cmp config
 -- https://github.com/hrsh7th/nvim-cmp
+-- UI about cmp win
 local winhighlight = {
 	winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual",
 }
@@ -118,6 +133,7 @@ cmp.setup({
 					vim_item.kind = vim_item.kind .. " " .. "[ML]"
 				end
 			end
+			-- the maximum length of the menu item, if it's logger than this value, it will be truncated
 			local maxwidth = 80
 			vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
 			return vim_item
@@ -132,8 +148,10 @@ cmp.setup({
 		end,
 	},
 	window = {
+		-- floating window for completion menu
 		completion = cmp.config.window.bordered(winhighlight),
 		-- completion = cmp.config.window.bordered(),
+		-- floating window for documentation popup
 		documentation = cmp.config.window.bordered(winhighlight),
 	},
 	-- keybindings
@@ -210,7 +228,7 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches" }, {
 	},
 })
 
--- disable cmp for specify filetype
+-- NOTE: disable cmp for specify filetype
 cmp.setup.filetype({ "TelescopePrompt", "text", "" }, {
 	enabled = false,
 })
@@ -220,8 +238,8 @@ cmp.setup.filetype({ "TelescopePrompt", "text", "" }, {
 -- custom snippets
 -- https://github.com/rafamadriz/friendly-snippets
 require("luasnip.loaders.from_vscode").lazy_load()
-local config_path = vim.fn.stdpath("config")
 
+local config_path = vim.fn.stdpath("config")
 -- load snippets from path/of/your/nvim/config/my-cool-snippets
 -- require("luasnip.loaders.from_vscode").lazy_load({ paths = { config_path .. "/lua/cmp/snippets/vscode" } })
 require("luasnip.loaders.from_lua").load({ paths = { config_path .. "/lua/cmp/snippets/lua" } })
