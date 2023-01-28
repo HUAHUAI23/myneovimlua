@@ -19,25 +19,6 @@ toggleterm.setup({
 		},
 	},
 })
-local keybind = require("keybindings")
-local keybindingAlias = require("keybindingAlias")
-local unsetMap = { t = { keybindingAlias.term.horizontal_split, keybindingAlias.term.vertical_split } }
-local setMap = {
-	{
-		mode = "t",
-		lhs = keybindingAlias.term.horizontal_split,
-		rhs = [[:sp | terminal<CR>]],
-		opts = { silent = false },
-		description = "open terminal horizontal split",
-	},
-	{
-		mode = "t",
-		lhs = keybindingAlias.term.vertical_split,
-		rhs = [[:vsp | terminal<CR>]],
-		opts = { silent = false },
-		description = "open terminal vertical split",
-	},
-}
 local Terminal = require("toggleterm.terminal").Terminal
 
 local lazygit = Terminal:new({
@@ -50,43 +31,13 @@ local lazygit = Terminal:new({
 		width = math.floor(vim.o.columns * 0.9),
 		height = math.floor(vim.o.lines * 0.9),
 	},
+	env = {
+		EDITOR = 'env VIMINIT="source ${HOME1}/.config/nvim/minimalStart/init.mini.dev.lua" nvim',
+	},
 	-- function to run on opening the terminal
 	---@diagnostic disable-next-line: unused-local
 	on_open = function(term)
 		vim.cmd("startinsert!")
-		--q | <leader>tg 关闭terminal
-		-- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", { noremap = true, silent = true })
-		-- vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<leader>tg", "<cmd>close<CR>", { noremap = true, silent = true })
-
-		-- ESC 键取消，留给lazygit
-		-- https://neovim.io/doc/user/builtin.html   #mapcheck
-		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
-			vim.api.nvim_del_keymap("t", "<Esc>")
-		end
-
-		for k, v in pairs(unsetMap) do
-			if type(v) == "string" then
-				if vim.fn.mapcheck(v, k) ~= "" then
-					vim.api.nvim_del_keymap(k, v)
-				end
-			else
-				for _, vv in ipairs(v) do
-					if vim.fn.mapcheck(vv, k) ~= "" then
-						vim.api.nvim_del_keymap(k, vv)
-					end
-				end
-			end
-		end
-	end,
-	-- function to run on closing the terminal
-	---@diagnostic disable-next-line: unused-local
-	on_close = function(term)
-		-- 添加回来, 前面取消了<Esc>的映射
-		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
-			noremap = true,
-			silent = true,
-		})
-		keybind.bulk_register_keymaps(setMap)
 	end,
 })
 
@@ -100,33 +51,6 @@ local ta = Terminal:new({
 	---@diagnostic disable-next-line: unused-local
 	on_open = function(term)
 		vim.cmd("startinsert!")
-		-- ESC 键取消，留给terminal
-		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
-			vim.api.nvim_del_keymap("t", "<Esc>")
-		end
-		for k, v in pairs(unsetMap) do
-			if type(v) == "string" then
-				if vim.fn.mapcheck(v, k) ~= "" then
-					vim.api.nvim_del_keymap(k, v)
-				end
-			else
-				for _, vv in ipairs(v) do
-					if vim.fn.mapcheck(vv, k) ~= "" then
-						vim.api.nvim_del_keymap(k, vv)
-					end
-				end
-			end
-		end
-	end,
-	-- function to run on closing the terminal
-	---@diagnostic disable-next-line: unused-local
-	on_close = function(term)
-		-- 添加回来, 前面取消了<Esc>的映射
-		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
-			noremap = true,
-			silent = true,
-		})
-		keybind.bulk_register_keymaps(setMap)
 	end,
 })
 
@@ -137,19 +61,6 @@ local tb = Terminal:new({
 	---@diagnostic disable-next-line: unused-local
 	on_open = function(term)
 		vim.cmd("startinsert!")
-		-- ESC 键取消，留给terminal
-		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
-			vim.api.nvim_del_keymap("t", "<Esc>")
-		end
-	end,
-	-- function to run on closing the terminal
-	---@diagnostic disable-next-line: unused-local
-	on_close = function(term)
-		-- 添加回来, 前面取消了<Esc>的映射
-		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
-			noremap = true,
-			silent = true,
-		})
 	end,
 })
 
@@ -160,19 +71,6 @@ local tc = Terminal:new({
 	---@diagnostic disable-next-line: unused-local
 	on_open = function(term)
 		vim.cmd("startinsert!")
-		-- ESC 键取消，留给terminal
-		if vim.fn.mapcheck("<Esc>", "t") ~= "" then
-			vim.api.nvim_del_keymap("t", "<Esc>")
-		end
-	end,
-	-- function to run on closing the terminal
-	---@diagnostic disable-next-line: unused-local
-	on_close = function(term)
-		-- 添加回来, 前面取消了<Esc>的映射
-		vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", {
-			noremap = true,
-			silent = true,
-		})
 	end,
 })
 

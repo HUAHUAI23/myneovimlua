@@ -2,8 +2,9 @@ local capabilities = require("lsp.common-config").capabilities
 capabilities.offsetEncoding = { "utf-16" }
 local opts = {
 	capabilities = capabilities,
+	---@diagnostic disable-next-line: unused-local
 	on_attach = function(client, bufnr)
-		local lspComm = require("lsp.common-config")
+		-- local lspComm = require("lsp.common-config")
 		-- lspComm.keyAttach(bufnr)
 		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
 		-- lspComm.shwLinDiaAtom(bufnr)

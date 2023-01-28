@@ -65,7 +65,9 @@ api.nvim_set_hl(0, "@operator", { ctermfg = 203, fg = "#ff4090" })
 api.nvim_set_hl(0, "@keyword.operator", { ctermfg = 203, fg = "#ff4090" }) -- and, or, not
 api.nvim_set_hl(0, "@type", { ctermfg = 214, fg = "#fabd2f", bold = true, italic = true }) -- class
 -- api.nvim_set_hl(0, "@variable", { ctermfg = 223, fg = "#ebdbb2" })
-api.nvim_set_hl(0, "@string", { ctermfg = 142, fg = "#98c379", italic = true })
+-- api.nvim_set_hl(0, "@string", { ctermfg = 142, fg = "#98c379", italic = true })
+api.nvim_set_hl(0, "@string", { ctermfg = 142, fg = "#ebdbb2", italic = true })
+-- api.nvim_set_hl(0, "@keyword", { ctermfg = 203, fg = "#fb4934" })
 api.nvim_set_hl(0, "@keyword", { ctermfg = 203, fg = "#ff4090" })
 api.nvim_set_hl(0, "@keyword.function", { ctermfg = 167, fg = "#fb4934" })
 api.nvim_set_hl(0, "@keyword.return", { ctermfg = 167, fg = "#fb4934" })

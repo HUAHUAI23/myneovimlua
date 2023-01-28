@@ -81,8 +81,8 @@ require("cmp.cmp")
 --- LSP
 require("lsp.setup")
 require("lsp.ui")
-require("plugin-config.fidget")
-require("lsp.null-ls")
+-- require("plugin-config.fidget")
+-- require("lsp.null-ls")
 
 -- DAP
 require("dap.nvim-dap.setup")

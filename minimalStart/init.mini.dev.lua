@@ -1,4 +1,13 @@
+-- NOTE: more info:
+--                  https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--                  https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
 local api = vim.api
+
+-- exclude default paths/config     config path and package path (packer)
+-- more info: https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--            https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
+vim.opt.runtimepath:remove(vim.fn.expand("~/.config/nvim"))
+vim.opt.packpath:remove(vim.fn.expand("~/.local/share/nvim/site"))
 
 local on_windows = vim.loop.os_uname().version:match("Windows")
 local function join_paths(...)
@@ -7,13 +16,15 @@ local function join_paths(...)
 	return result
 end
 
+-- add portable neovim runtimepath dir to neovim runtimepath
 vim.cmd([[set runtimepath=$VIMRUNTIME]])
--- you have to set runtimepath first then test dev plugin
+-- add dev plugin dir to neovim runtimepath
 vim.opt.runtimepath:append("/home/i42/pro/vimPlug/telescope/*")
 
 local temp_dir = vim.loop.os_getenv("TEMP") or "/tmp"
-vim.cmd("set packpath=" .. join_paths(temp_dir, "nvim", "site"))
-local package_root = join_paths(temp_dir, "nvim", "site", "pack")
+local packer_dir = temp_dir .. "/neovimdev"
+vim.cmd("set packpath=" .. join_paths(packer_dir, "nvim", "site"))
+local package_root = join_paths(packer_dir, "nvim", "site", "pack")
 local install_path = join_paths(package_root, "packer", "start", "packer.nvim")
 local compile_path = join_paths(install_path, "plugin", "packer_compiled.lua")
 
@@ -23,9 +34,19 @@ local function load_plugins()
 			use("wbthomason/packer.nvim")
 			-- 主题
 			use("ajmwagar/vim-deus")
-			use({ "aonemd/quietlight.vim" })
-			use({ "alexanderjeurissen/lumiere.vim" })
-			use({ "vim-scripts/zenesque.vim" })
+			-- use("Avimitin/neovim-deus")
+			-- use({ "aonemd/quietlight.vim" })
+			-- use({ "alexanderjeurissen/lumiere.vim" })
+			-- use({ "vim-scripts/zenesque.vim" })
+			-- tree-sitter
+			use({
+				"nvim-treesitter/nvim-treesitter",
+				run = function()
+					local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+					ts_update()
+				end,
+			})
+
 			-- telescope
 			use({
 				"nvim-telescope/telescope.nvim",
@@ -33,6 +54,7 @@ local function load_plugins()
 				requires = { { "nvim-lua/plenary.nvim" } },
 			})
 		end,
+
 		config = {
 			package_root = package_root,
 			compile_path = compile_path,
@@ -40,37 +62,12 @@ local function load_plugins()
 	})
 end
 
-local load_config = function()
-	vim.o.t_Co = 256
-	vim.o.termguicolors = true
-	vim.opt.termguicolors = true
-	-- theme
-	-- vim.o.t_Co = 256
-	-- vim.o.termguicolors = true
-	-- vim.opt.termguicolors = true
-	-- vim.o.t_ut = ""
-	-- vim.o.t_ul = ""
-	-- vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
-	-- vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
-	-- vim.o.background = "dark"
-	-- local colorscheme = "deus"
-	-- local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
-	-- if not status_ok then
-	-- 	vim.notify("colorscheme: " .. colorscheme .. " 没有找到！")
-	-- 	return
-	-- end
-	-- vim.g.deus_termcolors = 256
-	-- vim.cmd([[
-	--    highlight NonText ctermfg=gray guifg=grey50
-	--    hi SignColumn ctermbg=None guibg=None
-	--    hi VertSplit ctermfg=None ctermbg=None cterm=None guibg=None guifg=None
-	--    ]])
+local function setkeybindings()
 	-- keybinds
-	local map = vim.api.nvim_set_keymap
+	local map = vim.keymap.set
 	local opt = { noremap = true, silent = true }
-	-- leader key ";"
-	vim.g.mapleader = ";"
-	vim.g.maplocalleader = ";"
+	vim.g.mapleader = " "
+	vim.g.maplocalleader = " "
 	-- ctrl u / ctrl + d  只移动9行，默认移动半屏
 	map("n", "<C-u>", "10k", opt)
 	map("n", "<C-d>", "10j", opt)
@@ -112,6 +109,10 @@ local load_config = function()
 	map("n", "<F1>", "", opt)
 	-- 取消normal模式下 qq键的默认功能(连续点击两下q键)
 	map("n", "qq", "", opt)
+	-- 取消visual模式下 f1键的默认功能
+	map("v", "<F1>", "", opt)
+	-- visual模式和normal模式下f1键都可以进入命令行模式
+	map("v", "<F1>", ":", { noremap = true, silent = false })
 	map("n", "<F1>", ":", { noremap = true, silent = false })
 	map("n", "H", "35h", opt)
 	map("n", "L", "35l", opt)
@@ -119,6 +120,49 @@ local load_config = function()
 	map("n", "qq", ":bd<CR>", opt)
 	-- Enable completion triggered by <c-x><c-o>  it need lsp
 	api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
+end
+
+local function setTheme()
+	-- theme
+	vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+	vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+	vim.o.background = "dark"
+	vim.cmd("colorscheme deus")
+	-- vim.g.deus_background = "mid"
+	vim.g.deus_termcolors = 256
+end
+
+local function setBasics()
+	-- basic config
+	vim.opt_local.expandtab = true
+	vim.opt_local.shiftwidth = 4
+	vim.opt_local.tabstop = 4
+	vim.opt_local.softtabstop = 4
+	-- color support
+	vim.o.t_Co = 256
+	vim.opt.termguicolors = true
+end
+
+local load_config = function()
+	setBasics()
+	setTheme()
+	setkeybindings()
+	-- tree-sitter
+	require("nvim-treesitter.configs").setup({
+		auto_install = true,
+		highlight = {
+			enable = true,
+			---@diagnostic disable-next-line: unused-local
+			disable = function(lang, buf)
+				local max_filesize = 100 * 1024 -- 100 KB
+				local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+				if ok and stats and stats.size > max_filesize then
+					return true
+				end
+			end,
+			additional_vim_regex_highlighting = false,
+		},
+	})
 	-- telescope test
 	local _, telescope = pcall(require, "telescope")
 	telescope.setup({

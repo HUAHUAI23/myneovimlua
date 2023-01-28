@@ -89,6 +89,7 @@ vim.g.completeopt = "menu,menuone,noselect,noinsert"
 -- vim.o.t_Co = 256
 
 -- 不可见字符的显示，这里只把空格显示为一个点
+-- vim.opt.listchars = {eol = '↲', tab = '▸ ', trail = '·'}
 vim.opt.list = require("commConf").listchar
 vim.o.listchars = "tab:··,trail:▫"
 vim.opt.listchars:append("space:⋅")
@@ -107,6 +108,7 @@ vim.o.pumheight = 10
 -- 永远显示 tabline
 -- tabline winbar statusbar
 vim.o.showtabline = 2
+-- vim.o.showtabline = 0
 
 -- 使用增强状态栏插件后不再需要 vim 的模式提示
 vim.o.showmode = false

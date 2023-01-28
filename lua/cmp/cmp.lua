@@ -161,6 +161,7 @@ cmp.setup({
 		{ name = "luasnip", group_index = 1 }, -- For luasnip users. If this is not set, LuaSnip's snippet will not be included in the completion list
 		-- tabnine
 		{ name = "cmp_tabnine", group_index = 1 },
+		-- lsp
 		{ name = "nvim_lsp", group_index = 1 },
 		{ name = "nvim_lsp_signature_help", group_index = 1 },
 		{
@@ -185,6 +186,7 @@ cmp.setup({
 cmp.setup.cmdline({ "/", "?" }, {
 	mapping = cmp.mapping.preset.cmdline(),
 	sources = {
+		{ name = "nvim_lsp_document_symbol", group_index = 1 },
 		{
 			name = "buffer",
 			option = {
@@ -197,6 +199,7 @@ cmp.setup.cmdline({ "/", "?" }, {
 					return { buf }
 				end,
 			},
+			group_index = 2,
 		},
 	},
 })
@@ -231,6 +234,28 @@ cmp.setup.filetype({ "dap-repl", "dapui_watches" }, {
 -- NOTE: disable cmp for specify filetype
 cmp.setup.filetype({ "TelescopePrompt", "text", "" }, {
 	enabled = false,
+})
+
+-- NOTE: set cmp for specify filetype
+cmp.setup.filetype({ "markdown" }, {
+	sources = {
+		{ name = "luasnip", group_index = 1 },
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					local buf = vim.api.nvim_get_current_buf()
+					local byte_size = vim.api.nvim_buf_get_offset(buf, vim.api.nvim_buf_line_count(buf))
+					if byte_size > 1024 * 1024 then -- 1 Megabyte max
+						return {}
+					end
+					return { buf }
+				end,
+			},
+			group_index = 2,
+		},
+		{ name = "path", group_index = 2 },
+	},
 })
 
 -- ---LuaSnip configuration--------
@@ -333,9 +358,11 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, expr = true, desc = "accept copilot suggestion" }
 )
 vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap(
-	"i",
-	keybindingAlias.copilot.copilotPanel,
-	"<cmd>:Copilot panel<cr>",
-	{ noremap = true, silent = true, desc = "open copilot panel" }
-)
+
+-- OPTIMIZE:
+-- vim.api.nvim_set_keymap(
+-- 	"i",
+-- 	keybindingAlias.copilot.copilotPanel,
+-- 	"<cmd>:Copilot panel<cr>",
+-- 	{ noremap = true, silent = true, desc = "open copilot panel" }
+-- )

@@ -49,6 +49,7 @@ local config = {
 		"quickfix",
 		"nvim-dap-ui",
 		"man",
+		"symbols-outline",
 		my_extension,
 	},
 	sections = {
@@ -95,15 +96,25 @@ ins_leftc({
 		if next(clients) == nil then
 			return msg
 		end
-		-- make LSP first
+		-- first LSP
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
 			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-				if client.name ~= "null-ls" then
+				if client.name ~= "null-ls" and client.name ~= "copilot" then
 					return client.name
 				end
 			end
 		end
+		-- if don't have LSP then null-ls
+		for _, client in ipairs(clients) do
+			local filetypes = client.config.filetypes
+			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+				if client.name == "null-ls" then
+					return client.name
+				end
+			end
+		end
+		-- if don't have null-ls then orthers
 		for _, client in ipairs(clients) do
 			local filetypes = client.config.filetypes
 			if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
@@ -118,6 +129,9 @@ ins_leftc({
 	color = { --[[ fg = "#ffffff", ]]
 		gui = "bold",
 	},
+	on_click = function()
+		vim.cmd("LspInfo")
+	end,
 })
 
 ins_leftx({

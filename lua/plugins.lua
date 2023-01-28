@@ -71,7 +71,8 @@ return require("packer").startup({
 		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = function()
-				require("nvim-treesitter.install").update({ with_sync = true })
+				local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
+				ts_update()
 			end,
 			requires = {
 				{ "p00f/nvim-ts-rainbow" },
@@ -116,6 +117,7 @@ return require("packer").startup({
 		})
 
 		-- 更好看的命令终端
+		-- TODO: for lazy load fn or key
 		use({
 			"akinsho/toggleterm.nvim",
 			tag = "*",
@@ -156,12 +158,15 @@ return require("packer").startup({
 			end,
 		})
 
-		--  dashboard-nvim
+		-- --  dashboard-nvim
 		use({
 			"glepnir/dashboard-nvim",
+			event = "VimEnter",
+			-- commit = "f7d6234",
 			config = function()
 				require("plugin-config.dashboard")
 			end,
+			requires = { "nvim-tree/nvim-web-devicons" },
 		})
 		-- neocroll.nvim
 		use({
@@ -272,18 +277,27 @@ return require("packer").startup({
 		})
 		-- markdown work flow
 		use({
-			"jakewvincent/mkdnflow.nvim",
+			"HUAHUAI23/mkdnflow.nvim",
 			ft = "markdown",
+			branch = "dev",
 			-- 通过lua包管理器下载一些lua依赖包
 			rocks = "luautf8",
 			config = function()
 				require("plugin-config.mkdnflow")
 			end,
 		})
+		-- markdown TOC
+		use({
+			"mzlogin/vim-markdown-toc",
+			ft = "markdown",
+			config = function()
+				require("plugin-config.markdown-toc")
+			end,
+		})
 
 		-- --------telescope-------------
 		use({
-			"nvim-telescope/telescope.nvim",
+			"HUAHUAI23/telescope.nvim",
 			-- tag = "0.1.0",
 			branch = "0.1.x",
 			requires = { { "nvim-lua/plenary.nvim" } },
@@ -301,6 +315,8 @@ return require("packer").startup({
 		use("nvim-telescope/telescope-dap.nvim")
 		-- telesope http
 		use({ "barrett-ruth/telescope-http.nvim" })
+		-- telescope ui-select
+		use({ "nvim-telescope/telescope-ui-select.nvim" })
 		-- telesocpe-dapzzzz
 		use("HUAHUAI23/telescope-dapzzzz")
 		-- telescope-session
@@ -315,11 +331,19 @@ return require("packer").startup({
 		-- json LSP need
 		use("b0o/schemastore.nvim")
 		-- display lsp progress
-		use("j-hui/fidget.nvim")
+		use({
+			"j-hui/fidget.nvim",
+			config = function()
+				require("plugin-config.fidget")
+			end,
+		})
 		-- null-ls
 		use({
 			"jose-elias-alvarez/null-ls.nvim",
 			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("lsp.null-ls")
+			end,
 		})
 		-- ui-lsp_signature
 		-- TODO: request feature for auto adjust position
@@ -334,6 +358,28 @@ return require("packer").startup({
 		use({
 			"glepnir/lspsaga.nvim",
 			branch = "main",
+			cmd = "Lspsaga",
+			config = function()
+				require("lsp.lspsaga")
+			end,
+		})
+
+		-- ui-lightbulb
+		use({
+			"kosayoda/nvim-lightbulb",
+			requires = { "antoinemadec/FixCursorHold.nvim" },
+			config = function()
+				require("lsp.nvim-lightbulb")
+			end,
+		})
+
+		-- symbols-outline
+		use({
+			"simrat39/symbols-outline.nvim",
+			cmd = "SymbolsOutline",
+			config = function()
+				require("lsp.symbols-outline")
+			end,
 		})
 		-- ui-breadcrumb
 		use({
@@ -353,7 +399,7 @@ return require("packer").startup({
 		use("mfussenegger/nvim-dap")
 		-- something useful that improve UI
 		use("theHamsta/nvim-dap-virtual-text")
-		use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+		use({ "rcarriga/nvim-dap-ui", commit = "6b6081a", requires = { "mfussenegger/nvim-dap" } })
 		---specific configuration
 		-- python
 		use("mfussenegger/nvim-dap-python")
@@ -375,6 +421,7 @@ return require("packer").startup({
 		use("hrsh7th/cmp-path")
 		use("hrsh7th/cmp-cmdline")
 		use("hrsh7th/cmp-nvim-lsp-signature-help")
+		use({ "hrsh7th/cmp-nvim-lsp-document-symbol" })
 		-- snippet engine
 		use({ "L3MON4D3/LuaSnip" })
 		-- sources
@@ -388,6 +435,8 @@ return require("packer").startup({
 		use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
 		--  GitHub Copilot
 		use({ "github/copilot.vim" })
+		-- -------nvim-dev---------------
+		use({ "folke/neodev.nvim" })
 
 		-- Automatically set up your configuration after cloning packer.nvim
 		-- Put this at the end after all plugins

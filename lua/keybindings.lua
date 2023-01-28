@@ -20,7 +20,6 @@ local inser = keybindingAlias.insert
 local norl = keybindingAlias.norl
 local visul = keybindingAlias.visul
 local cmand = keybindingAlias.cmand
-local term = keybindingAlias.term
 -- plugins
 local nvimTree = keybindingAlias.nvimTree
 local bufferline = keybindingAlias.bufferline
@@ -81,12 +80,11 @@ keybind.unsetmap = {
 	},
 	i = { inser.goto_command_mode },
 	v = { visul.goto_command_mode },
-	t = { term.goto_command_mode },
 }
 
 keybind.editorInsert = {
 	{ mode = "i", lhs = inser.goto_command_mode, rhs = [[<Esc>:]], opts = { silent = false } },
-	{ mode = "i", lhs = inser.goto_normal_mode, rhs = [[<Esc>]], opts = { silent = false } },
+	-- { mode = "i", lhs = inser.goto_normal_mode, rhs = [[<Esc>]], opts = { silent = false } },
 }
 
 keybind.editorNormal = {
@@ -96,6 +94,11 @@ keybind.editorNormal = {
 	{ mode = "n", lhs = norl.undo, rhs = [[u]], opts = { silent = false } },
 	-- paste
 	{ mode = "n", lhs = norl.paste, rhs = [[p]], opts = { silent = false } },
+	-- switch ctrl-i and ctrl-o
+	-- FIX:
+	-- { mode = "n", lhs = [[<C-o]], rhs = [[<C-i>]], opts = { silent = false } },
+	-- { mode = "n", lhs = [[<C-i]], rhs = [[<C-o>]], opts = { silent = false } },
+
 	-- go and out paste mode
 	{
 		mode = "n",
@@ -247,8 +250,24 @@ keybind.editorNormal = {
 		opts = { silent = false },
 		description = "restore the window size",
 	},
+	-- open terminal
+	{
+		mode = "n",
+		lhs = norl.term_horizontal_split,
+		rhs = [[:sp | terminal<CR>]],
+		opts = { silent = false },
+		description = "open terminal horizontal split",
+	},
+	{
+		mode = "n",
+		lhs = norl.term_vertical_split,
+		rhs = [[:vsp | terminal<CR>]],
+		opts = { silent = false },
+		description = "open terminal vertical split",
+	},
 }
 
+-- NOTE: visual mode keybindings
 keybind.editorVisual = {
 	-- goto command mode
 	{
@@ -278,6 +297,7 @@ keybind.editorVisual = {
 	},
 }
 
+-- NOTE: command mode keybindings
 keybind.editorCommand = {
 	{
 		mode = "c",
@@ -291,58 +311,7 @@ keybind.editorCommand = {
 	},
 }
 
-keybind.editorTerminal = {
-	-- open terminal
-	{
-		mode = "t",
-		lhs = term.horizontal_split,
-		rhs = [[:sp | terminal<CR>]],
-		opts = { silent = false },
-		description = "open terminal horizontal split",
-	},
-	{
-		mode = "t",
-		lhs = term.vertical_split,
-		rhs = [[:vsp | terminal<CR>]],
-		opts = { silent = false },
-		description = "open terminal vertical split",
-	},
-	-- term to normal
-	{
-		mode = "t",
-		lhs = term.term_to_normal,
-		rhs = [[<C-\><C-n>]],
-	},
-	-- term to command
-	{
-		mode = "t",
-		lhs = term.goto_command_mode,
-		rhs = [[<C-\><C-N>:]],
-		opts = { silent = false },
-		description = "goto command mode",
-	},
-	-- window jumps
-	{
-		mode = "t",
-		lhs = term.window_left,
-		rhs = [[<C-\><C-N><C-w>h]],
-	},
-	{
-		mode = "t",
-		lhs = term.window_down,
-		rhs = [[<C-\><C-N><C-w>j]],
-	},
-	{
-		mode = "t",
-		lhs = term.window_up,
-		rhs = [[<C-\><C-N><C-w>k]],
-	},
-	{
-		mode = "t",
-		lhs = term.window_right,
-		rhs = [[<C-\><C-N><C-w>l]],
-	},
-}
+-- NOTE: terminal mode keybindings
 
 -- -------------------
 -- plugin keybindings
@@ -492,23 +461,29 @@ keybind.hop = {
 		description = "hop-line",
 	},
 	{
-		mode = "i",
-		lhs = hoppp.ihop_line,
-		rhs = [[<Esc>:HopLine<cr>]],
-		description = "hop-line",
+		mode = "n",
+		lhs = hoppp.nhop_pattern,
+		rhs = [[<cmd>HopPattern<cr>]],
+		description = "hop-pattern",
 	},
-	{
-		mode = "i",
-		lhs = hoppp.ihop_word,
-		rhs = [[<Esc>:HopWord<cr>]],
-		description = "hop-word",
-	},
-	{
-		mode = "i",
-		lhs = hoppp.ihop_pattern,
-		rhs = [[<Esc>:HopPattern<cr>]],
-		description = "hop-patter",
-	},
+	-- {
+	-- 	mode = "i",
+	-- 	lhs = hoppp.ihop_line,
+	-- 	rhs = [[<Esc>:HopLine<cr>]],
+	-- 	description = "hop-line",
+	-- },
+	-- {
+	-- 	mode = "i",
+	-- 	lhs = hoppp.ihop_word,
+	-- 	rhs = [[<Esc>:HopWord<cr>]],
+	-- 	description = "hop-word",
+	-- },
+	-- {
+	-- 	mode = "i",
+	-- 	lhs = hoppp.ihop_pattern,
+	-- 	rhs = [[<Esc>:HopPattern<cr>]],
+	-- 	description = "hop-patter",
+	-- },
 }
 
 -- ------------
@@ -626,6 +601,12 @@ keybind.pluginKeys.mapLSP = function(bufnr)
 			require("telescope.themes").get_cursor({ initial_mode = "normal" })
 		)
 	end, { noremap = true, silent = true, desc = "goto type definition", buffer = bufnr })
+	vim.keymap.set(
+		"n",
+		lsp.declaration,
+		vim.lsp.buf.declaration,
+		{ noremap = true, silent = true, desc = "goto declaration", buffer = bufnr }
+	)
 end
 
 -- nvim-dap
@@ -717,19 +698,30 @@ keybind.pluginKeys.cmp = function(luasnip, cmp)
 	local cmpp = keybindingAlias.cmp
 
 	-- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#luasnip
-	local has_words_before = function()
-		local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-		return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-	end
+	-- local has_words_before = function()
+	-- 	unpack = unpack or table.unpack
+	-- 	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+	-- 	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+	-- end
 
 	local mapping = {
+		-- [cmpp.cmp_next] = cmp.mapping(function(fallback)
+		-- 	if cmp.visible() then
+		-- 		cmp.select_next_item()
+		-- 	elseif luasnip.expand_or_jumpable() then
+		-- 		luasnip.expand_or_jump()
+		-- 		-- 光标左边有单词  if there are words before the cursor
+		-- 	elseif has_words_before() then
+		-- 		cmp.complete()
+		-- 	else
+		-- 		fallback()
+		-- 	end
+		-- end, { "i", "s" }),
 		[cmpp.cmp_next] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
 			elseif luasnip.expand_or_jumpable() then
 				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
 			else
 				fallback()
 			end
@@ -753,6 +745,7 @@ keybind.pluginKeys.cmp = function(luasnip, cmp)
 			cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior }),
 			{ "i", "c" }
 		),
+		-- [cmpp.cmp_trigge] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		[cmpp.cmp_trigge] = cmp.mapping.complete(),
 		[cmpp.cmp_abort] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
 		[cmpp.cmp_confirm] = cmp.mapping({
@@ -787,10 +780,10 @@ end
 -- <leader>tb 右侧
 -- <leader>tc 下方
 keybind.pluginKeys.mapToggleTerm = function(toggleterm)
-	vim.keymap.set({ "n", "t" }, toggletermm.toggleA, toggleterm.toggleA, { desc = "opent float terminal" })
-	vim.keymap.set({ "n", "t" }, toggletermm.toggleB, toggleterm.toggleB, { desc = "opent bottom terminal" })
-	vim.keymap.set({ "n", "t" }, toggletermm.toggleC, toggleterm.toggleC, { desc = "opent right side terminal" })
-	vim.keymap.set({ "n", "t" }, toggletermm.toggleG, toggleterm.toggleG, { desc = "opent lazygit terminal" })
+	vim.keymap.set("n", toggletermm.toggleA, toggleterm.toggleA, { desc = "opent float terminal" })
+	vim.keymap.set("n", toggletermm.toggleB, toggleterm.toggleB, { desc = "opent bottom terminal" })
+	vim.keymap.set("n", toggletermm.toggleC, toggleterm.toggleC, { desc = "opent right side terminal" })
+	vim.keymap.set("n", toggletermm.toggleG, toggleterm.toggleG, { desc = "opent lazygit terminal" })
 end
 
 -- gitsigns
@@ -852,7 +845,6 @@ keybind.keymap_set = {
 	"editorNormal",
 	"editorVisual",
 	"editorCommand",
-	"editorTerminal",
 
 	"nvimTree",
 	"bufferline",

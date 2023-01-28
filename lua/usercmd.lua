@@ -77,7 +77,8 @@ end, { desc = "NvimTree enhanced" })
 
 local ftAndCmandRight = {
 	dapui_scopes = "DapCloseWin",
-	lspsagaoutline = "LSoutlineToggle",
+	-- lspsagaoutline = "Lspsaga outline",
+	Outline = "SymbolsOutline",
 }
 local function rightSidebarAutoClose(ftAcmdRight, currentSelfRight)
 	local winList = vim.api.nvim_list_wins()
@@ -96,8 +97,8 @@ local function rightSidebarAutoClose(ftAcmdRight, currentSelfRight)
 end
 
 api.nvim_create_user_command("LSoutline", function()
-	rightSidebarAutoClose(ftAndCmandRight, "lspsagaoutline")
-	vim.api.nvim_cmd(api.nvim_parse_cmd("LSoutlineToggle", {}), {})
+	rightSidebarAutoClose(ftAndCmandRight, "Outline")
+	vim.api.nvim_cmd(api.nvim_parse_cmd("SymbolsOutline", {}), {})
 end, { desc = "LSoutlineToggle enhanced" })
 api.nvim_create_user_command("DapContinuee", function()
 	rightSidebarAutoClose(ftAndCmandRight, "dapui_scopes")

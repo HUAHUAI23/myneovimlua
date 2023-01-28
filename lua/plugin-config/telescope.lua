@@ -45,6 +45,9 @@ telescope.setup({
 			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
 			-- the default case_mode is "smart_case"
 		},
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown({}),
+		},
 	},
 })
 
@@ -57,6 +60,8 @@ pcall(telescope.load_extension, "env")
 pcall(telescope.load_extension, "http")
 -- extension telescope-project
 pcall(telescope.load_extension, "projects")
+-- extension telescope-ui-select
+pcall(telescope.load_extension, "ui-select")
 -- extension telescope-dap
 pcall(telescope.load_extension, "dap")
 -- extension telescope-dapzzzz

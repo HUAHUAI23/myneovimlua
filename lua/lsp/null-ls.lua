@@ -201,5 +201,11 @@ null_ls.setup({
 				require("telescope.themes").get_cursor({ initial_mode = "normal" })
 			)
 		end, { noremap = true, silent = true, desc = "goto type definition", buffer = bufnr })
+		vim.keymap.set(
+			"n",
+			lspKey.declaration,
+			vim.lsp.buf.declaration,
+			{ noremap = true, silent = true, desc = "goto declaration", buffer = bufnr }
+		)
 	end,
 })

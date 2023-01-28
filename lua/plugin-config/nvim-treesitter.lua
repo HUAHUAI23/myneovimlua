@@ -17,7 +17,19 @@ end
 
 treesitter.setup({
 	-- A list of parser names, or "all"
-	ensure_installed = { "html", "css", "vim", "lua", "javascript", "python", "json", "bash", "markdown", "go" },
+	ensure_installed = {
+		"html",
+		"css",
+		"vim",
+		"lua",
+		"javascript",
+		"python",
+		"json",
+		"bash",
+		"markdown",
+		"markdown_inline",
+		"go",
+	},
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,
 	-- Automatically install missing parsers when entering buffer

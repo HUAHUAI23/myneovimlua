@@ -20,6 +20,8 @@
 --          vim.bo.xxx=xxx
 -- TODO: https://github.com/andymass/vim-matchup#detailed-feature-documentation #A common usage of these options is to automatically disable matchparen for particular file types
 -- 11. add mirror site for packer, tree-sitter, mason ...
+-- 12. filter some notify message (nvim-notify)
+-- 13. telescope preview don't preview binary file
 
 -- 12. semantic syntax treesitter spellcheck onenote intergration
 local commconf = {}
@@ -37,6 +39,7 @@ commconf.listchar = true
 -- lint    null-ls
 -- https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.jsonc
 commconf.markdownlintConfig = vim.fn.expand("~/.config/nvim/lint-globals/.markdownlint.jsonc")
+commconf.markdownPreviewCss = vim.fn.expand("~/.config/nvim/mkp-css/")
 
 -- keybindings magic search
 function commconf.magiceSearchSwitches(opts)

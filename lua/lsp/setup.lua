@@ -9,6 +9,17 @@ mason.setup({
 	},
 })
 
+-- see https://github.com/folke/neodev.nvim
+local neodev
+status, neodev = pcall(require, "neodev")
+if not status then
+	vim.notify("没有找到 neodev", "error")
+	return
+end
+neodev.setup({
+	library = { plugins = { "nvim-dap-ui" }, types = true },
+})
+
 local mason_lspconfig
 status, mason_lspconfig = pcall(require, "mason-lspconfig")
 if not status then
@@ -92,6 +103,7 @@ local servers = {
 	tsserver = require("lsp.config.tsserver"),
 	clangd = require("lsp.config.clangd"),
 	gopls = require("lsp.config.gopls"),
+	-- ltex = require("lsp.config.ltex"),
 	-- quick_lint_js = require("lsp.config.quick-lint-js"),
 	sqls = require("lsp.config.sqls"),
 	-- css html

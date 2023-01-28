@@ -15,7 +15,7 @@ whichkey.setup({
 		-- override the label used to display some keys. It doesn't effect WK in any other way.
 		-- For example:
 		["<space>"] = "SPC",
-		["<cr>"] = "RET",
+		["<cr>"] = "Enter",
 		["<tab>"] = "TAB",
 	},
 	triggers_blacklist = {
