@@ -1,5 +1,6 @@
 local status, notify = pcall(require, "notify")
 if not status then
+	---@diagnostic disable-next-line: param-type-mismatch
 	vim.notify("没有找到 nvim-notify 插件", "error")
 	return
 end

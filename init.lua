@@ -11,8 +11,12 @@ vim.g.loaded_matchit = 1
 require("basic")
 
 -- 定义颜色主题
-require("colorscheme")
--- require("colorscheme-test")
+if vim.env.NVIM_LIGHTTT == "1" then
+	-- require("colorscheme-test")
+	require("colorschemeLight")
+else
+	require("colorscheme")
+end
 
 -- Packer插件管理
 require("plugins")

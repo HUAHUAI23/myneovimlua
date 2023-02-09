@@ -122,53 +122,65 @@ db.custom_header = {
 -- 	[[████████▀█████████████████████▀█████████████]],
 -- 	[[]],
 -- }
--- db.setup({
--- 	theme = "doom",
--- 	config = {
--- 		header = db.custom_header, -- ascii text in there
--- 		center = db.custom_center,
--- 		footer = db.custom_footer,
--- 	},
--- })
 
-db.setup({
-	theme = "hyper",
-	config = {
-		header = db.custom_header,
-		shortcut = {
-			{
-				desc = "☕ Update",
-				group = "@text.todo",
-				action = "PackerUpdate",
-				key = "u",
+local function themeSelect(theme)
+	if theme == "doom" then
+		db.setup({
+			theme = "doom",
+			config = {
+				header = db.custom_header, -- ascii text in there
+				center = db.custom_center,
+				footer = db.custom_footer,
 			},
-			{
-				desc = "📑 Files",
-				group = "@text.todo",
-				action = "Telescope find_files",
-				key = "f",
+		})
+		return "doom"
+	elseif theme == "hyper" then
+		db.setup({
+			theme = "hyper",
+			config = {
+				header = db.custom_header,
+				shortcut = {
+					{
+						desc = "☕ Update",
+						group = "@text.todo",
+						action = "PackerUpdate",
+						key = "u",
+					},
+					{
+						desc = "📑 Files",
+						group = "@text.todo",
+						action = "Telescope oldfiles",
+						key = "f",
+					},
+					{
+						desc = "📺 Projects",
+						group = "@text.todo",
+						action = "Telescope projects",
+						key = "p",
+					},
+					{
+						desc = "📻 Work Space",
+						group = "@text.todo",
+						action = "Telescope xray23 list",
+						key = "s",
+					},
+				},
+				project = { limit = 2, icon = "🎵" },
+				mru = { limit = 4, icon = "🕹️" },
+				footer = {
+					"",
+					"",
+					"千里之行，始于足下                     ",
+					-- "输时不悲，赢时不谦，唯全力以赴              ",
+					-- "https://xray23.ltd                     ",
+					"https://github.com/HUAHUA              ",
+				},
 			},
-			{
-				desc = "📺 Projects",
-				group = "@text.todo",
-				action = "Telescope projects",
-				key = "p",
-			},
-			{
-				desc = "📻 Work Space",
-				group = "@text.todo",
-				action = "Telescope xray23 list",
-				key = "s",
-			},
-		},
-		project = { limit = 2, icon = "🎵" },
-		mru = { limit = 4, icon = "🕹️" },
-		footer = {
-			"",
-			"",
-			"千里之行，始于足下                     ",
-			-- "https://xray23.ltd                     ",
-			"https://github.com/HUAHUA              ",
-		},
-	},
-})
+		})
+		return "hyper"
+	else
+		return
+	end
+end
+
+themeSelect("hyper")

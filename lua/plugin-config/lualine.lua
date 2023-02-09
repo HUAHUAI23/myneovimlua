@@ -24,7 +24,8 @@ local conditions = {
 	end,
 }
 -- 为特定文件类型的buffer设置 特定的状态栏
-local my_extension = { sections = { lualine_a = { "mode" } }, filetypes = { "undotree", "lspsagaoutline", "diff" } }
+local my_extension =
+	{ sections = { lualine_a = { "mode" } }, filetypes = { "undotree", "lspsagaoutline", "diff", "Outline" } }
 local config = {
 	options = {
 		-- 指定皮肤

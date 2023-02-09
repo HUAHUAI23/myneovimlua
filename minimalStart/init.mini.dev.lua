@@ -34,10 +34,7 @@ local function load_plugins()
 			use("wbthomason/packer.nvim")
 			-- 主题
 			use("ajmwagar/vim-deus")
-			-- use("Avimitin/neovim-deus")
-			-- use({ "aonemd/quietlight.vim" })
-			-- use({ "alexanderjeurissen/lumiere.vim" })
-			-- use({ "vim-scripts/zenesque.vim" })
+			use("HUAHUAI23/nvim-quietlight")
 			-- tree-sitter
 			use({
 				"nvim-treesitter/nvim-treesitter",
@@ -123,13 +120,17 @@ local function setkeybindings()
 end
 
 local function setTheme()
-	-- theme
-	vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
-	vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
-	vim.o.background = "dark"
-	vim.cmd("colorscheme deus")
-	-- vim.g.deus_background = "mid"
-	vim.g.deus_termcolors = 256
+	if vim.env.NVIM_LIGHTTT == "1" then
+		vim.o.background = "light"
+		vim.cmd("colorscheme quietlight")
+		vim.cmd("highlight clear ColorColumn")
+	else
+		vim.o.t_8f = "<Esc>[38;2;%lu;%lu;%lum"
+		vim.o.t_8b = "<Esc>[48;2;%lu;%lu;%lum"
+		vim.o.background = "dark"
+		vim.cmd("colorscheme deus")
+		vim.g.deus_termcolors = 256
+	end
 end
 
 local function setBasics()
@@ -143,10 +144,7 @@ local function setBasics()
 	vim.opt.termguicolors = true
 end
 
-local load_config = function()
-	setBasics()
-	setTheme()
-	setkeybindings()
+local function setPlugins()
 	-- tree-sitter
 	require("nvim-treesitter.configs").setup({
 		auto_install = true,
@@ -192,6 +190,13 @@ local load_config = function()
 	})
 	pcall(telescope.load_extension, "xray23")
 	pcall(telescope.load_extension, "i42")
+end
+
+local load_config = function()
+	setBasics()
+	setTheme()
+	setkeybindings()
+	setPlugins()
 end
 
 if vim.fn.isdirectory(install_path) == 0 then

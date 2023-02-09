@@ -36,7 +36,9 @@ return require("packer").startup({
 
 		use({ "sainnhe/everforest" })
 
-		-- use({ "ellisonleao/gruvbox.nvim" })
+		use({ "cocopon/iceberg.vim" })
+
+		use("HUAHUAI23/nvim-quietlight")
 
 		-- use({ "alexanderjeurissen/lumiere.vim" })
 
@@ -231,7 +233,16 @@ return require("packer").startup({
 				require("plugin-config.nvim-notify")
 			end,
 		})
-
+		-- use({
+		-- 	"folke/noice.nvim",
+		-- 	config = function()
+		-- 		require("plugin-config.noice")
+		-- 	end,
+		-- 	requires = {
+		-- 		"MunifTanjim/nui.nvim",
+		-- 		"rcarriga/nvim-notify",
+		-- 	},
+		-- })
 		-- something like lsp
 		-- ---------------------------------------------------------
 		-- TODO Comments
@@ -297,9 +308,10 @@ return require("packer").startup({
 
 		-- --------telescope-------------
 		use({
-			"HUAHUAI23/telescope.nvim",
-			-- tag = "0.1.0",
-			branch = "0.1.x",
+			-- "HUAHUAI23/telescope.nvim",
+			"nvim-telescope/telescope.nvim",
+			tag = "0.1.1",
+			-- branch = "0.1.x",
 			requires = { { "nvim-lua/plenary.nvim" } },
 			config = function()
 				require("plugin-config.telescope")
@@ -354,7 +366,6 @@ return require("packer").startup({
 		-- 	end,
 		-- })
 		-- ui-lspsaga
-		-- TODO: cmd
 		use({
 			"glepnir/lspsaga.nvim",
 			branch = "main",

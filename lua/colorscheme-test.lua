@@ -1,16 +1,17 @@
----@diagnostic disable-next-line: unused-local
-local api = vim.api
+vim.opt.runtimepath:append("/home/i42/pro/vimPlug/theme/*")
 vim.o.t_Co = 256
 vim.opt.termguicolors = true
 
-vim.g.lumiere_dim_inactive_windows = 0
+vim.o.background = "light"
 
-vim.o.background = "dark"
-local colorscheme = "lumiere"
+local colorscheme = "quietlight"
+
+---@diagnostic disable-next-line: param-type-mismatch
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
 	vim.notify("colorscheme: " .. colorscheme .. " 没有找到！")
 	return
 end
-
-api.nvim_set_hl(0, "Normal", { fg = "#424242", bg = "#e4e4e4" })
+vim.cmd("highlight clear ColorColumn")
+-- local palette = { darkpurple = "#5f005f" }
+-- vim.api.nvim_set_hl(0, "Keyword", { fg = palette.darkpurple, bg = "none" })

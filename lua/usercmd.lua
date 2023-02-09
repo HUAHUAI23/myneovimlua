@@ -14,15 +14,15 @@ api.nvim_create_user_command("DapCloseWin", function()
 		vim.notify("没有找到 dap")
 		return
 	end
-	require("dapui").close({})
-	dap.close()
+	-- local repl = dap.repl
+	-- require("dapui").close({})
+	-- repl.close()
+	-- dap.close()
 	dap.terminate()
-	local repl = dap.repl
-	repl.close()
 	-- api.nvim_command([[exe "normal \<c-w>o"]])
 	-- vim.api.nvim_command([[exe "normal \<Esc>0"]])
 	--  refer:https://vi.stackexchange.com/questions/27796/how-to-change-editor-mode-from-lua-or-viml
-	vim.cmd("stopinsert")
+	-- vim.cmd("stopinsert")
 	-- dap.clear_breakpoints()
 end, { desc = "close dap session" })
 

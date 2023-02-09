@@ -239,7 +239,7 @@ cmp.setup.filetype({ "TelescopePrompt", "text", "" }, {
 -- NOTE: set cmp for specify filetype
 cmp.setup.filetype({ "markdown" }, {
 	sources = {
-		{ name = "luasnip", group_index = 1 },
+		{ name = "luasnip", group_index = 2 },
 		{
 			name = "buffer",
 			option = {
@@ -254,7 +254,7 @@ cmp.setup.filetype({ "markdown" }, {
 			},
 			group_index = 2,
 		},
-		{ name = "path", group_index = 2 },
+		{ name = "path", group_index = 1 },
 	},
 })
 

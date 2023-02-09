@@ -46,6 +46,11 @@ bufferline.setup({
 				text_align = "right",
 			},
 			{
+				filetype = "Outline",
+				text = "👾outline",
+				text_align = "right",
+			},
+			{
 				filetype = "undotree",
 				text = "👾undo Tree",
 				text_align = "left",

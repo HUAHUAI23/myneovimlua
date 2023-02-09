@@ -1,5 +1,6 @@
 local status, mkdnflow = pcall(require, "mkdnflow")
 if not status then
+	---@diagnostic disable-next-line: param-type-mismatch
 	vim.notify("没有找到 mkdnflow 插件", "error")
 	return
 end
@@ -10,7 +11,7 @@ if type(mkd) == "table" and mkd.enable then
 			priority = "current",
 			fallback = "first",
 		},
-		wrap = true,
+		-- wrap = true,
 		mappings = {
 			-- buffer go forward or backward
 			MkdnGoBack = false,
