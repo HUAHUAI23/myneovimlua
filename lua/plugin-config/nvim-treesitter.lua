@@ -35,7 +35,6 @@ treesitter.setup({
 	-- Automatically install missing parsers when entering buffer
 	-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
 	auto_install = true,
-
 	-- 启用代码高亮模块
 	highlight = {
 		enable = true,
@@ -44,7 +43,6 @@ treesitter.setup({
 		-- list of language that will be disabled
 		-- disable = { "c", "rust" },
 	},
-
 	-- 启用增量选择模块
 	incremental_selection = {
 		enable = false,
@@ -56,13 +54,11 @@ treesitter.setup({
 			scope_incremental = "<TAB>",
 		},
 	},
-
 	-- 启用代码缩进模块 (=)
 	indent = {
 		enable = true,
 		disable = filesize_hundle,
 	},
-
 	-- https://github.com/nvim-treesitter/nvim-treesitter-refactor
 	refactor = {
 		-- the illuminate plugin is better than this
@@ -91,20 +87,20 @@ treesitter.setup({
 		disable = filesize_hundle,
 		-- [options]
 	},
-
 	-- https://github.com/windwp/nvim-ts-autotag
 	-- 方便前端语言标签的自动闭合
 	autotag = {
 		enable = true,
 		disable = filesize_hundle,
 	},
-
 	-- https://github.com/p00f/nvim-ts-rainbow
 	rainbow = {
 		enable = true,
 		-- disable = filesize_hundle,
 		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
 		extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+		disable = filesize_hundle,
+		-- some compreesed file is very large,but only one line
 		max_file_lines = commConf.rainbowLargefileEdge, -- Do not enable for files with more than n lines, int
 		colors = {
 			"#95ca60",

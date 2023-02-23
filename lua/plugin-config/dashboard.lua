@@ -109,6 +109,24 @@ db.custom_header = {
 	[[]],
 	[[]],
 }
+-- db.custom_header = {
+-- 	"",
+-- 	"",
+-- 	"",
+-- 	"",
+-- 	"",
+-- 	"",
+-- 	[[ ███▄    █     ▒█████      ██▓    ▄████▄     ▓█████   ]],
+-- 	[[ ██ ▀█   █    ▒██▒  ██▒   ▓██▒   ▒██▀ ▀█     ▓█   ▀   ]],
+-- 	[[▓██  ▀█ ██▒   ▒██░  ██▒   ▒██▒   ▒▓█    ▄    ▒███     ]],
+-- 	[[▓██▒  ▐▌██▒   ▒██   ██░   ░██░   ▒▓▓▄ ▄██▒   ▒▓█  ▄   ]],
+-- 	[[▒██░   ▓██░   ░ ████▓▒░   ░██░   ▒ ▓███▀ ░   ░▒████▒  ]],
+-- 	[[░ ▒░   ▒ ▒    ░ ▒░▒░▒░    ░▓     ░ ░▒ ▒  ░   ░░ ▒░ ░  ]],
+-- 	[[░ ░░   ░ ▒░     ░ ▒ ▒░     ▒ ░     ░  ▒       ░ ░  ░  ]],
+-- 	[[   ░   ░ ░    ░ ░ ░ ▒      ▒ ░   ░              ░     ]],
+-- 	[[         ░        ░ ░      ░     ░ ░            ░  ░  ]],
+-- 	[[                                 ░                    ]],
+-- }
 -- 👻 🎵 🔔 🤖 🚑 ☕ 💦 ☔
 -- see more: https://fsymbols.com/
 -- https://fsymbols.com/text-art/twitter/
@@ -122,6 +140,10 @@ db.custom_header = {
 -- 	[[████████▀█████████████████████▀█████████████]],
 -- 	[[]],
 -- }
+local shortcutgroup = "Normal"
+if vim.env.NVIM_LIGHTTT == "1" then
+	shortcutgroup = "@text.todo"
+end
 
 local function themeSelect(theme)
 	if theme == "doom" then
@@ -142,25 +164,25 @@ local function themeSelect(theme)
 				shortcut = {
 					{
 						desc = "☕ Update",
-						group = "@text.todo",
+						group = shortcutgroup,
 						action = "PackerUpdate",
 						key = "u",
 					},
 					{
 						desc = "📑 Files",
-						group = "@text.todo",
+						group = shortcutgroup,
 						action = "Telescope oldfiles",
 						key = "f",
 					},
 					{
 						desc = "📺 Projects",
-						group = "@text.todo",
+						group = shortcutgroup,
 						action = "Telescope projects",
 						key = "p",
 					},
 					{
 						desc = "📻 Work Space",
-						group = "@text.todo",
+						group = shortcutgroup,
 						action = "Telescope xray23 list",
 						key = "s",
 					},
@@ -183,4 +205,9 @@ local function themeSelect(theme)
 	end
 end
 
-themeSelect("hyper")
+if vim.env.NVIM_LIGHTTT == "1" then
+	themeSelect("hyper")
+	themeSelect("doom")
+else
+	themeSelect("doom")
+end

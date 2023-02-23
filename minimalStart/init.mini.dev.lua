@@ -1,14 +1,3 @@
--- NOTE: more info:
---                  https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
---                  https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
-local api = vim.api
-
--- exclude default paths/config     config path and package path (packer)
--- more info: https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
---            https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
-vim.opt.runtimepath:remove(vim.fn.expand("~/.config/nvim"))
-vim.opt.packpath:remove(vim.fn.expand("~/.local/share/nvim/site"))
-
 local on_windows = vim.loop.os_uname().version:match("Windows")
 local function join_paths(...)
 	local path_sep = on_windows and "\\" or "/"
@@ -16,17 +5,25 @@ local function join_paths(...)
 	return result
 end
 
--- add portable neovim runtimepath dir to neovim runtimepath
+-- add runtimepath dir to neovim runtimepath
 vim.cmd([[set runtimepath=$VIMRUNTIME]])
--- add dev plugin dir to neovim runtimepath
-vim.opt.runtimepath:append("/home/i42/pro/vimPlug/telescope/*")
 
 local temp_dir = vim.loop.os_getenv("TEMP") or "/tmp"
-local packer_dir = temp_dir .. "/neovimdev"
+local packer_dir = join_paths(temp_dir, "neovimdev")
 vim.cmd("set packpath=" .. join_paths(packer_dir, "nvim", "site"))
 local package_root = join_paths(packer_dir, "nvim", "site", "pack")
 local install_path = join_paths(package_root, "packer", "start", "packer.nvim")
 local compile_path = join_paths(install_path, "plugin", "packer_compiled.lua")
+
+-- NOTE: more info:
+--                  https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--                  https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
+
+-- exclude default paths/config     config path and package path (packer)
+-- more info: https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--            https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
+vim.opt.runtimepath:remove(vim.fn.expand("~/.config/nvim"))
+vim.opt.packpath:remove(vim.fn.expand("~/.local/share/nvim/site"))
 
 local function load_plugins()
 	require("packer").startup({
@@ -43,15 +40,7 @@ local function load_plugins()
 					ts_update()
 				end,
 			})
-
-			-- telescope
-			use({
-				"nvim-telescope/telescope.nvim",
-				branch = "0.1.x",
-				requires = { { "nvim-lua/plenary.nvim" } },
-			})
 		end,
-
 		config = {
 			package_root = package_root,
 			compile_path = compile_path,
@@ -115,8 +104,6 @@ local function setkeybindings()
 	map("n", "L", "35l", opt)
 	-- 定义快捷键关闭当前buffer
 	map("n", "qq", ":bd<CR>", opt)
-	-- Enable completion triggered by <c-x><c-o>  it need lsp
-	api.nvim_buf_set_option(0, "omnifunc", "v:lua.vim.lsp.omnifunc")
 end
 
 local function setTheme()
@@ -130,6 +117,7 @@ local function setTheme()
 		vim.o.background = "dark"
 		vim.cmd("colorscheme deus")
 		vim.g.deus_termcolors = 256
+		vim.cmd("highlight clear ColorColumn")
 	end
 end
 
@@ -161,35 +149,6 @@ local function setPlugins()
 			additional_vim_regex_highlighting = false,
 		},
 	})
-	-- telescope test
-	local _, telescope = pcall(require, "telescope")
-	telescope.setup({
-		defaults = {
-			prompt_prefix = "🔍",
-			-- 打开弹窗后进入的初始模式，默认为 normal，也可以是 insert
-			initial_mode = "normal",
-			-- default mappings see https://github.com/nvim-telescope/telescope.nvim
-			mappings = {
-				n = {
-					["q"] = "close",
-				},
-			},
-		},
-		extensions = {
-			xray23 = {
-				sessionDir = "/home/i42/tele/test",
-			},
-			i42 = {
-				colors = {
-					{ "🥮", "deus", "deus.lua" },
-					{ "", "xxx", "xxx.lua" },
-				},
-				colorDir = "/home/i42/tele/colortest",
-			},
-		},
-	})
-	pcall(telescope.load_extension, "xray23")
-	pcall(telescope.load_extension, "i42")
 end
 
 local load_config = function()

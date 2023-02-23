@@ -10,14 +10,20 @@ mason.setup({
 })
 
 -- see https://github.com/folke/neodev.nvim
+-- settings for neovim dev environment
 local neodev
 status, neodev = pcall(require, "neodev")
 if not status then
+	---@diagnostic disable-next-line: param-type-mismatch
 	vim.notify("没有找到 neodev", "error")
 	return
 end
 neodev.setup({
-	library = { plugins = { "nvim-dap-ui" }, types = true },
+	library = {
+		enable = true,
+		plugins = { "nvim-dap-ui" },
+		types = true,
+	},
 })
 
 local mason_lspconfig
@@ -29,7 +35,7 @@ end
 
 mason_lspconfig.setup({
 	ensure_installed = {
-		"sumneko_lua",
+		"lua_ls",
 		"bashls",
 		"pyright",
 		"tsserver",
@@ -97,9 +103,9 @@ end
 
 -- 使用neovim原生lspconfig进行language server配置
 local servers = {
-	sumneko_lua = require("lsp.config.lua"), -- lua/lsp/config/lua.lua
+	lua_ls = require("lsp.config.lua"), -- lua/lsp/config/lua.lua
 	bashls = require("lsp.config.bash"),
-	pyright = require("lsp.config.pyright"),
+	-- pyright = require("lsp.config.pyright"),
 	tsserver = require("lsp.config.tsserver"),
 	clangd = require("lsp.config.clangd"),
 	gopls = require("lsp.config.gopls"),
@@ -124,3 +130,18 @@ for name, config in pairs(servers) do
 		lspconfig[name].setup({})
 	end
 end
+
+-- pyleft
+local configs = require("lspconfig.configs")
+if not configs.pyleft then
+	configs.pyleft = require("lsp.config.pyleft")
+end
+local lspComm = require("lsp.common-config")
+lspconfig.pyleft.setup({
+	capabilities = lspComm.capabilities,
+	on_attach = function(client, bufnr)
+		lspComm.navic.attach(client, bufnr)
+		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+	end,
+	handlers = require("lsp.common-config").handlers,
+})

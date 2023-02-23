@@ -334,12 +334,12 @@ keybind.undotree = {
 		description = "undotree toggle",
 	},
 }
-keybind.LSoutline = {
+keybind.outline = {
 	{
 		mode = "n",
-		lhs = keybindingAlias.lsp.LSoutline,
+		lhs = keybindingAlias.lsp.outline,
 		rhs = [[<cmd>LSoutline<CR>]],
-		description = "LSoutline toggle",
+		description = "outline toggle",
 	},
 }
 
@@ -484,6 +484,20 @@ keybind.hop = {
 	-- 	rhs = [[<Esc>:HopPattern<cr>]],
 	-- 	description = "hop-patter",
 	-- },
+}
+keybind.translate = {
+	{
+		mode = { "n", "v" },
+		lhs = keybindingAlias.translate.translate_float,
+		rhs = [[:Translate zh-CN -source=en -output=floating<cr>]],
+		description = "-comment -parse_after|before -command",
+	},
+	{
+		mode = { "n", "v" },
+		lhs = keybindingAlias.translate.translate_split,
+		rhs = [[:Translate zh-CN -source=en -output=floating<cr>]],
+		description = "Translate zh-CN -source=en -output=split",
+	},
 }
 
 -- ------------
@@ -781,8 +795,9 @@ end
 -- <leader>tc 下方
 keybind.pluginKeys.mapToggleTerm = function(toggleterm)
 	vim.keymap.set("n", toggletermm.toggleA, toggleterm.toggleA, { desc = "opent float terminal" })
-	vim.keymap.set("n", toggletermm.toggleB, toggleterm.toggleB, { desc = "opent bottom terminal" })
-	vim.keymap.set("n", toggletermm.toggleC, toggleterm.toggleC, { desc = "opent right side terminal" })
+	vim.keymap.set("n", toggletermm.toggleB, toggleterm.toggleB, { desc = "opent right side terminal" })
+	vim.keymap.set("n", toggletermm.toggleC, toggleterm.toggleC, { desc = "opent bottom terminal" })
+	vim.keymap.set("n", toggletermm.toggleD, toggleterm.toggleD, { desc = "opent 0.8 right side terminal" })
 	vim.keymap.set("n", toggletermm.toggleG, toggleterm.toggleG, { desc = "opent lazygit terminal" })
 end
 
@@ -853,7 +868,8 @@ keybind.keymap_set = {
 	"yanky",
 	"hop",
 	"undotree",
-	"LSoutline",
+	"outline",
+	"translate",
 }
 
 function keybind.editorKeyRegister(keymapSet)
@@ -863,12 +879,12 @@ function keybind.editorKeyRegister(keymapSet)
 end
 
 function keybind.unsetKey(unsetmap)
-	for k, v in pairs(unsetmap) do
+	for mode, v in pairs(unsetmap) do
 		if type(v) == "string" then
-			vim.api.nvim_set_keymap(k, v, "", { noremap = true, silent = false })
+			vim.api.nvim_set_keymap(mode, v, "", { noremap = true, silent = false })
 		else
 			for _, vv in ipairs(v) do
-				vim.api.nvim_set_keymap(k, vv, "", { noremap = true, silent = false })
+				vim.api.nvim_set_keymap(mode, vv, "", { noremap = true, silent = false })
 			end
 		end
 	end

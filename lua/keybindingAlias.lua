@@ -1,6 +1,5 @@
 local M = {
 	config_path = vim.fn.stdpath("config"),
-
 	-- Modes
 	--   normal_mode = "n",
 	--   insert_mode = "i",
@@ -103,7 +102,7 @@ local M = {
 		-- TODO:
 		-- lsp_signature
 		-- outline
-		LSoutline = "<space>3",
+		outline = "<space>3",
 	},
 	bufferline = {
 		BufferLineCyclePrev = "<Leader>j",
@@ -147,6 +146,7 @@ local M = {
 		toggleA = "<leader>ta",
 		toggleB = "<leader>tb",
 		toggleC = "<leader>tc",
+		toggleD = "<leader>td",
 		toggleG = "<Leader>tg",
 	},
 	gitsigns = {
@@ -206,6 +206,10 @@ local M = {
 		-- ihop_pattern = "<F8>",
 		-- ihop_line = "<F7>",
 		-- ihop_word = "<C-x>",
+	},
+	translate = {
+		translate_float = ";g",
+		translate_split = ";t",
 	},
 	comment = {
 		iline_comment = [[<C-_>]],

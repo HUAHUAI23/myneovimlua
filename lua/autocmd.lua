@@ -2,7 +2,7 @@ local commConf = require("commConf")
 local loop, api = vim.loop, vim.api
 -- clear=true 如果创建的autocommand组已经存在，则将已经存在的autocommand组删除
 -- see more: https://github.com/glepnir/nvim-lua-guide-zh
-local myAutoGroup = api.nvim_create_augroup("myAutoGroup", {
+local myAutoGroupt = api.nvim_create_augroup("myAutoGroupt", {
 	clear = true,
 })
 -- local mylspAutoGroup = api.nvim_create_augroup("mylspAutoGroup", {
@@ -24,9 +24,10 @@ local autocmd = api.nvim_create_autocmd
 -- })
 
 -- 进入Terminal 自动进入插入模式
-autocmd("TermOpen", {
-	group = myAutoGroup,
-	command = "startinsert",
+autocmd({ "TermOpen" }, {
+	group = myAutoGroupt,
+	command = "startinsert | set nonumber",
+	-- command = "startinsert",
 })
 
 -- 自动保存
@@ -54,7 +55,7 @@ autocmd("TermOpen", {
 
 -- 用o换行不要延续注释
 autocmd("BufEnter", {
-	group = myAutoGroup,
+	group = myAutoGroupt,
 	pattern = "*",
 	callback = function()
 		vim.opt.formatoptions = vim.opt.formatoptions
@@ -115,7 +116,7 @@ end
 -- })
 -- NOTE: after file is loaded,determine whether to load indentline and autopair
 autocmd("BufReadPost", {
-	group = myAutoGroup,
+	group = myAutoGroupt,
 	pattern = "*",
 	callback = function()
 		local max_filesize = commConf.largefileEdge -- 100 KB
@@ -124,21 +125,36 @@ autocmd("BufReadPost", {
 			-- require("plugin-config.todo-comments")
 			require("indent_blankline.commands").enable()
 			require("nvim-autopairs").enable()
+			require("illuminate.engine").toggle()
 			-- vim.cmd("setlocal spell spelllang=en_us")
 		end
 	end,
 })
--- NOTE: disable indentline,autopair before loading file, this time the buffer is loaded but file is still not loaded
+-- NOTE: disable indentline,autopair,illuminate before loading file, this time the buffer is loaded but file is still not loaded
 autocmd("BufReadPre", {
-	group = myAutoGroup,
+	group = myAutoGroupt,
 	pattern = "*",
 	callback = function()
 		-- vim.api.nvim_cmd(vim.api.nvim_parse_cmd("IndentBlanklineDisable", {}), {})
 		require("indent_blankline.commands").disable()
 		require("nvim-autopairs").disable()
+		require("illuminate.engine").toggle()
 		-- vim.cmd("setlocal nospell")
 	end,
 })
+
+-- NOTE: 大文件 treesitter 问题 主要有 treesiiter indentline autopair illuminate telescope cmp comment lsp null-ls
+-- treesitter：的所有扩展在大文件中都会产生性能卡顿，尤其要注意 rainbow，rainbow 自带的大文件勾子
+-- 是通过文件行数决定是否启用 rainbow，对于压缩的大文件可能只有一行，所以会被逃避掉。**已解决** {通过 autocmd解决}
+-- indentline：会调用 treesitter 因此也会有大文件问题 **已解决** {通过 autocmd解决}
+-- autopair：会调用 treesitter 检查语法节点，决定在哪些节点中会使用或者不使用 autopair **已解决** {通过 autocmd解决}
+-- illuminate：illuminate的钩子是通过文件行决定的，也会被逃避掉 **已解决** {通过 autocmd解决}
+-- telescope：在预览时会调用 treesiiter，因此 telescope 预览在大文件中要关闭 treesitter 语法高亮 **已解决**
+-- cmp：tabnine (在大文件中可能会卡顿 **未解决**) buffer 补全源在大文件中会卡顿 **已解决**
+-- comment：会调用 treesitter 检测文件类型 以决定使用什么样的注释符号，因此也会有大文件问题 **已解决**
+-- lsp：在大文件中 lsp 可能会卡断 **未解决**
+-- null-ls：null-ls 在大文件中主要是 各种源会有卡断问题，比如 lint format，对于 format 在大文件中禁止了保存
+-- 自动格式化，通过对于 format 源要注意超时问题，对于 lint 源通过设置在大文件中不启用 **已解决**
 
 -- auto close LSP for large file
 -- autocmd("BufReadPost", {

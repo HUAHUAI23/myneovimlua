@@ -1,13 +1,3 @@
--- NOTE: more info:
---                  https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
---                  https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
-
--- exclude default paths/config     config path and package path (packer)
--- more info: https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
---            https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
-vim.opt.runtimepath:remove(vim.fn.expand("~/.config/nvim"))
-vim.opt.packpath:remove(vim.fn.expand("~/.local/share/nvim/site"))
-
 local on_windows = vim.loop.os_uname().version:match("Windows")
 local function join_paths(...)
 	local path_sep = on_windows and "\\" or "/"
@@ -17,12 +7,25 @@ end
 
 vim.cmd([[set runtimepath=$VIMRUNTIME]])
 
+-- add dev plugin dir to neovim runtimepath
+vim.opt.runtimepath:append("/home/i42/pro/vimPlug/telescope/*")
+
 local temp_dir = vim.loop.os_getenv("TEMP") or "/tmp"
-local packer_dir = temp_dir .. "/neovimtest"
+local packer_dir = join_paths(temp_dir, "neovimtest")
 vim.cmd("set packpath=" .. join_paths(packer_dir, "nvim", "site"))
 local package_root = join_paths(packer_dir, "nvim", "site", "pack")
 local install_path = join_paths(package_root, "packer", "start", "packer.nvim")
 local compile_path = join_paths(install_path, "plugin", "packer_compiled.lua")
+
+-- NOTE: more info:
+--                  https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--                  https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
+
+-- exclude default paths/config     config path and package path (packer)
+-- more info: https://github.com/VonHeikemen/lsp-zero.nvim/wiki/Minimal-test-config
+--            https://github.com/neovim/nvim-lspconfig/blob/master/test/minimal_init.lua
+vim.opt.runtimepath:remove(vim.fn.expand("~/.config/nvim"))
+vim.opt.packpath:remove(vim.fn.expand("~/.local/share/nvim/site"))
 
 local function load_plugins()
 	require("packer").startup({

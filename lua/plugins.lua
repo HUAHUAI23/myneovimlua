@@ -31,6 +31,8 @@ return require("packer").startup({
 
 		-- 主题
 		use("ajmwagar/vim-deus")
+		-- use("theniceboy/nvim-deus")
+		-- use({ "Avimitin/neovim-deus" })
 
 		use({ "sam4llis/nvim-tundra" })
 
@@ -38,11 +40,7 @@ return require("packer").startup({
 
 		use({ "cocopon/iceberg.vim" })
 
-		use("HUAHUAI23/nvim-quietlight")
-
-		-- use({ "alexanderjeurissen/lumiere.vim" })
-
-		-- use({ "Avimitin/neovim-deus" })
+		-- use("HUAHUAI23/nvim-quietlight")
 
 		-- 底部状态栏 statusline
 		use({
@@ -410,7 +408,10 @@ return require("packer").startup({
 		use("mfussenegger/nvim-dap")
 		-- something useful that improve UI
 		use("theHamsta/nvim-dap-virtual-text")
-		use({ "rcarriga/nvim-dap-ui", commit = "6b6081a", requires = { "mfussenegger/nvim-dap" } })
+		use({
+			"rcarriga/nvim-dap-ui", --[[ commit = "6b6081a", ]]
+			requires = { "mfussenegger/nvim-dap" },
+		})
 		---specific configuration
 		-- python
 		use("mfussenegger/nvim-dap-python")
@@ -446,8 +447,18 @@ return require("packer").startup({
 		use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
 		--  GitHub Copilot
 		use({ "github/copilot.vim" })
+
 		-- -------nvim-dev---------------
 		use({ "folke/neodev.nvim" })
+
+		-- -------translate--------------
+		use({
+			"uga-rosa/translate.nvim",
+			config = function()
+				require("plugin-config.translate")
+			end,
+			cmd = "Translate",
+		})
 
 		-- Automatically set up your configuration after cloning packer.nvim
 		-- Put this at the end after all plugins
