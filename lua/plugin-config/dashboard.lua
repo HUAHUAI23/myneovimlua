@@ -193,7 +193,6 @@ local function themeSelect(theme)
 					"",
 					"",
 					"千里之行，始于足下                     ",
-					-- "输时不悲，赢时不谦，唯全力以赴              ",
 					-- "https://xray23.ltd                     ",
 					"https://github.com/HUAHUA              ",
 				},

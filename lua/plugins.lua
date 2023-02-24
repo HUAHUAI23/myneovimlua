@@ -40,7 +40,7 @@ return require("packer").startup({
 
 		use({ "cocopon/iceberg.vim" })
 
-		-- use("HUAHUAI23/nvim-quietlight")
+		use("HUAHUAI23/nvim-quietlight")
 
 		-- 底部状态栏 statusline
 		use({

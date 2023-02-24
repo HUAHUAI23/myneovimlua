@@ -29,10 +29,11 @@ local default_config = {
 	end,
 	settings = {
 		python = {
-			analysis = vim.empty_dict(),
-		},
-		telemetry = {
-			telemetryLevel = "off",
+			analysis = {
+				autoSearchPaths = true,
+				diagnosticMode = "workspace",
+				useLibraryCodeForTypes = true,
+			},
 		},
 	},
 }

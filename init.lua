@@ -50,8 +50,8 @@ require("basic")
 
 -- 定义颜色主题
 if vim.env.NVIM_LIGHTTT == "1" then
-	require("colorscheme-test")
-	-- require("colorschemeLight")
+	-- require("colorscheme-dev")
+	require("colorschemeLight")
 else
 	require("colorscheme")
 	-- require("colorschemeLight")

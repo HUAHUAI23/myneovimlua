@@ -142,6 +142,12 @@ lspconfig.pyleft.setup({
 	on_attach = function(client, bufnr)
 		lspComm.navic.attach(client, bufnr)
 		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+		vim.api.nvim_buf_create_user_command(bufnr, "PyleftFixImport", function()
+			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
+		end, {
+			desc = "Fix Pyleft import problem",
+			nargs = 0,
+		})
 	end,
-	handlers = require("lsp.common-config").handlers,
+	handlers = lspComm.handlers,
 })
