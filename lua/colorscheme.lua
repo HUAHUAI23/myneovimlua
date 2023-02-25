@@ -341,7 +341,7 @@ local caseList = {
 		vim.api.nvim_set_hl(0, "@text.emphasis", { fg = "#fabd2f", bold = true })
 		vim.api.nvim_set_hl(0, "@text.underline", { underline = true })
 		vim.api.nvim_set_hl(0, "@text.strike", { strikethrough = true })
-		vim.api.nvim_set_hl(0, "@text.title", { link = "Keyword" })
+		vim.api.nvim_set_hl(0, "@text.title", { ctermfg = 167, fg = "#fb4934", bold = true })
 		vim.api.nvim_set_hl(0, "@text.literal", { link = "String" })
 		vim.api.nvim_set_hl(0, "@text.uri", { fg = "#aaaaaa", bold = true })
 		vim.api.nvim_set_hl(0, "@text.math", { link = "Special" })
@@ -375,7 +375,7 @@ local caseList = {
 		vim.api.nvim_set_hl(0, "Function", { ctermfg = 142, fg = "#B5E8B0", bold = true })
 		vim.api.nvim_set_hl(0, "Statement", { ctermfg = 167, fg = "#FF0000" })
 		vim.api.nvim_set_hl(0, "Operator", { ctermfg = 223, fg = "#ebdbb2", bold = true })
-		vim.api.nvim_set_hl(0, "keyword", { ctermfg = 167, fg = "#FF0000", bold = true })
+		vim.api.nvim_set_hl(0, "keyword", { ctermfg = 167, fg = "#FF0000", italic = true, bold = true })
 		vim.api.nvim_set_hl(0, "PreProc", { ctermfg = 108, fg = "#B5E8B0", bold = true, italic = true })
 		vim.api.nvim_set_hl(0, "Type", { ctermfg = 214, fg = "#fabd2f", bold = true })
 		vim.api.nvim_set_hl(0, "StorageClass", { ctermfg = 208, fg = "#fe8019" })
@@ -509,6 +509,9 @@ local caseList = {
 		vim.api.nvim_set_hl(0, "@keyword", { ctermfg = 203, fg = "#ff4090" })
 		vim.api.nvim_set_hl(0, "@keyword.function", { ctermfg = 167, fg = "#fb4934" })
 		vim.api.nvim_set_hl(0, "@keyword.return", { ctermfg = 167, fg = "#fb4934" })
+
+		-- markdown
+		vim.api.nvim_set_hl(0, "@text.title", { ctermfg = 167, fg = "#fb4934", bold = true })
 
 		vim.cmd("highlight clear ColorColumn")
 	end,
