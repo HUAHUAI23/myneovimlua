@@ -206,7 +206,7 @@ end
 
 if vim.env.NVIM_LIGHTTT == "1" then
 	themeSelect("hyper")
-	themeSelect("doom")
+	-- themeSelect("doom")
 else
 	themeSelect("doom")
 end

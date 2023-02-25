@@ -7,25 +7,52 @@ end
 local Term = require("toggleterm.terminal")
 local Terminal = Term.Terminal
 
-toggleterm.setup({
-	size = function(term)
-		if term.direction == "horizontal" then
-			return vim.o.lines * 0.35
-		elseif term.direction == "vertical" then
-			return vim.o.columns * 0.3
-		end
-	end,
-	start_in_insert = true,
-	persist_size = false,
-	highlights = {
-		FloatBorder = {
-			link = "FloatBorder",
+if vim.env.NVIM_LIGHTTT == "1" then
+	toggleterm.setup({
+		size = function(term)
+			if term.direction == "horizontal" then
+				return vim.o.lines * 0.35
+			elseif term.direction == "vertical" then
+				return vim.o.columns * 0.3
+			end
+		end,
+		start_in_insert = true,
+		persist_size = false,
+		shading_factor = 1,
+		shade_terminals = true,
+		highlights = {
+			FloatBorder = {
+				link = "FloatBorder",
+			},
+			NormalFloat = {
+				link = "NormalFloat",
+			},
+			-- Normal = {
+			-- 	link = "Normal",
+			-- },
 		},
-		NormalFloat = {
-			link = "Normal",
+	})
+else
+	toggleterm.setup({
+		size = function(term)
+			if term.direction == "horizontal" then
+				return vim.o.lines * 0.35
+			elseif term.direction == "vertical" then
+				return vim.o.columns * 0.3
+			end
+		end,
+		start_in_insert = true,
+		persist_size = false,
+		highlights = {
+			FloatBorder = {
+				link = "FloatBorder",
+			},
+			NormalFloat = {
+				link = "Normal",
+			},
 		},
-	},
-})
+	})
+end
 
 local lazygit = Terminal:new({
 	cmd = "lazygit",

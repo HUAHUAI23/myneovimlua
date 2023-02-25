@@ -23,8 +23,10 @@ local caselist = {
 		-- vim.api.nvim_set_hl(0, "Cursor", { fg = "#ffffff", bg = "#ffffff", bold = true })
 	end,
 	b = function()
+		require("nvim-quietlight").setup({
+			ansi_terminal_colors = "",
+		})
 		local colorscheme = "quietlight"
-
 		---@diagnostic disable-next-line: param-type-mismatch
 		local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 		if not status_ok then

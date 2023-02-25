@@ -71,6 +71,7 @@ local function set_editor_hl()
 	vim.api.nvim_set_hl(0, "MoreMsg", { ctermfg = 214, fg = "#fabd2f", bold = true })
 	vim.api.nvim_set_hl(0, "Question", { ctermfg = 208, fg = "#fe8019", bold = true })
 	vim.api.nvim_set_hl(0, "MatchParen", { ctermbg = 241, bg = "#665c54", bold = true })
+	-- MsgArea
 
 	vim.api.nvim_set_hl(
 		0,
