@@ -1,3 +1,8 @@
+-- PERF: structure
+--       Before: do something there
+--       Load
+--       After: do something there
+
 if vim.g.neovide then
 	-- Put anything you want to happen only in Neovide here
 	--  BUG: fix shell environment when neocvide --wsl
@@ -37,6 +42,9 @@ if vim.g.neovide then
 end
 
 -- TODO: use loop to disable bulks of plugins
+
+-- NOTE: Before
+
 -- disable some builtin plugins
 -- nvim-tree builtin file explorer
 vim.g.loaded_netrw = 1
@@ -57,8 +65,12 @@ else
 	-- require("colorschemeLight")
 end
 
+-- NOTE: load
+
 -- Packer插件管理
 require("plugins")
+
+-- NOTE: After
 
 -- 通过vim.cmd加载一些 vimscript commands
 vim.cmd("source " .. vim.fn.stdpath("config") .. "/extVIM.vim")

@@ -17,13 +17,16 @@
 
 -- normal #2C323B, nc and float #242a32 -- editor background
 -- #1e2329 darker background eg: toggerterm vertical and horizontal, bufferline fill bg
+-- #1d1536 darker background
 -- #000000 statusline fill bg
-
+-- error Red #b30909 #FF0000 #a80000
+-- Error          xxx cterm=bold,reverse ctermfg=167 ctermbg=235 gui=bold,reverse guifg=#fb4934 guibg=bg -- #2C323B ##242a32
 -- other colors
 -- #FF0000 #fb4934 #B5E8B0 #ebdbb2 #fe8019 #a89984 #b8bb26 #d3869b
 -- #8ec07c #98c379 #990808 #990606 #B30909 #fabd2f #aaaaaa #ffa6ff
--- #83a598 #c678dd #928374 #fff073 "LigthGrey" #959595 #ededed #4493c8
--- #bb0099 #00d0c0 #50de60
+-- #83a598 #90b5a7 #c678dd #928374 #fff073 "LightGrey" #959595 #ededed #4493c8
+-- #bb0099 #00d0c0 #50de60 #FFFFFF #808080 "LightBlue" #665c54 #8094b4
+-- #a80000 #f3a0a0
 
 vim.o.t_Co = 256
 -- vim.o.termguicolors = true
@@ -56,11 +59,14 @@ local function set_editor_hl()
 	-- editor
 	-- Normal         xxx ctermfg=223 ctermbg=235 guifg=#ebdbb2 guibg=#2c323b
 	-- NormalFloat    xxx ctermfg=223 ctermbg=239 guifg=#ebdbb2 guibg=#242a32
+	-- Visual         xxx cterm=reverse ctermbg=241 gui=reverse guibg=#665c54
 
-	-- vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 142, fg = "#ebdbb2", bg = "#2C323B", bold = true })
+	-- vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 239, fg = "#ebdbb2", bg = "#242a32", bold = true })
+	vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 235, fg = "#ebdbb2", bg = "#2c323b", bold = true })
+
 	vim.api.nvim_set_hl(0, "NonText", { ctermfg = 142, fg = "grey50", bold = true })
 	vim.api.nvim_set_hl(0, "Cursor", { bold = true })
-	-- nvim gutter sign 列 number 列 fold（折叠标记） bookmark 列
+	-- nvim gutter, sign 列 number 列 fold（折叠标记） bookmark 列
 	vim.api.nvim_set_hl(0, "SignColumn", { ctermbg = "none", bg = "none" })
 
 	vim.api.nvim_set_hl(0, "VertSplit", { ctermfg = 245, fg = "#928374", bold = true })
@@ -85,6 +91,7 @@ local function set_editor_hl()
 	-- Search impact yank highlight
 	-- vim.api.nvim_set_hl(0, "Search", { ctermbg = 214, ctermfg = 235, bg = "#fe8019", fg = "White", bold = true })
 	vim.api.nvim_set_hl(0, "Search", { ctermbg = 214, ctermfg = 235, bg = "#B5E8B0", fg = "#808080", bold = true })
+	vim.api.nvim_set_hl(0, "Visual", { ctermbg = 241, bg = "#665c54", reverse = true, bold = true })
 
 	vim.api.nvim_set_hl(
 		0,
@@ -125,8 +132,10 @@ local function set_nvimtree_hl()
 	vim.api.nvim_set_hl(0, "NvimTreeImageFile", { fg = "#bb0099", bold = true })
 	vim.api.nvim_set_hl(0, "NvimTreeExecFile", { fg = "#50de60", bold = true })
 	vim.api.nvim_set_hl(0, "NvimTreeSpecialFile", { fg = "#fe8019", underline = true, bold = true })
+	vim.api.nvim_set_hl(0, "NvimTreeBookmark", { fg = "#50de60", bold = true })
 
 	vim.api.nvim_set_hl(0, "NvimTreeLiveFilterPrefix", { fg = "#bb0099", bold = true })
+	vim.api.nvim_set_hl(0, "NvimTreeLiveFilterValue", { bold = true })
 	vim.api.nvim_set_hl(0, "NvimTreeWindowPicker", { fg = "#ededed", bg = "#4493c8", bold = true })
 
 	vim.api.nvim_set_hl(0, "NvimTreeFileIgnored", { fg = "#928374", bold = true })
@@ -218,13 +227,16 @@ local function set_lsp_hl()
 
 	vim.api.nvim_set_hl(0, "DiagnosticError", { ctermfg = 1, fg = "Red", bold = true })
 	vim.api.nvim_set_hl(0, "DiagnosticWarn", { ctermfg = 3, fg = "Orange", bold = true })
-	vim.api.nvim_set_hl(0, "DiagnosticInfo", { ctermfg = 4, fg = "LightBlue", bold = true })
+
+	-- vim.api.nvim_set_hl(0, "DiagnosticInfo", { ctermfg = 4, fg = "LightBlue", bold = true })
+	vim.api.nvim_set_hl(0, "DiagnosticInfo", { ctermfg = 4, fg = "#add8e6", bold = true })
+	-- vim.api.nvim_set_hl(0, "DiagnosticInfo", { ctermfg = 4, fg = "#BAE6FD", bold = true })
+
 	vim.api.nvim_set_hl(0, "DiagnosticHint", { ctermfg = 7, fg = "#d3d3d3", bold = true })
 
 	vim.api.nvim_set_hl(0, "DiagnosticUnderlineError", { standout = true, strikethrough = true, sp = "Red" })
 	vim.api.nvim_set_hl(0, "DiagnosticUnderlineWarn", { standout = true, sp = "Orange" })
 end
-
 set_editor_hl()
 set_lsp_hl()
 set_gitsigns_hl()
@@ -534,6 +546,7 @@ local caseList = {
 		-- if vim.fn.exists("syntax_on") then
 		-- 	vim.cmd("syntax reset")
 		-- end
+		-- vim.cmd("colorscheme deus")
 		-- set_editor_hl()
 		-- set_lsp_hl()
 		-- set_gitsigns_hl()

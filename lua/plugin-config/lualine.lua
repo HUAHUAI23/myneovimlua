@@ -144,3 +144,7 @@ ins_leftx({
 })
 
 lualine.setup(config)
+
+-- change highlight
+vim.api.nvim_set_hl(0, "lualine_a_normal", { bg = "#B5E8B0", fg = "#434D59", bold = true })
+vim.api.nvim_set_hl(0, "lualine_b_normal", { fg = "#B5E8B0", bg = "#303740", bold = true })

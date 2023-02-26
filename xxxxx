@@ -1,1 +1,2 @@
-colorscheme
+colorscheme.lua
+lualine.lua -change highlights group
