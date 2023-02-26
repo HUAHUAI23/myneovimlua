@@ -62,7 +62,7 @@ if vim.env.NVIM_LIGHTTT == "1" then
 	require("colorschemeLight")
 else
 	require("colorscheme")
-	-- require("colorschemeLight")
+	-- require("colorscheme-test")
 end
 
 -- NOTE: load
