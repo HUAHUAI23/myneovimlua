@@ -15,3 +15,10 @@
 -- vim.lsp.buf_request(bufnr, "textDocument/definition", ref_params, function(err, result, ctx, config)
 -- 	print(string.format("spent: %s ms", (vim.loop.hrtime() - start) / 1000000))
 -- end)
+
+-- ===========
+for pack, _ in pairs(package.loaded) do
+	if string.find(pack, "^" .. vim.pesc("telescope")) then
+		package.loaded[pack] = nil
+	end
+end

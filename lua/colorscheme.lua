@@ -62,7 +62,9 @@ local function set_editor_hl()
 	-- Visual         xxx cterm=reverse ctermbg=241 gui=reverse guibg=#665c54
 
 	-- vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 239, fg = "#ebdbb2", bg = "#242a32", bold = true })
-	vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 235, fg = "#ebdbb2", bg = "#2c323b", bold = true })
+	-- vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 239, fg = "#ebdbb2", bg = "#242a32" })
+	-- vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 235, fg = "#ebdbb2", bg = "#2c323b", bold = true })
+	vim.api.nvim_set_hl(0, "NormalFloat", { ctermfg = 223, ctermbg = 235, fg = "#ebdbb2", bg = "#2c323b" })
 
 	vim.api.nvim_set_hl(0, "NonText", { ctermfg = 142, fg = "grey50", bold = true })
 	vim.api.nvim_set_hl(0, "Cursor", { bold = true })
@@ -92,6 +94,7 @@ local function set_editor_hl()
 	-- vim.api.nvim_set_hl(0, "Search", { ctermbg = 214, ctermfg = 235, bg = "#fe8019", fg = "White", bold = true })
 	vim.api.nvim_set_hl(0, "Search", { ctermbg = 214, ctermfg = 235, bg = "#B5E8B0", fg = "#808080", bold = true })
 	vim.api.nvim_set_hl(0, "Visual", { ctermbg = 241, bg = "#665c54", reverse = true, bold = true })
+	-- vim.api.nvim_set_hl(0, "Visual", { ctermbg = 241, bg = "#665c54", reverse = true })
 
 	vim.api.nvim_set_hl(
 		0,
