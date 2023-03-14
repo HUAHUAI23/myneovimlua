@@ -39,8 +39,10 @@ local opts = {
 		-- lspComm.keyAttach(bufnr)
 		-- lspComm.disableFormat(client)
 		-- lspComm.shwLinDiaAtom(bufnr)
-		lspComm.navic.attach(client, bufnr)
-		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+		if lspComm.navic then
+			lspComm.navic.attach(client, bufnr)
+		end
+		vim.opt_local.winbar = lspComm.winbarrs
 		-- lspComm.hlSymUdrCursor(client, bufnr)
 	end,
 	handlers = require("lsp.common-config").handlers,

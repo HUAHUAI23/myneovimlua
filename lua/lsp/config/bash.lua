@@ -9,11 +9,13 @@ return {
 			capabilities = require("lsp.common-config").capabilities,
 			on_attach = function(client, bufnr)
 				-- lspComm.keyAttach(bufnr)
-				lspComm.navic.attach(client, bufnr)
 				-- lspComm.shwLinDiaAtom(bufnr)
 				-- lspComm.disableFormat(client)
 				-- lspComm.hlSymUdrCursor(client, bufnr)
-				vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+				if lspComm.navic then
+					lspComm.navic.attach(client, bufnr)
+				end
+				vim.opt_local.winbar = lspComm.winbarrs
 			end,
 			handlers = require("lsp.common-config").handlers,
 			root_dir = function(fname)

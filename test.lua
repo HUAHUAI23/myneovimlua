@@ -16,9 +16,321 @@
 -- 	print(string.format("spent: %s ms", (vim.loop.hrtime() - start) / 1000000))
 -- end)
 
--- ===========
-for pack, _ in pairs(package.loaded) do
-	if string.find(pack, "^" .. vim.pesc("telescope")) then
-		package.loaded[pack] = nil
-	end
-end
+-- =========== NOTE: reload
+
+-- for pack, _ in pairs(package.loaded) do
+-- 	if string.find(pack, "^" .. vim.pesc("bufferline")) then
+-- 		package.loaded[pack] = nil
+-- 	end
+-- end
+-- require("bufferline").setup()
+-- require("bufferline").setup({
+-- 	options = {
+-- 		middle_mouse_command = function()
+-- 			require("bufferline").sort_buffers_by(function(buf_a, buf_b)
+-- 				return buf_a.id < buf_b.id
+-- 			end)
+-- 		end,
+-- 		-- numbers = "buffer_id",
+-- 		-- indicator = {
+-- 		-- 	icon = "▎", -- this should be omitted if indicator style is not 'icon'
+-- 		-- 	style = "icon" | "underline" | "none",
+-- 		-- },
+-- 		separator_style = "thin",
+-- 		-- color_icons = false,
+-- 		diagnostics = "nvim_lsp",
+-- 		---@diagnostic disable-next-line: unused-local
+-- 		diagnostics_indicator = function(count, level, diagnostics_dict, context)
+-- 			-- -- current buffer don't show LSP indicators
+-- 			-- if context.buffer:current() then
+-- 			--     return ''
+-- 			-- end
+-- 			local s = " "
+-- 			-- e=level,n=count
+-- 			for e, n in pairs(diagnostics_dict) do
+-- 				-- sym  symbol的缩写
+-- 				local sym = e == "error" and " " or (e == "warning" and " " or "")
+-- 				s = s .. n .. sym
+-- 			end
+-- 			return s
+-- 		end,
+-- 		offsets = {
+-- 			{
+-- 				filetype = "NvimTree",
+-- 				-- 🧶 🧵 💯 🗒︎ 🗓️
+-- 				text = "🗂️ File Explorer",
+-- 				highlight = "BufferlineCustomeNvimtree",
+-- 				text_align = "left",
+-- 				separator = true,
+-- 			},
+-- 			{
+-- 				filetype = "lspsagaoutline",
+-- 				text = "🧵 outline",
+-- 				highlight = "BufferlineCustomeNvimtree",
+-- 				text_align = "right",
+-- 			},
+-- 			{
+-- 				filetype = "Outline",
+-- 				highlight = "BufferlineCustomeNvimtree",
+-- 				text = "💯 outline",
+-- 				text_align = "right",
+-- 			},
+-- 			{
+-- 				filetype = "undotree",
+-- 				highlight = "BufferlineCustomeNvimtree",
+-- 				text = "🧶 undo Tree",
+-- 				text_align = "left",
+-- 			},
+-- 		},
+-- 		-- hover = {
+-- 		-- 	enabled = true,
+-- 		-- 	delay = 200,
+-- 		-- 	reveal = { "close" },
+-- 		-- },
+--
+-- 		-- see more: https://github.com/akinsho/bufferline.nvim/blob/main/doc/bufferline.txt
+-- 		-- highlights = {
+-- 		-- 	buffer_visible = {
+-- 		-- 		fg = "#ebdbb2",
+-- 		-- 	},
+-- 		-- },
+-- 	},
+-- })
+-- require("bufferline").setup()
+
+-- local old = package.loaded["bufferline"]
+-- package.loaded["bufferline"] = nil
+-- local new = require("bufferline")
+
+-- NOTE: statusline
+
+-- https://alpha2phi.medium.com/neovim-for-beginners-status-line-dd0c97fba978
+
+-- vim.api.nvim_set_hl(0, "StatusLineHeader", { fg = "#FFFFFF", bg = "#2C896B" })
+-- vim.api.nvim_set_hl(0, "StatusLineBody", { bg = "#bb0099" })
+-- -- vim.cmd("hi! StatusLineBody cterm=bold guibg= None")
+-- local function status_line1()
+-- 	-- local str = "🤣%-15.3t[%-4.n%-17.n %#StatuslineHeader#   %n %#StatusLineBody#    %-*10.6dddd"
+-- 	local str1 = "🤣%-20.ttest" -- %{field-justify:-}{field-minwidth:20.}{field-item:t}{text:test} -- "-" 左对齐
+-- 	local str2 = "🤣%20.ttest" -- {field-minwidth:20.}{field-item:t}{text:test}  -- justify default is right 右对齐
+-- 	local str3 = "🤣%020.n" -- {field-Leading:0}{field-minwidth:20.}{field-item:n} -- 填充 0
+-- 	local str3 = "%#StatuslineHeader#🤣%020.nRssss%#StatuslineBody#Ruuuuuuu%1*.ffff"
+-- 	-- {field-item:hlg}{field-texr:🤣}{field-Leading:0}{field-minwidth:20.}{field-item:n}{field-text:Rssss}{field-item:hlg}{field-text:Ruuuuuuu}{field-item:hlg}{field-text:.ffff}
+-- 	return str3
+-- end
+
+-- vim.g.get_statusline = function()
+-- 	local statusline = {
+-- 		{ name = "header", content = "%#StatuslineHeader#    %#StatusLineBody#" },
+-- 		{
+-- 			name = "mode",
+-- 			content = function()
+-- 				local mode = vim.fn.mode()
+-- 				local mode_mapping = {
+-- 					n = "Normal",
+-- 					r = "Replace",
+-- 					c = "Command",
+-- 					i = "Insert",
+-- 					s = "Select",
+-- 					V = "Visual",
+-- 					t = "Terminal",
+-- 				}
+--
+-- 				return ("%s-- %s --%s"):format("%13(", mode_mapping[mode], "%)")
+-- 			end,
+-- 		},
+-- 		{ name = "filename", content = "%10(%t%)%=" },
+-- 		{
+-- 			name = "space-style",
+-- 			content = function()
+-- 				local expand = vim.opt_local.expandtab:get()
+-- 				local widht = vim.opt_local.shiftwidth:get()
+-- 				local style = expand and "space" or "tab"
+--
+-- 				return ("%s:%s"):format(style, widht)
+--
+-- 				-- return ("%s%s:%s%s"):format("%5(", style, widht, "%)")
+-- 			end,
+-- 		},
+-- 		{ name = "position", content = "%8(%l:%v%)" },
+-- 		{ name = "schedule", content = "%5(%p%%%) " },
+-- 	}
+--
+-- 	local str = ""
+--
+-- 	for _, value in ipairs(statusline) do
+-- 		local content = value.content
+-- 		if type(content) == "function" then
+-- 			content = content()
+-- 		end
+-- 		str = str .. content
+-- 	end
+--
+-- 	return str
+-- end
+--
+-- vim.api.nvim_set_hl(0, "StatusLineHeader", { fg = "#FFFFFF", bg = "#2C896B", default = true })
+-- vim.api.nvim_set_hl(0, "StatusLineBody", { fg = "#FFFFFF", bg = "#007ACC", default = true })
+-- vim.opt.statusline = vim.g.get_statusline()
+-- vim.api.nvim_create_autocmd({ "ModeChanged", "BufEnter" }, {
+-- 	callback = function()
+-- 		vim.opt.statusline = vim.g.get_statusline()
+-- 	end,
+-- })
+
+-- TODO: buffer
+
+-- nvim_buf_set_mark() nvim_del_mark() nvim_buf_get_mark()
+-- nvim_buf_get_var()  Gets a buffer-scoped (b:) variable
+-- nvim_buf_set_extmark()  nvim_buf_get_extmark()
+
+-- buffer highlight
+-- 获取所有 buffer 的编号列表
+-- local buf_list = vim.api.nvim_list_bufs()
+-- 过滤掉 hidden 和 unlisted 选项为 true 的 buffer
+-- local visible_buf_list = {}
+-- for _, bufnr in ipairs(buf_list) do
+-- 	local unlisted = vim.api.nvim_buf_get_option(bufnr, "buflisted")
+-- 	if not unlisted then
+-- 		table.insert(visible_buf_list, bufnr)
+-- 	end
+-- end
+-- vim.pretty_print(visible_buf_list)
+-- nvim_buf_delete({buffer}, {opts})
+-- bufhidden
+-- vim.pretty_print(vim.api.nvim_buf_get_option(28, "buflisted"))
+-- vim.pretty_print(vim.api.nvim_get_all_options_info())
+
+-- 1. 获取所有listed buffer delete
+-- 2. 获取所有listed buffer，且未保存的buffer  save
+-- 3. 删除所有的buffer 当前buffer 除外
+-- 4. 删除所有的buffer 当前buffer除外，且未保存的buffer 除外
+
+-- local buf_list = vim.api.nvim_list_bufs()
+-- vim.pretty_print(buf_list)
+-- for index, value in ipairs(buf_list) do
+-- 	if vim.api.nvim_buf_is_loaded(value) then
+-- 		vim.pretty_print(index, value)
+-- 	end
+-- end
+-- for _, buf_handle in ipairs(buf_list) do
+-- 	vim.api.nvim_buf_delete(buf_handle, { force = true })
+-- end
+
+-- vim.pretty_print(vim.api.nvim_get_current_buf())
+-- vim.pretty_print(vim.api.nvim_buf_get_name(0))
+-- for _, value in ipairs(buf_list) do
+-- 	vim.pretty_print(vim.fn.getbufinfo(value))
+-- end
+-- local on_windows = vim.loop.os_uname().version:match("Windows")
+-- local function path_tail(path)
+-- 	local os_sep = on_windows and "\\" or "/"
+-- 	for i = #path, 1, -1 do
+-- 		if path:sub(i, i) == os_sep then
+-- 			return path:sub(i + 1, -1)
+-- 		end
+-- 	end
+-- 	return path
+-- end
+-- vim.pretty_print(path_tail(vim.api.nvim_buf_get_name(0)))
+
+-- TODO: diagnostic
+
+-- local ignore_diags = {
+-- 	python = {},
+-- 	lua = {},
+-- }
+-- local function keep_element(diagnostic, filter_rules)
+-- 	for _, v in ipairs(filter_rules) do
+-- 		if diagnostic.message:match(v[2]) then
+-- 			return false
+-- 		end
+-- 	end
+-- 	return true
+-- end
+-- local function remove_element(arr, fn, rules)
+-- 	local new_index = 1
+-- 	local old_index = #arr
+-- 	for i = 1, old_index do
+-- 		if fn(arr[i], rules) then
+-- 			arr[new_index] = arr[i]
+-- 			new_index = new_index + 1
+-- 		end
+-- 	end
+-- 	for i = new_index, old_index do
+-- 		arr[i] = nil
+-- 	end
+-- end
+--
+-- local orig_text_handler = vim.diagnostic.handlers.virtual_text
+-- -- vim.pretty_print(orig_text_handler)
+-- vim.diagnostic.handlers.virtual_text = {
+-- 	show = function(namespace, bufnr, diagnostics, opts)
+-- 		-- can also filter by namespace or other things,eg: severity bufnr ..., a diagnostic producer generate diagnostics will
+-- 		-- define a namespace, and generally this namespace represents this diagnostic producer
+-- 		remove_element(diagnostics, keep_element, ignore_diags[vim.api.nvim_buf_get_option(bufnr, "filetype")])
+-- 		orig_text_handler.show(namespace, bufnr, diagnostics, opts)
+-- 	end,
+-- 	hide = orig_text_handler.hide,
+-- }
+
+-- https://neovim.io/doc/user/diagnostic.html#vim.diagnostic.severity
+-- http://neovim.io/doc/user/quickfix.html
+
+-- vim.diagnostic.get()
+-- vim.diagnostic.show()
+
+-- NOTE: lsp
+
+-- vim.tbl_value|key
+-- vim.lsp.get_active_clients()[].server_capabilities
+-- reload lsp
+-- vim.lsp.stop_client(vim.lsp.get_active_clients())   edit
+-- vim.lsp.buf_request() client_is_stopped() get_active_clients buf_notify
+-- vim.lsp.buf.signature_help()
+
+-- function _G.notify_didchange()
+-- 	local format_line_ending = {
+-- 		["unix"] = "\n",
+-- 		["dos"] = "\r\n",
+-- 		["mac"] = "\r",
+-- 	}
+--
+-- 	local function buf_get_line_ending(bufnr)
+-- 		return format_line_ending[vim.api.nvim_buf_get_option(bufnr, "fileformat")] or "\n"
+-- 	end
+-- 	local function buf_get_full_text(bufnr)
+-- 		local line_ending = buf_get_line_ending(bufnr)
+-- 		local text = table.concat(vim.api.nvim_buf_get_lines(bufnr, 0, -1, true), line_ending)
+-- 		if vim.api.nvim_buf_get_option(bufnr, "eol") then
+-- 			text = text .. line_ending
+-- 		end
+-- 		return text
+-- 	end
+-- 	-- vim.pretty_print(buf_get_full_text(vim.api.nvim_get_current_buf())
+-- 	vim.pretty_print(vim.lsp.buf_notify(vim.api.nvim_get_current_buf(), "textDocument/didChange", {
+-- 		textDocument = {
+-- 			uri = vim.uri_from_bufnr(vim.api.nvim_get_current_buf()),
+-- 			version = vim.lsp.util.buf_versions[vim.api.nvim_get_current_buf()],
+-- 		},
+-- 		contentChanges = {
+-- 			{ text = buf_get_full_text(vim.api.nvim_get_current_buf()) },
+-- 			-- { text = "New text in the buffer." },
+-- 		},
+-- 	}))
+-- end
+
+-- function _G.notify_diag_req()
+-- 	vim.lsp.buf_request(vim.api.nvim_get_current_buf(), "textDocument/diagnostic", {
+-- 		textDocument = {
+-- 			uri = vim.uri_from_bufnr(vim.api.nvim_get_current_buf()),
+-- 		},
+-- 	}, function(err, result, ctx, config)
+-- 		-- vim.pretty_print(err, result)
+-- 	end)
+-- end
+--
+-- vim.lsp.handlers["textDocument/diagnostic"] = function(err, result, ctx, config)
+-- 	vim.pretty_print("yes")
+-- 	vim.pretty_print(err, result, ctx, config)
+-- end

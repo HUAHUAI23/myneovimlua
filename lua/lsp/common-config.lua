@@ -1,3 +1,4 @@
+local commConf = require("commConf")
 local M = {}
 
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#borders
@@ -77,63 +78,15 @@ M.disableFormat = function(client)
 	end
 end
 
-M.navic = require("nvim-navic")
---
------winbar And navic
---
--- local ignore_filetype = {
--- 	"",
--- 	"dap-repl",
--- 	"markdown",
--- }
-M.navic.setup({
-	-- icons = {
-	-- 	File = " ",
-	-- 	Module = " ",
-	-- 	Namespace = " ",
-	-- 	Package = " ",
-	-- 	Class = " ",
-	-- 	Method = " ",
-	-- 	Property = " ",
-	-- 	Field = " ",
-	-- 	Constructor = " ",
-	-- 	Enum = "練",
-	-- 	Interface = "練",
-	-- 	Function = " ",
-	-- 	Variable = " ",
-	-- 	Constant = " ",
-	-- 	String = " ",
-	-- 	Number = " ",
-	-- 	Boolean = "◩ ",
-	-- 	Array = " ",
-	-- 	Object = " ",
-	-- 	Key = " ",
-	-- 	Null = "ﳠ ",
-	-- 	EnumMember = " ",
-	-- 	Struct = " ",
-	-- 	Event = " ",
-	-- 	Operator = " ",
-	-- 	TypeParameter = " ",
-	-- },
-	highlight = true,
-})
-
--- local function load_navic()
--- 	vim.api.nvim_create_autocmd(
--- 		{ "DirChanged", "CursorMoved", "BufWinEnter", "BufFilePost", "InsertEnter", "BufNewFile" },
--- 		{
--- 			callback = function()
--- 				if not vim.bo.buflisted or vim.tbl_contains(ignore_filetype, vim.bo.filetype) then
--- 					vim.opt_local.winbar = ""
--- 					return
--- 				end
--- 				vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
--- 			end,
--- 		}
--- 	)
--- end
 -- load_navic()
 
-M.winbarrs = "%{%v:lua.require('nvim-navic').get_location()%}"
+if commConf.simple_mode then
+	-- M.winbarrs = ""
+	M.navic = require("nvim-navic")
+	M.winbarrs = "%{%v:lua.require('nvim-navic').get_location()%}"
+else
+	M.navic = require("nvim-navic")
+	M.winbarrs = "%{%v:lua.require('nvim-navic').get_location()%}"
+end
 
 return M

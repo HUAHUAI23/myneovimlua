@@ -343,32 +343,89 @@ keybind.outline = {
 	},
 }
 
-keybind.bufferline = {
-	{
-		mode = "n",
-		lhs = bufferline.BufferLineCyclePrev,
-		rhs = [[:BufferLineCyclePrev<CR>]],
-		description = "bufferline-goto left buffer",
-	},
-	{
-		mode = "n",
-		lhs = bufferline.BufferLineCycleNext,
-		rhs = [[:BufferLineCycleNext<CR>]],
-		description = "bufferline-goto right buffer",
-	},
-	{
-		mode = "n",
-		lhs = bufferline.BufferLineMovePrev,
-		rhs = [[:BufferLineMovePrev<CR>]],
-		description = "bufferline-move buffer left",
-	},
-	{
-		mode = "n",
-		lhs = bufferline.BufferLineMoveNext,
-		rhs = [[:BufferLineMoveNext<CR>]],
-		description = "bufferline-move buffer right",
-	},
-}
+if commConf.simple_mode then
+	keybind.bufferline = {
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineCyclePrev,
+			rhs = [[:bnext<CR>]],
+			description = "bufferline-goto next buffer",
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineCycleNext,
+			rhs = [[:bprevious<CR>]],
+			description = "bufferline-goto previous buffer",
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineMovePrev,
+			rhs = [[:BufferOperation delSingleBuffer]],
+			description = "del buffer",
+			opts = { silent = false },
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineMoveNext,
+			rhs = [[:BufferOperation saveSingleBuffer]],
+			description = "save buffer",
+			opts = { silent = false },
+		},
+	}
+else
+	keybind.bufferline = {
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineCyclePrev,
+			rhs = [[:BufferLineCyclePrev<CR>]],
+			description = "bufferline-goto left buffer",
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineCycleNext,
+			rhs = [[:BufferLineCycleNext<CR>]],
+			description = "bufferline-goto right buffer",
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineMovePrev,
+			rhs = [[:BufferLineMovePrev<CR>]],
+			description = "bufferline-move buffer left",
+		},
+		{
+			mode = "n",
+			lhs = bufferline.BufferLineMoveNext,
+			rhs = [[:BufferLineMoveNext<CR>]],
+			description = "bufferline-move buffer right",
+		},
+	}
+end
+-- keybind.bufferline = {
+-- 	{
+-- 		mode = "n",
+-- 		lhs = bufferline.BufferLineCyclePrev,
+-- 		rhs = [[:BufferLineCyclePrev<CR>]],
+-- 		description = "bufferline-goto left buffer",
+-- 	},
+-- 	{
+-- 		mode = "n",
+-- 		lhs = bufferline.BufferLineCycleNext,
+-- 		rhs = [[:BufferLineCycleNext<CR>]],
+-- 		description = "bufferline-goto right buffer",
+-- 	},
+-- 	{
+-- 		mode = "n",
+-- 		lhs = bufferline.BufferLineMovePrev,
+-- 		rhs = [[:BufferLineMovePrev<CR>]],
+-- 		description = "bufferline-move buffer left",
+-- 	},
+-- 	{
+-- 		mode = "n",
+-- 		lhs = bufferline.BufferLineMoveNext,
+-- 		rhs = [[:BufferLineMoveNext<CR>]],
+-- 		description = "bufferline-move buffer right",
+-- 	},
+-- }
 
 keybind.comment = {
 	{
@@ -413,7 +470,7 @@ keybind.telescope = {
 	{
 		mode = "n",
 		lhs = telesp.buffer_select,
-		rhs = [[<cmd>lua require('telescope.builtin').buffers({initial_mode = 'insert'})<CR>]],
+		rhs = [[<cmd>lua require('telescope.builtin').buffers({initial_mode = 'normal'})<CR>]],
 		description = "telescope-find buffer select",
 	},
 }
@@ -495,7 +552,7 @@ keybind.translate = {
 	{
 		mode = { "n", "v" },
 		lhs = keybindingAlias.translate.translate_split,
-		rhs = [[:Translate zh-CN -source=en -output=floating<cr>]],
+		rhs = [[:Translate zh-CN -source=en -output=split<cr>]],
 		description = "Translate zh-CN -source=en -output=split",
 	},
 }
@@ -539,6 +596,33 @@ local function lsp_formatting()
 		-- timeout_ms = 20000,
 		async = true,
 	})
+end
+
+if commConf.simple_mode then
+	vim.keymap.set(
+		"n",
+		lsp.open_fix_current,
+		vim.diagnostic.setloclist,
+		{ noremap = true, silent = true, desc = "open loacation quickfix list current" }
+	)
+	vim.keymap.set("n", lsp.open_fix_workspace, function()
+		local work_space_diagnostics = vim.diagnostic.toqflist(vim.diagnostic.get())
+		vim.cmd("call setloclist(0, " .. vim.fn.json_encode(work_space_diagnostics) .. ", 'r')")
+		vim.cmd("lopen")
+	end, { noremap = true, silent = true, desc = "open loacation quickfix list workspace" })
+else
+	vim.keymap.set(
+		"n",
+		lsp.open_fix_workspace,
+		"<cmd>Trouble document_diagnostics<cr>",
+		{ noremap = true, silent = true, desc = "open loacation quickfix list current" }
+	)
+	vim.keymap.set(
+		"n",
+		lsp.open_fix_workspace,
+		"<cmd>Trouble workspace_diagnostics<cr>",
+		{ noremap = true, silent = true, desc = "open loacation quickfix list workspace" }
+	)
 end
 
 keybind.pluginKeys.mapLSP = function(bufnr)

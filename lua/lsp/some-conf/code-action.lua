@@ -1,5 +1,5 @@
 local M = {}
-
+-- https://github.com/neovim/nvim-lspconfig/wiki/Code-Actions
 local lsp_util = vim.lsp.util
 
 function M.code_action_listener()

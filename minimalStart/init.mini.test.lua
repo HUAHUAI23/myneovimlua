@@ -32,7 +32,8 @@ local function load_plugins()
 		function(use)
 			use("wbthomason/packer.nvim")
 			-- theme
-			use("ajmwagar/vim-deus")
+			-- use("ajmwagar/vim-deus")
+			use("theniceboy/nvim-deus")
 			use("HUAHUAI23/nvim-quietlight")
 		end,
 		config = {
@@ -55,12 +56,15 @@ local function setBasics()
 	vim.o.t_Co = 256
 	vim.o.termguicolors = true
 	-- theme
-	vim.o.background = "light"
-	vim.cmd([[colorscheme quietlight]])
+	vim.o.background = "dark"
+	vim.cmd([[colorscheme deus]])
+	vim.g.deus_termcolors = 256
 end
+-- local function setPlugs() end
 
 local function load_config()
 	setBasics()
+	-- setPlugs()
 end
 
 if vim.fn.isdirectory(install_path) == 0 then

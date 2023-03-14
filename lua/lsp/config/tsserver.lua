@@ -7,12 +7,14 @@ local util = require("lspconfig.util")
 local opts = {
 	capabilities = require("lsp.common-config").capabilities,
 	on_attach = function(client, bufnr)
-		lspComm.keyAttach(bufnr)
-		lspComm.navic.attach(client, bufnr)
+		-- lspComm.keyAttach(bufnr)
+		if lspComm.navic then
+			lspComm.navic.attach(client, bufnr)
+		end
+		vim.opt_local.winbar = lspComm.winbarrs
 		-- lspComm.shwLinDiaAtom(bufnr)
 		-- lspComm.disableFormat(client)
 		-- lspComm.hlSymUdrCursor(client, bufnr)
-		vim.opt_local.winbar = lspComm.winbarrs
 	end,
 	single_file_support = true,
 	handlers = require("lsp.common-config").handlers,

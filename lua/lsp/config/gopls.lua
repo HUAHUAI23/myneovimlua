@@ -2,13 +2,15 @@ local root_files = {
 	"project.md",
 }
 local util = require("lspconfig.util")
+local lspComm = require("lsp.common-config")
 local opts = {
 	capabilities = require("lsp.common-config").capabilities,
 	on_attach = function(client, bufnr)
-		local lspComm = require("lsp.common-config")
 		lspComm.keyAttach(bufnr)
-		lspComm.navic.attach(client, bufnr)
-		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+		if lspComm.navic then
+			lspComm.navic.attach(client, bufnr)
+		end
+		vim.opt_local.winbar = lspComm.winbarrs
 		-- lspComm.shwLinDiaAtom(bufnr)
 		-- lspComm.hlSymUdrCursor(client, bufnr)  -- vim-illuminate plugin do this
 		-- lspComm.disableFormat(client)

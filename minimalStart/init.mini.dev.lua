@@ -31,6 +31,7 @@ local function load_plugins()
 			use("wbthomason/packer.nvim")
 			-- 主题
 			use("ajmwagar/vim-deus")
+			-- use("theniceboy/nvim-deus")
 			use("HUAHUAI23/nvim-quietlight")
 			-- tree-sitter
 			use({

@@ -259,6 +259,9 @@ M.toggleG = function()
 	end
 end
 
+-- http://neovim.io/doc/user/job_control.html
+-- https://neovim.io/doc/user/channel.html
+-- vim.api.nvim_chan_send -- https://neovim.io/doc/user/api.html#nvim_chan_send()
 vim.api.nvim_create_user_command("CloseAllterm", function(_)
 	if ta:is_open() then
 		ta:close()
@@ -326,6 +329,7 @@ vim.api.nvim_create_user_command("JobAndTerm", function(args)
 			end
 		end,
 		alljob = function()
+			vim.pretty_print(#vim.api.nvim_list_chans())
 			vim.pretty_print(vim.api.nvim_list_chans())
 		end,
 		onejob = function(chan_id)

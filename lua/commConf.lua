@@ -35,6 +35,7 @@ commconf.autoformatEdge = 102400 -- 100kb
 
 -- basic config switch
 commconf.listchar = true
+commconf.simple_mode = false
 
 -- lint    null-ls
 -- https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.jsonc

@@ -68,6 +68,11 @@ autocmd("BufEnter", {
 -- ==# vim 运算符  参考: https://stackoverflow.com/questions/45842690/what-does-the-hash-sign-mean-after-two-equal-signs-in-vim
 -- v:<name>是vim中预定义的变量，参考 :h v:var
 -- :h v:event
+-- @ @@ 均表示最近一次yank操作的寄存器中的内容 :echo @  |  :echo @@
+-- @[name] 表示指定名字的寄存器
+
+-- TODO: lua YANK
+
 if vim.fn.has("wsl") then
 	vim.cmd([[
     augroup wslYank
@@ -127,6 +132,54 @@ autocmd("BufReadPost", {
 			require("nvim-autopairs").enable()
 			require("illuminate.engine").toggle()
 			-- vim.cmd("setlocal spell spelllang=en_us")
+		else
+			vim.pretty_print("hhhhhh")
+			local luacache = (_G.__luacache or {}).cache
+			for pack, _ in pairs(package.loaded) do
+				if string.find(pack, "^" .. vim.pesc("indent_blankline")) then
+					package.loaded[pack] = nil
+
+					if luacache then
+						luacache[pack] = nil
+					end
+				end
+				if string.find(pack, "^" .. vim.pesc("nvim-autopairs")) then
+					package.loaded[pack] = nil
+
+					if luacache then
+						luacache[pack] = nil
+					end
+				end
+			end
+			require("indent_blankline").setup({
+				space_char_blankline = " ",
+				show_current_context = false,
+				show_current_context_start = false,
+				filetype_exclude = {
+					"null-ls-info",
+					"dashboard",
+					"packer",
+					"terminal",
+					"help",
+					"log",
+					"markdown",
+					"TelescopePrompt",
+					"lspinfo",
+					"mason.nvim",
+					"toggleterm",
+					"lspsagaoutline",
+					"text",
+				},
+				char = "▏",
+			})
+			require("indent_blankline.commands").enable()
+			require("nvim-autopairs").setup({
+				disable_filetype = { "TelescopePrompt", "vim" },
+				enable_check_bracket_line = false,
+				ignored_next_char = [=[[%w%%%'%[%"%.]]=],
+				check_ts = false,
+			})
+			require("nvim-autopairs").enable()
 		end
 	end,
 })

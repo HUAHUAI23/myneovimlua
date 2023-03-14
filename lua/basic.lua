@@ -1,3 +1,16 @@
+local commConf = require("commConf")
+if commConf.simple_mode then
+	vim.wo.number = false
+	vim.wo.signcolumn = "no"
+	vim.o.showtabline = 0
+	-- dev42
+	require("dev42.status")
+	require("dev42.usercmd")
+else
+	vim.wo.number = true
+	vim.wo.signcolumn = "yes"
+	vim.o.showtabline = 1
+end
 -- utf8
 vim.g.encoding = "UTF-8"
 vim.o.fileencoding = "utf-8"
@@ -6,15 +19,16 @@ vim.o.fileencoding = "utf-8"
 vim.o.scrolloff = 8
 vim.o.sidescrolloff = 8
 
+-- vim.wo.number = true
 -- 使用相对行号
-vim.wo.number = true
 vim.wo.relativenumber = false
 -- 高亮所在行
 vim.wo.cursorline = true
 
+-- https://neovim.io/doc/user/options.html#'statuscolumn'
 -- 显示左侧图标指示列   nv的gutter 有三种 number 显示数字 fold 显示折叠标志 sign 显示icon
 -- icon 占用的列数可以设置 auto 或者 yes:1 yes:2 yes:3 （固定列数） 或者 number 和行号共占一列
-vim.wo.signcolumn = "yes"
+-- vim.wo.signcolumn = "yes"
 -- vim.wo.signcolumn = "auto"
 -- vim.wo.signcolumn = "number"
 -- vim.wo.signcolumn = "yes:1"
@@ -41,7 +55,7 @@ vim.o.colorcolumn = "80"
 
 -- 新行对齐当前行
 vim.o.autoindent = true
-vim.bo.autoindent = true
+-- vim.bo.autoindent = true
 vim.o.smartindent = true
 
 -- 搜索大小写不敏感，除非包含大写
@@ -96,12 +110,11 @@ vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
 -- 不可见字符的显示，这里只把空格显示为一个点
 -- vim.opt.listchars = {eol = '↲', tab = '▸ ', trail = '·'}
-vim.opt.list = require("commConf").listchar
+vim.opt.list = commConf.listchar
 -- vim.o.listchars = "tab:··,trail:▫"
 -- vim.opt.listchars:append("space:⋅")
 vim.opt.listchars:append("eol:↴")
 vim.opt.listchars:append("trail:▫")
--- vim.o.list = false
 -- vim.o.listchars = "space:·,tab:··"
 -- vim.o.listchars = "tab:··,trail:▫"
 
@@ -114,10 +127,10 @@ vim.o.pumheight = 10
 
 -- 永远显示 tabline
 -- tabline winbar statusbar
-vim.o.showtabline = 2
+-- vim.o.showtabline = 2
 -- vim.o.showtabline = 0
 
--- 使用增强状态栏插件后不再需要 vim 的模式提示
+-- 显示 vim 的模式提示
 vim.o.showmode = false
 
 -- 配置剪切板
@@ -134,3 +147,6 @@ vim.opt.foldlevel = 99
 
 -- 启用vim自带的插件检测文件类型
 vim.opt.filetype = "plugin"
+
+-- statusline https://neovim.io/doc/user/windows.html#status-line
+vim.opt.laststatus = 3

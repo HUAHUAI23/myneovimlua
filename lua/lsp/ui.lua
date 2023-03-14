@@ -2,13 +2,16 @@
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#customizing-how-diagnostics-are-displayed
 -- see ：h diagnostic.txt     398gg
 vim.diagnostic.config({
-	-- 🔬 🔮
-	virtual_text = { source = "always", prefix = "🔍️" },
+	-- virtual_text = { source = "always", prefix = "👀" },
+	virtual_text = { source = "always", prefix = "🪵" },
 	signs = true,
 	update_in_insert = false,
+	severity_sort = true,
 	float = {
 		border = "rounded",
 		source = "always", -- show diagnostices sources
+		severity_sort = true,
+		-- prefix = "👀 ",  -- string | function TODO: add number prefix ---- 👀 + number
 	},
 })
 -- Change diagnostic symbols in the sign column (gutter)

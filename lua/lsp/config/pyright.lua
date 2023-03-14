@@ -13,8 +13,10 @@ local opts = {
 		-- lspComm.keyAttach(bufnr)
 		-- lspComm.shwLinDiaAtom(bufnr)
 		-- lspComm.disableFormat(client)
-		lspComm.navic.attach(client, bufnr)
-		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
+		if lspComm.navic then
+			lspComm.navic.attach(client, bufnr)
+		end
+		vim.opt_local.winbar = lspComm.winbarrs
 		-- lspComm.hlSymUdrCursor(client, bufnr)
 		vim.api.nvim_buf_create_user_command(bufnr, "PyleftFixImport", function()
 			client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
