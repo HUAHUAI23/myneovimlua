@@ -41,28 +41,28 @@ return require("packer").startup({
 
 		use("HUAHUAI23/nvim-quietlight")
 		-- 底部状态栏 statusline
-		use({
-			"nvim-lualine/lualine.nvim",
-			requires = { "kyazdani42/nvim-web-devicons", opt = true },
-			event = "BufEnter",
-			config = function()
-				require("plugin-config.lualine")
-			end,
-			after = "nvim-web-devicons",
-		})
+		-- use({
+		-- 	"nvim-lualine/lualine.nvim",
+		-- 	requires = { "kyazdani42/nvim-web-devicons", opt = true },
+		-- 	event = "BufEnter",
+		-- 	config = function()
+		-- 		require("plugin-config.lualine")
+		-- 	end,
+		-- 	after = "nvim-web-devicons",
+		-- })
 
 		-- 顶部状态栏 bufferline
-		use({
-			"akinsho/bufferline.nvim",
-			-- tag = "v2.*",
-			tag = "v3.*",
-			requires = "nvim-tree/nvim-web-devicons",
-			event = "BufEnter",
-			config = function()
-				require("plugin-config.bufferline")
-			end,
-			after = "nvim-web-devicons",
-		})
+		-- use({
+		-- 	"akinsho/bufferline.nvim",
+		-- 	-- tag = "v2.*",
+		-- 	tag = "v3.*",
+		-- 	requires = "nvim-tree/nvim-web-devicons",
+		-- 	event = "BufEnter",
+		-- 	config = function()
+		-- 		require("plugin-config.bufferline")
+		-- 	end,
+		-- 	after = "nvim-web-devicons",
+		-- })
 
 		-- sytax highlight
 		-- ---------------------------------------------------------
