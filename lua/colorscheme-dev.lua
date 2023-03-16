@@ -35,12 +35,13 @@ vim.api.nvim_set_hl(0, "LineNr", { fg = "#6d705b", bg = "#f3f3f3" })
 
 vim.api.nvim_set_hl(0, "VertSplit", { fg = "#9E9E9E", bold = true })
 
-vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#424242", bg = "#EDEDF5" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#686C6D", bg = "#EDEDF5" })
+vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#686C6D" })
 
 vim.api.nvim_set_hl(0, "MatchParen", { fg = "#f3f3f3", bg = "#7a3e9d", bold = true })
 
 -- indentline
-vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = "#9E9E9E", bg = "none" })
+vim.api.nvim_set_hl(0, "IndentBlanklineContextChar", { fg = "#1a1a1a", bg = "none" })
 vim.api.nvim_set_hl(0, "IndentBlanklineSpaceCharBlankline", { ctermfg = 142, fg = "#D9D9D9", nocombine = true })
 vim.api.nvim_set_hl(0, "IndentBlanklineSpaceChar", { ctermfg = 142, fg = "#D9D9D9", nocombine = true })
 vim.api.nvim_set_hl(0, "IndentBlanklineChar", { ctermfg = 142, fg = "#D9D9D9", nocombine = true })
@@ -157,7 +158,7 @@ vim.api.nvim_set_hl(0, "BufferLineBuffer", { fg = "#c2c2c2", bg = "#d5d5d5", bol
 
 -- syntax and treesitter
 
-vim.api.nvim_set_hl(0, "@parameter", { fg = "#424242" })
+vim.api.nvim_set_hl(0, "@parameter", { fg = "#6d705b" })
 vim.api.nvim_set_hl(0, "@parameter.reference", { link = "@parameter" })
 vim.api.nvim_set_hl(0, "@variable.builtin", { italic = true, fg = "#7A3E9D" })
 vim.api.nvim_set_hl(0, "@method.call", { bold = true, fg = "#6c6c6c" })
@@ -167,3 +168,21 @@ vim.api.nvim_set_hl(0, "Repeat", { italic = true, fg = "#6d705b" })
 vim.api.nvim_set_hl(0, "@repeat", { italic = true, fg = "#6d705b" })
 -- vim.api.nvim_set_hl(0, "Comment", { italic = true, fg = "#c2c2c2", bold = true })
 -- vim.api.nvim_set_hl(0, "@comment", { italic = true, fg = "#c2c2c2", bold = true })
+vim.api.nvim_set_hl(0, "@type.builtin", { bold = true, fg = "#aa3731" })
+vim.api.nvim_set_hl(0, "Keyword", { italic = true, fg = "#4B69C6" })
+vim.api.nvim_set_hl(0, "Exception", { bold = true, fg = "#aa3731" })
+vim.api.nvim_set_hl(0, "@keyword.operator", { bold = true, fg = "#448C27" })
+vim.api.nvim_set_hl(0, "NonText", { bold = true, fg = "#EDEDF5" })
+
+-- treesitter-markdown
+vim.api.nvim_set_hl(0, "Normal", { fg = "#686C6D", bg = "#f5f5f5" })
+vim.api.nvim_set_hl(0, "@text.title", { bold = true, fg = "#535759" })
+vim.api.nvim_set_hl(0, "@text.strong", { bold = true, fg = "#686C6D" })
+-- vim.api.nvim_set_hl(0, "@text.literal", { fg = "#656A6C", bg = "#EFF1F3" })
+vim.api.nvim_set_hl(0, "@text.literal", { fg = "#656A6C", bg = "#EDEDF5" })
+vim.api.nvim_set_hl(0, "@text.reference", { fg = "#6886AA", bold = true })
+vim.api.nvim_set_hl(0, "@text.uri", { fg = "#6886AA" })
+vim.api.nvim_set_hl(0, "@punctuation.special", { fg = "#919394", bold = true })
+vim.api.nvim_set_hl(0, "@text.quote", { fg = "#A7A9AA", bg = "#EDEDF5" })
+vim.api.nvim_set_hl(0, "SpellBad", { undercurl = true })
+vim.api.nvim_set_hl(0, "SpellLocal", { underline = true })

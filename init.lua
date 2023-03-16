@@ -25,7 +25,7 @@ if vim.g.neovide then
 
 	-- vim.g.neovide_input_use_logo = 1
 
-	vim.opt.guifont = { "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h12" }
+	vim.opt.guifont = { "Consolas_NF", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h12" }
 	vim.g.neovide_hide_mouse_when_typing = false
 	vim.g.neovide_underline_automatic_scaling = false
 	-- refresh rate when fouces on neovide
@@ -76,8 +76,13 @@ if vim.env.NVIM_LIGHTTT == "1" then
 	-- require("colorscheme-dev")
 	require("colorschemeLight")
 else
+	-- if vim.g.neovide then
+	-- 	require("colorschemeLight")
+	-- else
+	-- 	require("colorscheme")
+	-- 	-- require("colorscheme-test")
+	-- end
 	require("colorscheme")
-	-- require("colorscheme-test")
 end
 
 -- NOTE: load

@@ -27,3 +27,7 @@ vim.cmd("setlocal spell spelllang=en_us,cjk") -- switch spell check on
 -- 超过80字符自动添加换行符
 -- TODO: 如何实现超过80个字符后，先添加两个空格然后添加换行符
 -- vim.bo.textwidth = 80
+
+if vim.env.NVIM_LIGHTTT == "1" then
+	vim.cmd("hi clear CursorLine")
+end

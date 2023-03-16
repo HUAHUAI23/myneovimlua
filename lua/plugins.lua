@@ -285,7 +285,8 @@ return require("packer").startup({
 		})
 		-- markdown work flow
 		use({
-			"HUAHUAI23/mkdnflow.nvim",
+			-- "HUAHUAI23/mkdnflow.nvim",
+			"jakewvincent/mkdnflow.nvim",
 			ft = "markdown",
 			branch = "dev",
 			-- 通过lua包管理器下载一些lua依赖包

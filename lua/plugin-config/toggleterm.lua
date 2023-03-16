@@ -11,9 +11,9 @@ if vim.env.NVIM_LIGHTTT == "1" then
 	toggleterm.setup({
 		size = function(term)
 			if term.direction == "horizontal" then
-				return vim.o.lines * 0.35
+				return math.floor(vim.o.lines * 0.35)
 			elseif term.direction == "vertical" then
-				return vim.o.columns * 0.3
+				return math.floor(vim.o.columns * 0.3)
 			end
 		end,
 		start_in_insert = true,
@@ -21,14 +21,30 @@ if vim.env.NVIM_LIGHTTT == "1" then
 		shading_factor = 1,
 		shade_terminals = true,
 		highlights = {
-			FloatBorder = {
-				link = "FloatBorder",
-			},
 			NormalFloat = {
 				link = "NormalFloat",
 			},
+			FloatBorder = {
+				link = "FloatBorder",
+			},
+			Normal = {
+				link = "Normal",
+			},
+			-- NormalFloat = {
+			-- 	guifg = "#ebdbb2",
+			-- 	guibg = "#2c323b",
+			-- },
+			-- FloatBorder = {
+			-- 	guifg = "#2c323b",
+			-- 	guibg = "#2c323b",
+			-- },
 			-- Normal = {
-			-- 	link = "Normal",
+			-- 	guifg = "#ebdbb2",
+			-- 	guibg = "#2c323b",
+			-- },
+			-- Winbar = {
+			-- 	guifg = "#2c323b",
+			-- 	guibg = "#2c323b",
 			-- },
 		},
 	})
@@ -36,9 +52,9 @@ else
 	toggleterm.setup({
 		size = function(term)
 			if term.direction == "horizontal" then
-				return vim.o.lines * 0.35
+				return math.floor(vim.o.lines * 0.35)
 			elseif term.direction == "vertical" then
-				return vim.o.columns * 0.3
+				return math.floor(vim.o.columns * 0.3)
 			end
 		end,
 		start_in_insert = true,
@@ -48,6 +64,9 @@ else
 				link = "FloatBorder",
 			},
 			NormalFloat = {
+				link = "Normal",
+			},
+			Normal = {
 				link = "Normal",
 			},
 		},
@@ -118,7 +137,7 @@ local td = Terminal:new({
 	direction = "vertical",
 	close_on_exit = true,
 	on_open = function(t)
-		vim.api.nvim_win_set_width(t.window, vim.o.columns * 0.8)
+		vim.api.nvim_win_set_width(t.window, math.floor(vim.o.columns * 0.8))
 	end,
 	on_stderr = function(t, job, data, name)
 		vim.pretty_print(name)

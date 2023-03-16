@@ -24,7 +24,7 @@ local caselist = {
 	end,
 	b = function()
 		require("nvim-quietlight").setup({
-			ansi_terminal_colors = "",
+			ansi_terminal_colors = "colors3",
 		})
 		local colorscheme = "quietlight"
 		---@diagnostic disable-next-line: param-type-mismatch
