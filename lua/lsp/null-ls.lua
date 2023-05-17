@@ -23,17 +23,17 @@ local sources = {
 	formatting.clang_format,
 	formatting.fixjson,
 	formatting.prettier.with({
-		disabled_filetypes = { "markdown", "typescript" },
+		disabled_filetypes = { "markdown" },
 		prefer_local = "node_modules/.bin",
 		-- milliseconds
 		-- NOTE: The maximum processing time of prettier,
 		-- if file size is very large,the maximum processing time should be more longer
 		timeout = 30000,
 	}),
-	formatting.deno_fmt.with({
-		filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-		timeout = 30000,
-	}),
+	-- formatting.deno_fmt.with({
+	-- 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+	-- 	timeout = 30000,
+	-- }),
 	formatting.sql_formatter,
 	formatting.stylua,
 	formatting.markdownlint.with({
@@ -51,7 +51,7 @@ local sources = {
 	-- diagnostics.checkmake, markdownlint
 	diagnostics.eslint.with({
 		prefer_local = "node_modules/.bin",
-		method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+		-- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 		condition = function()
 			local max_filesize = commConf.largefileEdge -- 100 KB
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))
@@ -129,6 +129,8 @@ null_ls.setup({
 				})
 			end
 		end
+
+		vim.cmd([[LspExtension remove_semantic_tokens_highlight]])
 
 		-- TODO: fix markdown file
 		-- there are some lsp keymap the markdown file don't need

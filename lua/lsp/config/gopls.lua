@@ -4,9 +4,9 @@ local root_files = {
 local util = require("lspconfig.util")
 local lspComm = require("lsp.common-config")
 local opts = {
-	capabilities = require("lsp.common-config").capabilities,
+	capabilities = lspComm.capabilities,
 	on_attach = function(client, bufnr)
-		lspComm.keyAttach(bufnr)
+		-- lspComm.keyAttach(bufnr)
 		if lspComm.navic then
 			lspComm.navic.attach(client, bufnr)
 		end
@@ -15,7 +15,7 @@ local opts = {
 		-- lspComm.hlSymUdrCursor(client, bufnr)  -- vim-illuminate plugin do this
 		-- lspComm.disableFormat(client)
 	end,
-	handlers = require("lsp.common-config").handlers,
+	handlers = lspComm.handlers,
 	root_dir = function(fname)
 		return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
 	end,

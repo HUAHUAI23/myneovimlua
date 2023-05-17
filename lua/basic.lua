@@ -10,6 +10,7 @@ else
 	vim.wo.number = true
 	vim.wo.signcolumn = "yes"
 	vim.o.showtabline = 1
+	require("dev42.usercmd")
 end
 -- utf8
 vim.g.encoding = "UTF-8"

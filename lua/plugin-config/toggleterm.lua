@@ -18,18 +18,33 @@ if vim.env.NVIM_LIGHTTT == "1" then
 		end,
 		start_in_insert = true,
 		persist_size = false,
-		shading_factor = 1,
-		shade_terminals = true,
+		-- shading_factor = 1,
+		shade_terminals = false,
 		highlights = {
 			NormalFloat = {
-				link = "NormalFloat",
+				-- link = "NormalFloat",
+				guifg = "#444963",
+				guibg = "#f5f5f5",
 			},
 			FloatBorder = {
 				link = "FloatBorder",
 			},
 			Normal = {
-				link = "Normal",
+				-- link = "Normal",
+				guifg = "#444963",
+				guibg = "#f5f5f5",
 			},
+			StatusLine = {
+				link = "StatusLine",
+			},
+			StatusLineNC = {
+				link = "StatusLine",
+			},
+			-- EndOfBuffer
+			-- SignColumn
+			-- WinBarActive
+			-- WinBarInactive
+
 			-- NormalFloat = {
 			-- 	guifg = "#ebdbb2",
 			-- 	guibg = "#2c323b",
@@ -42,7 +57,7 @@ if vim.env.NVIM_LIGHTTT == "1" then
 			-- 	guifg = "#ebdbb2",
 			-- 	guibg = "#2c323b",
 			-- },
-			-- Winbar = {
+			-- WinBarActive = {
 			-- 	guifg = "#2c323b",
 			-- 	guibg = "#2c323b",
 			-- },
@@ -87,6 +102,12 @@ local lazygit = Terminal:new({
 		EDITOR = 'env VIMINIT="source ${HOME1}/.config/nvim/minimalStart/init.mini.dev.lua" nvim',
 	},
 	close_on_exit = true,
+	on_stderr = function(t, job, data, name)
+		vim.pretty_print(name)
+		vim.pretty_print(data)
+		vim.cmd("call jobstop(" .. job .. ")")
+		t:shutdown()
+	end,
 })
 lazygit.id = 23
 lazygit.user_definename = "lazygit"
@@ -101,7 +122,7 @@ local ta = Terminal:new({
 		vim.pretty_print(name)
 		vim.pretty_print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
-		t.shutdown()
+		t:shutdown()
 	end,
 })
 ta.id = 11
@@ -114,7 +135,7 @@ local tb = Terminal:new({
 		vim.pretty_print(name)
 		vim.pretty_print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
-		t.shutdown()
+		t:shutdown()
 	end,
 })
 tb.id = 22
@@ -127,7 +148,7 @@ local tc = Terminal:new({
 		vim.pretty_print(name)
 		vim.pretty_print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
-		t.shutdown()
+		t:shutdown()
 	end,
 })
 tc.id = 33
@@ -143,11 +164,30 @@ local td = Terminal:new({
 		vim.pretty_print(name)
 		vim.pretty_print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
-		t.shutdown()
+		t:shutdown()
 	end,
 })
 td.id = 42
 td.user_definename = "80vertical_term"
+
+local tx = Terminal:new({
+	direction = "horizontal",
+	close_on_exit = true,
+	on_open = function(t)
+		vim.api.nvim_win_set_height(t.window, math.floor(vim.o.lines * 0.5))
+		vim.keymap.set({ "n", "t" }, "<M-q>", function()
+			t:close()
+		end, { buffer = t.bufnr })
+	end,
+	on_stderr = function(t, job, data, name)
+		vim.pretty_print(name)
+		vim.pretty_print(data)
+		vim.cmd("call jobstop(" .. job .. ")")
+		t:shutdown()
+	end,
+})
+tx.id = 13
+tx.user_definename = "80compile_term"
 
 local M = {}
 
@@ -183,6 +223,9 @@ M.toggleA = function()
 	if td:is_open() then
 		td:close()
 	end
+	if tx:is_open() then
+		tx:close()
+	end
 	if lazygit:is_open() then
 		lazygit:close()
 	end
@@ -203,6 +246,9 @@ M.toggleB = function()
 	end
 	if td:is_open() then
 		td:close()
+	end
+	if tx:is_open() then
+		tx:close()
 	end
 	if lazygit:is_open() then
 		lazygit:close()
@@ -225,6 +271,9 @@ M.toggleC = function()
 	if td:is_open() then
 		td:close()
 	end
+	if tx:is_open() then
+		tx:close()
+	end
 	if lazygit:is_open() then
 		lazygit:close()
 	end
@@ -245,6 +294,9 @@ M.toggleD = function()
 	end
 	if tc:is_open() then
 		tc:close()
+	end
+	if tx:is_open() then
+		tx:close()
 	end
 	if lazygit:is_open() then
 		lazygit:close()
@@ -270,11 +322,62 @@ M.toggleG = function()
 	if td:is_open() then
 		td:close()
 	end
+	if tx:is_open() then
+		tx:close()
+	end
 	if lazygit:is_open() then
 		lazygit:close()
 	else
 		others_win_close()
 		lazygit:open()
+	end
+end
+M.toggleCompile = function()
+	local compiler = {
+		javascript = "node",
+		python = "python",
+		c = "gcc -g -Wall",
+	}
+	local compile_cmd = compiler[vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "filetype")] or "ls"
+	local filepath = vim.fn.expand(vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())):gsub(" ", "\\ ")
+	local cmd = nil
+	local parent_dir = vim.fn.expand("%:p:h"):gsub(" ", "\\ ")
+	-- local path = "/home/user/documents/file.txt"
+	-- local parentDir = path:match("(.*/)")
+	-- local cmd = { "clear", compile_cmd .. " " .. filepath }
+
+	if vim.api.nvim_buf_get_option(vim.api.nvim_get_current_buf(), "filetype") == "c" then
+		cmd = {
+			"cd" .. " " .. parent_dir,
+			compile_cmd .. " " .. filepath .. " " .. "-o" .. " " .. filepath .. ".exe",
+			filepath .. ".exe",
+		}
+	else
+		cmd = compile_cmd .. " " .. filepath
+	end
+	if ta:is_open() then
+		ta:close()
+	end
+	if tb:is_open() then
+		tb:close()
+	end
+	if tc:is_open() then
+		tc:close()
+	end
+	if td:is_open() then
+		td:close()
+	end
+	if lazygit:is_open() then
+		lazygit:close()
+	end
+	if tx:is_open() then
+		tx:close()
+	else
+		others_win_close()
+		vim.cmd([[write]]) -- must before tx:open(), tx:open() will change the current window
+		tx:open()
+		-- vim.pretty_print(cmd)
+		tx:send(cmd)
 	end
 end
 
@@ -296,6 +399,9 @@ vim.api.nvim_create_user_command("CloseAllterm", function(_)
 	end
 	if lazygit:is_open() then
 		lazygit:close()
+	end
+	if tx:is_open() then
+		tx:close()
 	end
 end, {
 	desc = "close all opend terminal",

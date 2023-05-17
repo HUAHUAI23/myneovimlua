@@ -266,6 +266,14 @@ keybind.editorNormal = {
 		description = "open terminal vertical split",
 	},
 }
+-- devtools
+vim.keymap.set("n", norl.toggle_signcolumn, function()
+	if vim.o.signcolumn == "no" then
+		vim.o.signcolumn = "yes"
+	else
+		vim.o.signcolumn = "no"
+	end
+end, { silent = false, noremap = true, desc = "toggle signcolumn" })
 
 -- NOTE: visual mode keybindings
 keybind.editorVisual = {
@@ -730,11 +738,28 @@ keybind.pluginKeys.mapDAP = function()
 		{ noremap = true, silent = true, desc = "terminate debuggings" }
 	)
 	-- 继续
-	vim.api.nvim_set_keymap(
+	-- vim.api.nvim_set_keymap(
+	-- 	"n",
+	-- 	dapp.debugg,
+	-- 	-- ":lua require'dap'.continue()<CR>",
+	-- 	"<cmd>DapContinuee<CR>",
+	-- 	{ noremap = true, silent = true, desc = "start debuggings" }
+	-- )
+	vim.keymap.set(
 		"n",
 		dapp.debugg,
 		-- ":lua require'dap'.continue()<CR>",
-		"<cmd>DapContinuee<CR>",
+		function()
+			if vim.api.nvim_buf_get_option(0, "filetype") == "lua" then
+				vim.cmd([[write]])
+				vim.cmd([[messages clear]])
+				vim.cmd([[luafile %]])
+				vim.cmd([[RecommandTo messages]])
+			else
+				vim.cmd([[write]])
+				vim.cmd([[DapContinuee]])
+			end
+		end,
 		{ noremap = true, silent = true, desc = "start debuggings" }
 	)
 	-- 设置断点
@@ -835,14 +860,14 @@ keybind.pluginKeys.cmp = function(luasnip, cmp)
 		end, { "i", "s" }),
 		[cmpp.cmp_scroll_doc_down] = cmp.mapping.scroll_docs(4),
 		[cmpp.cmp_scroll_doc_up] = cmp.mapping.scroll_docs(-4),
-		[cmpp.cmp_select_next_item] = cmp.mapping(
-			cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior }),
-			{ "i", "c" }
-		),
-		[cmpp.cmp_select_prev_item] = cmp.mapping(
-			cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior }),
-			{ "i", "c" }
-		),
+		-- [cmpp.cmp_select_next_item] = cmp.mapping(
+		-- 	cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior }),
+		-- 	{ "i", "c" }
+		-- ),
+		-- [cmpp.cmp_select_prev_item] = cmp.mapping(
+		-- 	cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior }),
+		-- 	{ "i", "c" }
+		-- ),
 		-- [cmpp.cmp_trigge] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 		[cmpp.cmp_trigge] = cmp.mapping.complete(),
 		[cmpp.cmp_abort] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
@@ -883,6 +908,7 @@ keybind.pluginKeys.mapToggleTerm = function(toggleterm)
 	vim.keymap.set("n", toggletermm.toggleC, toggleterm.toggleC, { desc = "opent bottom terminal" })
 	vim.keymap.set("n", toggletermm.toggleD, toggleterm.toggleD, { desc = "opent 0.8 right side terminal" })
 	vim.keymap.set("n", toggletermm.toggleG, toggleterm.toggleG, { desc = "opent lazygit terminal" })
+	vim.keymap.set("n", toggletermm.toggleCompile, toggleterm.toggleCompile, { desc = "compile and run code" })
 end
 
 -- gitsigns

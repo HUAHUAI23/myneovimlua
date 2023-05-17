@@ -1,9 +1,11 @@
 local api = vim.api
 -- command open dapui float
 -- refer: https://github.com/rcarriga/nvim-dap-ui
+
 api.nvim_create_user_command("DapFloatWin", function(args)
 	local dapfloat = {
 		"scopes",
+		"60scopes",
 		"stacks",
 		"console",
 		"breakpoints",
@@ -11,7 +13,11 @@ api.nvim_create_user_command("DapFloatWin", function(args)
 		"repl",
 	}
 	if vim.tbl_contains(dapfloat, args.fargs[1]) then
-		require("dapui").float_element(args.fargs[1], { enter = true })
+		if args.fargs[1] == "60scopes" then
+			require("dapui").float_element("scopes", { enter = true, height = 30, width = 60, position = "center" })
+		else
+			require("dapui").float_element(args.fargs[1], { enter = true })
+		end
 	else
 		---@diagnostic disable-next-line: missing-parameter
 		require("dapui").float_element()
@@ -23,6 +29,7 @@ end, {
 	complete = function(A, L, P)
 		return {
 			"scopes",
+			"60scopes",
 			"stacks",
 			"console",
 			"breakpoints",

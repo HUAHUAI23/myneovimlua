@@ -225,6 +225,14 @@ vim.api.nvim_create_user_command("LspExtension", function(args)
 		"stop_semantic_tokens",
 		"start_semantic_tokens",
 		"get_semantic_tokens_cursor",
+		"remove_semantic_tokens_highlight",
+		"add_semantic_tokens_highlight",
+		-- TODO: add tree-sitter token
+	}
+	local lspSrv = {
+		"lua_ls",
+		"pyleft",
+		"tsserver",
 	}
 
 	local caselist = {
@@ -234,13 +242,13 @@ vim.api.nvim_create_user_command("LspExtension", function(args)
 		end,
 		get_all_active_clients = function()
 			for _, value in ipairs(vim.lsp.get_active_clients()) do
-				vim.pretty_print(value)
+				vim.print(value)
 			end
 		end,
 		get_single_active_client = function(active_client_name)
 			for _, value in ipairs(vim.lsp.get_active_clients()) do
 				if value.name == active_client_name[2] then
-					vim.pretty_print(value)
+					vim.print(value)
 				end
 			end
 		end,
@@ -248,10 +256,40 @@ vim.api.nvim_create_user_command("LspExtension", function(args)
 			vim.pretty_print(vim.lsp.semantic_tokens.get_at_pos())
 		end,
 		start_semantic_tokens = function()
-			vim.lsp.semantic_tokens.start()
+			for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+				if vim.tbl_contains(lspSrv, client.name) then
+					vim.lsp.semantic_tokens.start(vim.api.nvim_get_current_buf(), client.id, {})
+				end
+			end
 		end,
 		stop_semantic_tokens = function()
-			vim.lsp.semantic_tokens.stop()
+			for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+				if vim.tbl_contains(lspSrv, client.name) then
+					vim.lsp.semantic_tokens.stop(vim.api.nvim_get_current_buf(), client.id)
+				end
+			end
+		end,
+		remove_semantic_tokens_highlight = function()
+			for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+				vim.api.nvim_set_hl(0, group, {})
+			end
+		end,
+		add_semantic_tokens_highlight = function()
+			vim.api.nvim_set_hl(0, "@lsp.type.class", { link = "Structure" })
+			vim.api.nvim_set_hl(0, "@lsp.type.decorator", { link = "Function" })
+			vim.api.nvim_set_hl(0, "@lsp.type.enum", { link = "Structure" })
+			vim.api.nvim_set_hl(0, "@lsp.type.enumMember", { link = "Constant" })
+			vim.api.nvim_set_hl(0, "@lsp.type.function", { link = "Function" })
+			vim.api.nvim_set_hl(0, "@lsp.type.interface", { link = "Structure" })
+			vim.api.nvim_set_hl(0, "@lsp.type.macro", { link = "Macro" })
+			vim.api.nvim_set_hl(0, "@lsp.type.method", { link = "Function" })
+			vim.api.nvim_set_hl(0, "@lsp.type.namespace", { link = "Structure" })
+			vim.api.nvim_set_hl(0, "@lsp.type.parameter", { link = "Identifier" })
+			vim.api.nvim_set_hl(0, "@lsp.type.property", { link = "Identifier" })
+			vim.api.nvim_set_hl(0, "@lsp.type.struct", { link = "Structure" })
+			vim.api.nvim_set_hl(0, "@lsp.type.type", { link = "Type" })
+			vim.api.nvim_set_hl(0, "@lsp.type.typeParameter", { link = "TypeDef" })
+			vim.api.nvim_set_hl(0, "@lsp.type.variable", { link = "Identifier" })
 		end,
 	}
 	if vim.tbl_contains(args_table, args.fargs[1]) then
@@ -276,6 +314,8 @@ end, {
 				"stop_semantic_tokens",
 				"start_semantic_tokens",
 				"get_semantic_tokens_cursor",
+				"add_semantic_tokens_highlight",
+				"remove_semantic_tokens_highlight",
 			}
 		end
 	end,

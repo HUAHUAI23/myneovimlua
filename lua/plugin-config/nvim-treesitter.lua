@@ -29,6 +29,7 @@ treesitter.setup({
 		"markdown",
 		"markdown_inline",
 		"go",
+		"sql",
 	},
 	-- Install parsers synchronously (only applied to `ensure_installed`)
 	sync_install = false,

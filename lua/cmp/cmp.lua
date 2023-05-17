@@ -47,49 +47,42 @@ local ifEnable = function()
 end
 
 -- UI
--- local kind_icons = {
--- 	Text = "",
--- 	Method = "",
--- 	Function = "",
--- 	Constructor = "",
--- 	Field = "",
--- 	Variable = "",
--- 	Class = "ﴯ",
--- 	Interface = "",
--- 	Module = "",
--- 	Property = "ﰠ",
--- 	Unit = "",
--- 	Value = "",
--- 	Enum = "",
--- 	Keyword = "",
--- 	Snippet = "",
--- 	Color = "",
--- 	File = "",
--- 	Reference = "",
--- 	Folder = "",
--- 	EnumMember = "",
--- 	Constant = "",
--- 	Struct = "",
--- 	Event = "",
--- 	Operator = "",
--- 	TypeParameter = "",
--- }
 
-local lspkind
-status, lspkind = pcall(require, "lspkind")
-if not status then
-	vim.notify("没有找到 lspkind")
-	return
-end
-
-local source_mapping = {
-	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
-	luasnip = "[LuaSnip]",
-	dap = "[DAP]",
-	path = "[Path]",
-	cmp_tabnine = "[TN]",
-}
+-- local lspkind
+-- status, lspkind = pcall(require, "lspkind")
+-- if not status then
+-- 	vim.notify("没有找到 lspkind")
+-- 	return
+-- end
+-- lspkind.init({
+-- 	symbol_map = {
+-- 		Text = "",
+-- 		Method = "ƒ",
+-- 		Function = "",
+-- 		Constructor = "",
+-- 		Field = "",
+-- 		Variable = "",
+-- 		Class = "ﴯ",
+-- 		Interface = "",
+-- 		Module = "",
+-- 		Property = "ﰠ",
+-- 		Unit = "",
+-- 		Value = "",
+-- 		Enum = "",
+-- 		Keyword = "",
+-- 		Snippet = "",
+-- 		Color = "",
+-- 		File = "",
+-- 		Reference = "",
+-- 		Folder = "",
+-- 		EnumMember = "",
+-- 		Constant = "",
+-- 		Struct = "",
+-- 		Event = "",
+-- 		Operator = "",
+-- 		TypeParameter = "",
+-- 	},
+-- })
 
 --cmp config
 -- https://github.com/hrsh7th/nvim-cmp
@@ -115,15 +108,38 @@ cmp.setup({
 	-- 		return vim_item
 	-- 	end,
 	-- },
+
 	formatting = {
 		format = function(entry, vim_item)
-			-- https://github.com/tzachar/cmp-tabnine#pretty-printing-menu-items
-			-- if you have lspkind installed, you can use it like
-			-- in the following line:
-			vim_item.kind = lspkind.symbolic(vim_item.kind, { mode = "symbol" })
-			vim_item.menu = source_mapping[entry.source.name]
+			local kind_icons = {
+				Text = "",
+				Method = "ƒ",
+				Function = "",
+				Constructor = "",
+				Field = "",
+				Variable = "",
+				Class = "ﴯ",
+				Interface = "",
+				Module = "",
+				Property = "ﰠ",
+				Unit = "",
+				Value = "",
+				Enum = "",
+				Keyword = "",
+				Snippet = "",
+				Color = "",
+				File = "",
+				Reference = "",
+				Folder = "",
+				EnumMember = "",
+				Constant = "",
+				Struct = "",
+				Event = "",
+				Operator = "",
+				TypeParameter = "",
+			}
 			if entry.source.name == "cmp_tabnine" then
-				local detail = (entry.completion_item.data or {}).detail
+				local detail = (entry.completion_item.labelDetails or {}).detail
 				vim_item.kind = ""
 				if detail and detail:find(".*%%.*") then
 					vim_item.kind = vim_item.kind .. " " .. detail
@@ -132,13 +148,38 @@ cmp.setup({
 				if (entry.completion_item.data or {}).multiline then
 					vim_item.kind = vim_item.kind .. " " .. "[ML]"
 				end
+			else
+				-- Kind icons
+				vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			end
+			-- Source
+			vim_item.menu = ({
+				buffer = "[Buffer]",
+				nvim_lsp = "[LSP]",
+				luasnip = "[LuaSnip]",
+				dap = "[DAP]",
+				path = "[Path]",
+				cmp_tabnine = "[TN]",
+			})[entry.source.name]
+
 			-- the maximum length of the menu item, if it's logger than this value, it will be truncated
 			local maxwidth = 80
-			vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+			local ellipsis_char = "…"
+			if maxwidth ~= nil then
+				if ellipsis_char == nil then
+					vim_item.abbr = string.sub(vim_item.abbr, 1, maxwidth)
+				else
+					local label = vim_item.abbr
+					local truncated_label = vim.fn.strcharpart(label, 0, maxwidth)
+					if truncated_label ~= label then
+						vim_item.abbr = truncated_label .. ellipsis_char
+					end
+				end
+			end
 			return vim_item
 		end,
 	},
+
 	-- not enable auto-completion in comments and in large file will not use treesitter
 	enabled = ifEnable,
 	snippet = {
@@ -302,8 +343,9 @@ tabnine:setup({
 		-- uncomment to ignore in lua:
 		-- lua = true
 		markdown = true,
+		html = true,
 	},
-	-- show_prediction_strength = false,
+	-- show_prediction_strength = false
 })
 -- reset cmp sorting with tabnine
 local compare = require("cmp.config.compare")
@@ -330,11 +372,27 @@ local prefetch = vim.api.nvim_create_augroup("prefetch", { clear = true })
 
 vim.api.nvim_create_autocmd("BufRead", {
 	group = prefetch,
-	pattern = { "*.py", "*.lua", "*.js", "*.sh" },
+	pattern = { "*.py", "*.lua", "*.js", "*.sh", "*.c", "*.ts" },
 	callback = function()
 		require("cmp_tabnine"):prefetch(vim.fn.expand("%:p"))
 	end,
 })
+
+-- local tabnine
+-- status, tabnine = pcall(require, "tabnine")
+-- if not status then
+-- 	vim.notify("没有找到 cmp-tabnine")
+-- 	return
+-- end
+-- tabnine.setup({
+-- 	disable_auto_comment = true,
+-- 	accept_keymap = keybindingAlias.tabline.accept_keymap,
+-- 	dismiss_keymap = keybindingAlias.tabline.dismiss_keymap,
+-- 	debounce_ms = 800,
+-- 	suggestion_color = { gui = "#808080", cterm = 244 },
+-- 	exclude_filetypes = { "TelescopePrompt", "markdown", "html" },
+-- 	log_file_path = nil, -- absolute path to Tabnine log file
+-- })
 
 -- github Copilot
 -- ctrl x | xx
@@ -348,6 +406,8 @@ vim.api.nvim_set_var("copilot_filetypes", {
 	["lua"] = true,
 	["javascript"] = true,
 	["sh"] = true,
+	["c"] = true,
+	["typescript"] = true,
 })
 
 vim.api.nvim_set_keymap(

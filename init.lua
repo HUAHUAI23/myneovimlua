@@ -6,6 +6,11 @@
 if vim.g.neovide then
 	-- Put anything you want to happen only in Neovide here
 
+	-- map ctrl-/
+	-- vim.keymap.set("n", [[<c-/>]], function()
+	-- 	vim.pretty_print("fffff")
+	-- end)
+
 	-- set ctrl v to paste from "+" register
 	-- vim.keymap.set("n", "<c-v>", '"+<space>p') -- Paste normal mode
 	-- vim.keymap.set("n", "<c-v>", '"+P') -- Paste normal mode
@@ -53,6 +58,22 @@ if vim.g.neovide then
 	vim.g.neovide_cursor_animate_command_line = true
 	vim.g.neovide_cursor_unfocused_outline_width = 0.125
 	-- vim.g.neovide_cursor_vfx_mode = "railgun"
+
+	-- padding
+	vim.g.neovide_padding_left = 8
+	vim.g.neovide_padding_right = 8
+
+	-- scale
+	-- vim.g.neovide_scale_factor = 1.0
+	-- local change_scale_factor = function(delta)
+	-- 	vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+	-- end
+	-- vim.keymap.set("n", [[<C-=>]], function()
+	-- 	change_scale_factor(1.25)
+	-- end)
+	-- vim.keymap.set("n", [[<C-->]], function()
+	-- 	change_scale_factor(1 / 1.25)
+	-- end)
 end
 
 -- TODO: use loop to disable bulks of plugins

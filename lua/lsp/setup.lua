@@ -111,7 +111,7 @@ local servers = {
 	gopls = require("lsp.config.gopls"),
 	-- ltex = require("lsp.config.ltex"),
 	-- quick_lint_js = require("lsp.config.quick-lint-js"),
-	sqls = require("lsp.config.sqls"),
+	sqlls = require("lsp.config.sqls"),
 	-- css html
 	emmet_ls = require("lsp.config.emmet-ls"),
 	html = require("lsp.config.html"),

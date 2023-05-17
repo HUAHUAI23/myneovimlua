@@ -4,12 +4,15 @@ local opts = {
 	capabilities = capabilities,
 	---@diagnostic disable-next-line: unused-local
 	on_attach = function(client, bufnr)
-		-- local lspComm = require("lsp.common-config")
+		local lspComm = require("lsp.common-config")
 		-- lspComm.keyAttach(bufnr)
-		vim.opt_local.winbar = "%{%v:lua.require('nvim-navic').get_location()%}"
 		-- lspComm.shwLinDiaAtom(bufnr)
 		-- lspComm.hlSymUdrCursor(client, bufnr)
 		-- lspComm.disableFormat(client)
+		if lspComm.navic then
+			lspComm.navic.attach(client, bufnr)
+		end
+		vim.opt_local.winbar = lspComm.winbarrs
 	end,
 	handlers = require("lsp.common-config").handlers,
 }

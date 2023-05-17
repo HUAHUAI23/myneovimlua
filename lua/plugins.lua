@@ -40,29 +40,30 @@ return require("packer").startup({
 		use({ "cocopon/iceberg.vim" })
 
 		use("HUAHUAI23/nvim-quietlight")
+
 		-- 底部状态栏 statusline
-		-- use({
-		-- 	"nvim-lualine/lualine.nvim",
-		-- 	requires = { "kyazdani42/nvim-web-devicons", opt = true },
-		-- 	event = "BufEnter",
-		-- 	config = function()
-		-- 		require("plugin-config.lualine")
-		-- 	end,
-		-- 	after = "nvim-web-devicons",
-		-- })
+		use({
+			"nvim-lualine/lualine.nvim",
+			requires = { "kyazdani42/nvim-web-devicons", opt = true },
+			event = "BufEnter",
+			config = function()
+				require("plugin-config.lualine")
+			end,
+			after = "nvim-web-devicons",
+		})
 
 		-- 顶部状态栏 bufferline
-		-- use({
-		-- 	"akinsho/bufferline.nvim",
-		-- 	-- tag = "v2.*",
-		-- 	tag = "v3.*",
-		-- 	requires = "nvim-tree/nvim-web-devicons",
-		-- 	event = "BufEnter",
-		-- 	config = function()
-		-- 		require("plugin-config.bufferline")
-		-- 	end,
-		-- 	after = "nvim-web-devicons",
-		-- })
+		use({
+			"akinsho/bufferline.nvim",
+			-- tag = "v2.*",
+			tag = "v3.*",
+			requires = "nvim-tree/nvim-web-devicons",
+			event = "BufEnter",
+			config = function()
+				require("plugin-config.bufferline")
+			end,
+			after = "nvim-web-devicons",
+		})
 
 		-- sytax highlight
 		-- ---------------------------------------------------------
@@ -424,7 +425,7 @@ return require("packer").startup({
 		use({
 			"microsoft/vscode-js-debug",
 			opt = true,
-			run = "npm install --legacy-peer-deps && npm run compile",
+			run = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
 		})
 		-- -------nvim-cmp---------------
 		-- nvim-cmp
@@ -448,6 +449,7 @@ return require("packer").startup({
 		-- AI assistant
 		-- tabnine
 		use({ "tzachar/cmp-tabnine", run = "./install.sh", requires = "hrsh7th/nvim-cmp" })
+		-- use({ "codota/tabnine-nvim", run = "./dl_binaries.sh" })
 		--  GitHub Copilot
 		use({ "github/copilot.vim" })
 

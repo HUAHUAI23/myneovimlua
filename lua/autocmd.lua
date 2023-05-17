@@ -133,7 +133,7 @@ autocmd("BufReadPost", {
 			require("illuminate.engine").toggle()
 			-- vim.cmd("setlocal spell spelllang=en_us")
 		else
-			vim.pretty_print("hhhhhh")
+			vim.print("hhhhhh")
 			local luacache = (_G.__luacache or {}).cache
 			for pack, _ in pairs(package.loaded) do
 				if string.find(pack, "^" .. vim.pesc("indent_blankline")) then

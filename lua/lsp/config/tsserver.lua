@@ -13,7 +13,7 @@ local opts = {
 		end
 		vim.opt_local.winbar = lspComm.winbarrs
 		-- lspComm.shwLinDiaAtom(bufnr)
-		-- lspComm.disableFormat(client)
+		lspComm.disableFormat(client)
 		-- lspComm.hlSymUdrCursor(client, bufnr)
 	end,
 	single_file_support = true,

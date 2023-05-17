@@ -49,8 +49,10 @@ local M = {
 		move_2right = "s.",
 		move_resize = "s=",
 		-- terminal split
-		term_horizontal_split = "st",
+		term_horizontal_split = "sth",
 		term_vertical_split = "stv",
+		-- devtools
+		toggle_signcolumn = ";a",
 	},
 	-- insert 模式下键盘映射
 	insert = {
@@ -138,7 +140,7 @@ local M = {
 		cmp_trigge = "<M-h>",
 		-- PERF:
 		cmp_abort = "<M-k>",
-		-- luasnip
+		-- luasnip insert mode
 		luasnip_node_next = "<C-j>",
 		luasnip_node_prev = "<C-k>",
 	},
@@ -148,6 +150,7 @@ local M = {
 		toggleC = "<leader>tc",
 		toggleD = "<leader>td",
 		toggleG = "<Leader>tg",
+		toggleCompile = ";c",
 	},
 	gitsigns = {
 		gs_next_hunk = "<space>gj",
@@ -222,6 +225,13 @@ local M = {
 		vmagicSearch = "on",
 		nmagicSearch = "on",
 	},
+	tabline = {
+		accept_keymap = "<M-i>",
+		dismiss_keymap = "<M-y>",
+	},
 }
 
+-- tabnine: <M-i> <M-y>  copilot: <M-j>  comment: <c-/>  yanky: f3 mkdnflow: <M-.> <M-,> <M-n> <M-m>
+-- cmp: <cr> <Tab> <S-Tab> <C-u d j k> <M-h k>  dap: f5 f6 telescope: <C-f> lsp: g -> g <-
+-- normal visual insert: f1  norml visual command: <C-j k> normal: <C-u d>
 return M

@@ -7,28 +7,79 @@ dapui.setup({
 	-- expand_lines = vim.fn.has("nvim-0.7") == 1,
 	expand_lines = false,
 	layouts = {
-		-- {
-		-- 	elements = {
-		-- 		-- Elements can be strings or table with id and size keys.
-		-- 		{ id = "scopes", size = 0.25 },
-		-- 		"breakpoints",
-		-- 		"stacks",
-		-- 		"watches",
-		-- 	},
-		-- 	size = 30, -- 30 columns
-		-- 	position = "right",
-		-- },
 		{
 			elements = {
-				"repl",
-				"console",
+				{
+					id = "scopes",
+					size = 0.25,
+				},
+				{
+					id = "stacks",
+					size = 0.25,
+				},
+				{
+					id = "watches",
+					size = 0.25,
+				},
+				{
+					id = "breakpoints",
+					size = 0.25,
+				},
 			},
-			size = 0.3, -- 25% of total lines
+			position = "right",
+			size = 50,
+		},
+		{
+			elements = {
+				{
+					id = "repl",
+					size = 0.5,
+				},
+				{
+					id = "console",
+					size = 0.5,
+				},
+			},
 			position = "bottom",
+			size = 0.3,
 		},
 	},
 	floating = {
 		border = "rounded", -- Border style. Can be "single", "double" or "rounded"
+		mappings = {
+			close = { "q", "<Esc>" },
+		},
+	},
+	icons = {
+		collapsed = "",
+		current_frame = "",
+		expanded = "",
+	},
+	mappings = {
+		edit = "e",
+		expand = { "<CR>", "<2-LeftMouse>" },
+		open = "o",
+		remove = "d",
+		repl = "r",
+		toggle = "t",
+	},
+	controls = {
+		element = "repl",
+		enabled = true,
+		icons = {
+			disconnect = "",
+			pause = "",
+			play = "",
+			run_last = "",
+			step_back = "",
+			step_into = "",
+			step_out = "",
+			step_over = "",
+			terminate = "",
+		},
+	},
+	render = {
+		indent = 2,
 	},
 })
 
@@ -41,6 +92,31 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
 	vim.cmd("stopinsert")
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
+	-- save the repl buffer contents to a temp buffer
+	local get_buffer_contents = require("dev42.common-utils").get_buffer_contents
+	local ft = {
+		"javascript",
+		"python",
+		"c",
+	}
+	local repl_or_terminal = {
+		javascript = "dap-repl",
+		python = "dap-terminal",
+		c = "dap-terminal",
+	}
+
+	for _, winHandle in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_is_valid(winHandle) then
+			local win_buf_ft = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winHandle), "filetype")
+			-- vim.pretty_print(win_buf_ft)
+			if vim.tbl_contains(ft, win_buf_ft) then
+				local bufnr = vim.fn.bufnr(repl_or_terminal[win_buf_ft])
+				get_buffer_contents(bufnr)
+				break
+			end
+		end
+	end
+
 	dapui.close({})
 	local repl = dap.repl
 	repl.close()
