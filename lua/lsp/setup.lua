@@ -153,3 +153,6 @@ lspconfig.pyleft.setup({
 	end,
 	handlers = lspComm.handlers,
 })
+
+-- remove semantic highlight default
+vim.cmd([[LspExtension remove_semantic_tokens_highlight]])

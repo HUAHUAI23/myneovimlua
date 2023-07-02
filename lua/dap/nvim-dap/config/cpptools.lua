@@ -17,7 +17,7 @@ M.configuration = {
 				vim.cmd("!gcc -g -Wall " .. filepath .. " -o " .. filepath .. ".exe")
 				return vim.fn.expand("%:p") .. ".exe"
 			else
-				-- file 触发 neovim 自带的文件补全
+				-- file 触发 neovim 自带的文件补全 参考 :h input() 第三个参数
 				return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 			end
 		end,

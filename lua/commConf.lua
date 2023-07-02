@@ -25,6 +25,10 @@
 
 -- 12. semantic syntax treesitter spellcheck onenote intergration
 local commconf = {}
+-- CONSTANT
+
+commconf.stdpath = vim.fn.stdpath("config")
+
 -- file size handler
 commconf.illuminateLargefileEdge = 2000 -- 2000 lines
 commconf.rainbowLargefileEdge = 2000 -- 2000 lines

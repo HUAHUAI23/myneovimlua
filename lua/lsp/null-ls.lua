@@ -130,7 +130,7 @@ null_ls.setup({
 			end
 		end
 
-		vim.cmd([[LspExtension remove_semantic_tokens_highlight]])
+		-- vim.cmd([[LspExtension remove_semantic_tokens_highlight]])
 
 		-- TODO: fix markdown file
 		-- there are some lsp keymap the markdown file don't need

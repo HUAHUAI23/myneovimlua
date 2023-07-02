@@ -47,7 +47,6 @@ local ifEnable = function()
 end
 
 -- UI
-
 -- local lspkind
 -- status, lspkind = pcall(require, "lspkind")
 -- if not status then
@@ -56,31 +55,31 @@ end
 -- end
 -- lspkind.init({
 -- 	symbol_map = {
--- 		Text = "",
--- 		Method = "ƒ",
--- 		Function = "",
--- 		Constructor = "",
--- 		Field = "",
--- 		Variable = "",
--- 		Class = "ﴯ",
--- 		Interface = "",
--- 		Module = "",
--- 		Property = "ﰠ",
--- 		Unit = "",
--- 		Value = "",
--- 		Enum = "",
--- 		Keyword = "",
+-- 		Text = "",
+-- 		Method = "󰫺",
+-- 		Function = "󰡱",
+-- 		Constructor = "󰡢",
+-- 		Field = "",
+-- 		Variable = "󰫧",
+-- 		Class = "",
+-- 		Interface = "",
+-- 		Module = "",
+-- 		Property = "󰫽",
+-- 		Unit = "󰬂",
+-- 		Value = "󱂌",
+-- 		Enum = "󰕅",
+-- 		Keyword = "󰫸",
 -- 		Snippet = "",
--- 		Color = "",
--- 		File = "",
+-- 		Color = "",
+-- 		File = "",
 -- 		Reference = "",
--- 		Folder = "",
--- 		EnumMember = "",
--- 		Constant = "",
--- 		Struct = "",
--- 		Event = "",
--- 		Operator = "",
--- 		TypeParameter = "",
+-- 		Folder = "",
+-- 		EnumMember = "",
+-- 		Constant = "",
+-- 		Struct = "󰷑",
+-- 		Event = "󱔁",
+-- 		Operator = "",
+-- 		TypeParameter = "",
 -- 	},
 -- })
 
@@ -92,8 +91,36 @@ local winhighlight = {
 }
 cmp.setup({
 	-- UI
+	-- this don't hava tabnine
 	-- formatting = {
 	-- 	format = function(entry, vim_item)
+	-- 		local kind_icons = {
+	-- 			Text = "",
+	-- 			Method = "󰫺",
+	-- 			Function = "󰡱",
+	-- 			Constructor = "󰡢",
+	-- 			Field = "",
+	-- 			Variable = "󰫧",
+	-- 			Class = "",
+	-- 			Interface = "",
+	-- 			Module = "",
+	-- 			Property = "󰫽",
+	-- 			Unit = "󰬂",
+	-- 			Value = "󱂌",
+	-- 			Enum = "󰕅",
+	-- 			Keyword = "󰫸",
+	-- 			Snippet = "",
+	-- 			Color = "",
+	-- 			File = "",
+	-- 			Reference = "",
+	-- 			Folder = "",
+	-- 			EnumMember = "",
+	-- 			Constant = "",
+	-- 			Struct = "󰷑",
+	-- 			Event = "󱔁",
+	-- 			Operator = "",
+	-- 			TypeParameter = "",
+	-- 		}
 	-- 		-- Kind icons
 	-- 		vim_item.kind = string.format("%s %s", kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 	-- 		-- Source
@@ -103,7 +130,6 @@ cmp.setup({
 	-- 			luasnip = "[LuaSnip]",
 	-- 			dap = "[DAP]",
 	-- 			path = "[Path]",
-	-- 			cmp_tabnine = "[TN]",
 	-- 		})[entry.source.name]
 	-- 		return vim_item
 	-- 	end,
@@ -112,35 +138,36 @@ cmp.setup({
 	formatting = {
 		format = function(entry, vim_item)
 			local kind_icons = {
-				Text = "",
-				Method = "ƒ",
-				Function = "",
-				Constructor = "",
-				Field = "",
-				Variable = "",
-				Class = "ﴯ",
-				Interface = "",
-				Module = "",
-				Property = "ﰠ",
-				Unit = "",
-				Value = "",
-				Enum = "",
-				Keyword = "",
+				Text = "",
+				Method = "󰫺",
+				Function = "󰡱",
+				Constructor = "󰡢",
+				Field = "",
+				Variable = "󰫧",
+				Class = "",
+				Interface = "",
+				Module = "",
+				Property = "󰫽",
+				Unit = "󰬂",
+				Value = "󱂌",
+				Enum = "󰕅",
+				Keyword = "󰫸",
 				Snippet = "",
-				Color = "",
-				File = "",
+				Color = "",
+				File = "",
 				Reference = "",
-				Folder = "",
-				EnumMember = "",
-				Constant = "",
-				Struct = "",
-				Event = "",
-				Operator = "",
-				TypeParameter = "",
+				Folder = "",
+				EnumMember = "",
+				Constant = "",
+				Struct = "󰷑",
+				Event = "󱔁",
+				Operator = "",
+				TypeParameter = "",
 			}
 			if entry.source.name == "cmp_tabnine" then
 				local detail = (entry.completion_item.labelDetails or {}).detail
-				vim_item.kind = ""
+				-- vim_item.kind = ""
+				vim_item.kind = ""
 				if detail and detail:find(".*%%.*") then
 					vim_item.kind = vim_item.kind .. " " .. detail
 				end
@@ -405,9 +432,9 @@ vim.api.nvim_set_var("copilot_filetypes", {
 	["python"] = true,
 	["lua"] = true,
 	["javascript"] = true,
+	["typescript"] = true,
 	["sh"] = true,
 	["c"] = true,
-	["typescript"] = true,
 })
 
 vim.api.nvim_set_keymap(

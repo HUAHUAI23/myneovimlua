@@ -1,3 +1,4 @@
+-- don't show some diagnostics, filter pharse: diagnostic module
 local ignore_diags = {
 	python = {},
 	lua = {},

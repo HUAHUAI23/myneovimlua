@@ -1,6 +1,6 @@
 -- local str = "Undefined global `icon`."
 -- vim.pretty_print(str:match("^Undefined globa"))
--- some thing filer diagnostics
+-- some thing filer diagnostics, filter pharse: lsp server and client
 local on_publish_diagnostics = vim.lsp.handlers["textDocument/publishDiagnostics"]
 vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx, config)
 	-- dosomething like filte diagnostics
@@ -16,11 +16,11 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx,
 		end
 		return true
 	end
-	local function remove_element(arr, fn)
+	local function remove_element(arr, fn, ignore_diagnostic_param)
 		local new_index = 1
 		local old_index = #arr
 		for i = 1, old_index do
-			if fn(arr[i], ignore_diagnostic) then
+			if fn(arr[i], ignore_diagnostic_param) then
 				arr[new_index] = arr[i]
 				new_index = new_index + 1
 			end
@@ -29,6 +29,6 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = function(err, result, ctx,
 			arr[i] = nil
 		end
 	end
-	remove_element(result.diagnostics, keep_element)
+	remove_element(result.diagnostics, keep_element, ignore_diagnostic)
 	on_publish_diagnostics(err, result, ctx, config)
 end
