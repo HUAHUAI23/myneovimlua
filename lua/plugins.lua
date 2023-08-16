@@ -328,6 +328,7 @@ return require("packer").startup({
 		use({ "barrett-ruth/telescope-http.nvim" })
 		-- telescope ui-select
 		use({ "nvim-telescope/telescope-ui-select.nvim" })
+		-- dev by huahua
 		-- telesocpe-dapzzzz
 		use("HUAHUAI23/telescope-dapzzzz")
 		-- telescope-session

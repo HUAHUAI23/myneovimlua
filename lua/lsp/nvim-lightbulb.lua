@@ -6,7 +6,7 @@ if not status then
 	return
 end
 lightbulb.setup({
-	ignore = { "null-ls" },
+	ignore = { clients = { "null-ls" } },
 })
 
 local llightbulbAu = vim.api.nvim_create_augroup("myAutoGroup", {
