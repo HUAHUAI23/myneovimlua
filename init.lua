@@ -4,6 +4,20 @@
 --       After: do something there
 
 if vim.g.neovide then
+	-- for remote dev fix cmp highlight issue
+
+	local neovide_group = vim.api.nvim_create_augroup("neovide_group_unique", { clear = true })
+	vim.api.nvim_create_autocmd({ "CmdwinEnter", "WinEnter", "BufEnter" }, {
+		group = neovide_group, -- 自定义的自动命令组名称
+		once = true, -- 设置此选项为 true 使得自动命令只执行一次
+		callback = function()
+			require("cmp.utils.autocmd").emit("ColorScheme")
+			-- vim.cmd("doautocmd ColorScheme")
+		end,
+	})
+
+	-- for macos
+	vim.g.neovide_input_macos_alt_is_meta = true
 	-- Put anything you want to happen only in Neovide here
 
 	-- map ctrl-/
@@ -30,7 +44,7 @@ if vim.g.neovide then
 
 	-- vim.g.neovide_input_use_logo = 1
 
-	vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h11" }
+	vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h15" }
 	vim.g.neovide_hide_mouse_when_typing = false
 	vim.g.neovide_underline_automatic_scaling = false
 	-- refresh rate when fouces on neovide
@@ -190,3 +204,7 @@ require("lsp.ui")
 
 -- DAP
 require("dap.nvim-dap.setup")
+-- for osx terminal
+if vim.env.NVIM_ENVVT == "1" then
+	vim.cmd("set notermguicolors")
+end
