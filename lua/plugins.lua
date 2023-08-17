@@ -65,6 +65,14 @@ return require("packer").startup({
 			after = "nvim-web-devicons",
 		})
 
+		-- rainbow
+		use({
+			"HiPhish/rainbow-delimiters.nvim",
+			config = function()
+				require("plugin-config.rainbow-delimiters")
+			end,
+		})
+
 		-- sytax highlight
 		-- ---------------------------------------------------------
 		-- nvim-treesitter,基于语法语义生成代码高亮
@@ -75,7 +83,6 @@ return require("packer").startup({
 				ts_update()
 			end,
 			requires = {
-				{ "p00f/nvim-ts-rainbow" },
 				{ "windwp/nvim-ts-autotag" },
 				{ "nvim-treesitter/nvim-treesitter-refactor" },
 			},
