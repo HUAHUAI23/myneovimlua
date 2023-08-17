@@ -74,6 +74,7 @@ else
 		end,
 		start_in_insert = true,
 		persist_size = false,
+		shade_terminals = false,
 		highlights = {
 			FloatBorder = {
 				link = "FloatBorder",

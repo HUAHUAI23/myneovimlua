@@ -51,7 +51,7 @@ local sources = {
 	-- diagnostics.checkmake, markdownlint
 	diagnostics.eslint.with({
 		prefer_local = "node_modules/.bin",
-		-- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+		method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
 		condition = function()
 			local max_filesize = commConf.largefileEdge -- 100 KB
 			local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()))

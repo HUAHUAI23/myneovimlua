@@ -12,6 +12,10 @@ if vim.g.neovide then
 		once = true, -- 设置此选项为 true 使得自动命令只执行一次
 		callback = function()
 			require("cmp.utils.autocmd").emit("ColorScheme")
+			-- https://neovim.io/doc/user/starting.html
+			vim.cmd("runtime! plugin/**/*.{vim,lua}")
+			vim.cmd("runtime! syntax/syntax.vim")
+			vim.cmd("runtime! filetype.lua")
 			-- vim.cmd("doautocmd ColorScheme")
 		end,
 	})
