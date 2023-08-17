@@ -42,8 +42,6 @@ if vim.g.neovide then
 	-- 	callback = set_ime,
 	-- })
 
-	-- for macos
-	vim.g.neovide_input_macos_alt_is_meta = true
 	-- Put anything you want to happen only in Neovide here
 
 	-- map ctrl-/
@@ -74,7 +72,7 @@ if vim.g.neovide then
 
 	-- vim.g.neovide_input_use_logo = 1
 
-	vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h15" }
+	vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h11" }
 	vim.g.neovide_hide_mouse_when_typing = false
 	vim.g.neovide_underline_automatic_scaling = false
 	-- refresh rate when fouces on neovide
@@ -234,7 +232,3 @@ require("lsp.ui")
 
 -- DAP
 require("dap.nvim-dap.setup")
--- for osx terminal
-if vim.env.NVIM_ENVVT == "1" then
-	vim.cmd("set notermguicolors")
-end

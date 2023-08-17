@@ -33,15 +33,15 @@ if vim.env.NVIM_LIGHTTT == "1" then
 	vim.cmd("hi clear CursorLine")
 end
 
--- vim.api.nvim_create_autocmd("InsertLeave", {
--- 	pattern = "*.md",
--- 	callback = function()
--- 		vim.fn.system("/mnt/d/Applications/Scoop/apps/im-select/current/im-select.exe 1033")
--- 	end,
--- })
--- vim.api.nvim_create_autocmd("InsertEnter", {
--- 	pattern = "*.md",
--- 	callback = function()
--- 		vim.fn.system("/mnt/d/Applications/Scoop/apps/im-select/current/im-select.exe 2052")
--- 	end,
--- })
+vim.api.nvim_create_autocmd("InsertLeave", {
+	pattern = "*.md",
+	callback = function()
+		vim.fn.system("/mnt/d/Applications/Scoop/apps/im-select/current/im-select.exe 1033")
+	end,
+})
+vim.api.nvim_create_autocmd("InsertEnter", {
+	pattern = "*.md",
+	callback = function()
+		vim.fn.system("/mnt/d/Applications/Scoop/apps/im-select/current/im-select.exe 2052")
+	end,
+})
