@@ -20,14 +20,40 @@ if vim.g.neovide then
 		end,
 	})
 
+	-- local function set_ime(args)
+	-- 	if args.event:match("Enter$") then
+	-- 		vim.g.neovide_input_ime = true
+	-- 	else
+	-- 		vim.g.neovide_input_ime = false
+	-- 	end
+	-- end
+	--
+	-- local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
+	--
+	-- vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+	-- 	group = ime_input,
+	-- 	pattern = "*",
+	-- 	callback = set_ime,
+	-- })
+	--
+	-- vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
+	-- 	group = ime_input,
+	-- 	pattern = "[/\\?]",
+	-- 	callback = set_ime,
+	-- })
+
 	-- for macos
 	vim.g.neovide_input_macos_alt_is_meta = true
 	-- Put anything you want to happen only in Neovide here
 
 	-- map ctrl-/
-	-- vim.keymap.set("n", [[<c-/>]], function()
+	-- vim.keymap.set("i", [[<c-/>]], function()
 	-- 	vim.pretty_print("fffff")
 	-- end)
+
+	vim.api.nvim_set_keymap("i", [[<c-/>]], [[<Esc>gccA<Space>]], { noremap = false })
+	vim.api.nvim_set_keymap("v", [[<c-/>]], [[gc]], { noremap = false })
+	vim.api.nvim_set_keymap("n", [[<c-/>]], [[gccA<Space>]], { noremap = false })
 
 	-- set ctrl v to paste from "+" register
 	-- vim.keymap.set("n", "<c-v>", '"+<space>p') -- Paste normal mode

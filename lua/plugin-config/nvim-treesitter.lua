@@ -96,7 +96,7 @@ treesitter.setup({
 	},
 	-- https://github.com/p00f/nvim-ts-rainbow
 	rainbow = {
-		enable = true,
+		enable = false,
 		-- disable = filesize_hundle,
 		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
 		extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
