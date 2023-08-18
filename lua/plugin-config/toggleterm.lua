@@ -96,8 +96,12 @@ local lazygit = Terminal:new({
 	-- hidden = true,
 	float_opts = {
 		border = "rounded",
-		-- width = math.floor(vim.o.columns * 0.9),
-		-- height = math.floor(vim.o.lines * 0.9),
+		width = function()
+			return math.floor(vim.o.columns * 0.9)
+		end,
+		height = function()
+			return math.floor(vim.o.lines * 0.9)
+		end,
 	},
 	env = {
 		EDITOR = 'env VIMINIT="source ${HOME1}/.config/nvim/minimalStart/init.mini.dev.lua" nvim',
@@ -121,6 +125,12 @@ local ta = Terminal:new({
 	direction = "float",
 	float_opts = {
 		border = "rounded",
+		width = function()
+			return math.floor(vim.o.columns * 0.8)
+		end,
+		height = function()
+			return math.floor(vim.o.lines * 0.6)
+		end,
 	},
 	close_on_exit = true,
 	-- on_open = function(t)
