@@ -63,7 +63,8 @@ if has("persistent_undo")
     let &undodir=target_path
     set undofile
 endif
-let g:undotree_SplitWidth=30
+let g:undotree_SplitWidth=45
+
 
 
 " function SetUtSize()

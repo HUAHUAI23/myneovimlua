@@ -4,6 +4,8 @@
 --       After: do something there
 
 if vim.g.neovide then
+	-- for macos
+	vim.g.neovide_input_macos_alt_is_meta = true
 	-- for remote dev fix cmp highlight issue
 
 	local neovide_group = vim.api.nvim_create_augroup("neovide_group_unique", { clear = true })
@@ -12,19 +14,46 @@ if vim.g.neovide then
 		once = true, -- 设置此选项为 true 使得自动命令只执行一次
 		callback = function()
 			require("cmp.utils.autocmd").emit("ColorScheme")
+			-- https://neovim.io/doc/user/starting.html
+			vim.cmd("runtime! plugin/**/*.{vim,lua}")
+			vim.cmd("runtime! syntax/syntax.vim")
+			vim.cmd("runtime! filetype.lua")
 			-- vim.cmd("doautocmd ColorScheme")
 		end,
 	})
 
-	-- for macos
-	vim.g.neovide_input_macos_alt_is_meta = true
+	-- local function set_ime(args)
+	-- 	if args.event:match("Enter$") then
+	-- 		vim.g.neovide_input_ime = true
+	-- 	else
+	-- 		vim.g.neovide_input_ime = false
+	-- 	end
+	-- end
+	--
+	-- local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
+	--
+	-- vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave" }, {
+	-- 	group = ime_input,
+	-- 	pattern = "*",
+	-- 	callback = set_ime,
+	-- })
+	--
+	-- vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
+	-- 	group = ime_input,
+	-- 	pattern = "[/\\?]",
+	-- 	callback = set_ime,
+	-- })
 
 	-- Put anything you want to happen only in Neovide here
 
 	-- map ctrl-/
-	-- vim.keymap.set("n", [[<c-/>]], function()
+	-- vim.keymap.set("i", [[<c-/>]], function()
 	-- 	vim.pretty_print("fffff")
 	-- end)
+
+	vim.api.nvim_set_keymap("i", [[<c-/>]], [[<Esc>gccA<Space>]], { noremap = false })
+	vim.api.nvim_set_keymap("v", [[<c-/>]], [[gc]], { noremap = false })
+	vim.api.nvim_set_keymap("n", [[<c-/>]], [[gccA<Space>]], { noremap = false })
 
 	-- set ctrl v to paste from "+" register
 	-- vim.keymap.set("n", "<c-v>", '"+<space>p') -- Paste normal mode

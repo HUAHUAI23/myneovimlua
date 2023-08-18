@@ -72,6 +72,7 @@ autocmd("BufEnter", {
 -- @[name] 表示指定名字的寄存器
 
 -- TODO: lua YANK
+-- TODO: add remote clip
 
 if vim.fn.has("wsl") then
 	vim.cmd([[

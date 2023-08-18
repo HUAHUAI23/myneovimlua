@@ -94,25 +94,6 @@ treesitter.setup({
 		enable = true,
 		disable = filesize_hundle,
 	},
-	-- https://github.com/p00f/nvim-ts-rainbow
-	rainbow = {
-		enable = true,
-		-- disable = filesize_hundle,
-		-- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-		extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-		disable = filesize_hundle,
-		-- some compreesed file is very large,but only one line
-		max_file_lines = commConf.rainbowLargefileEdge, -- Do not enable for files with more than n lines, int
-		colors = {
-			"#98C379",
-			"#83a598",
-			"#ee6985",
-			"#C678DD",
-			"#ebdbb2",
-			"#fe8019",
-		}, -- table of hex strings
-		-- termcolors = {} -- table of colour name strings
-	},
 })
 
 -- use tressitter to fold code
