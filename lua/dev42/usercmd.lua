@@ -7,6 +7,23 @@
 -- 	desc = "redirect messages",
 -- 	nargs = "?",
 -- })
+vim.api.nvim_create_user_command("MouseReset", function(args)
+	local horizontal = "1"
+	local vertical = "1"
+	if args.fargs[1] then
+		vertical = args.fargs[1]
+		vim.print("vertical " .. vertical)
+	end
+	if args.fargs[2] then
+		horizontal = args.fargs[2]
+		vim.print("horizontal " .. horizontal)
+	end
+	local settings = "ver:" .. vertical .. ",hor:" .. horizontal
+	vim.o.mousescroll = settings
+end, {
+	desc = "reset mouse",
+	nargs = "*",
+})
 
 vim.api.nvim_create_user_command("RecommandTo", function(args)
 	local cmd = ""
