@@ -96,8 +96,8 @@ local lazygit = Terminal:new({
 	-- hidden = true,
 	float_opts = {
 		border = "rounded",
-		width = math.floor(vim.o.columns * 0.9),
-		height = math.floor(vim.o.lines * 0.9),
+		-- width = math.floor(vim.o.columns * 0.9),
+		-- height = math.floor(vim.o.lines * 0.9),
 	},
 	env = {
 		EDITOR = 'env VIMINIT="source ${HOME1}/.config/nvim/minimalStart/init.mini.dev.lua" nvim',
