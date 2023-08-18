@@ -210,7 +210,7 @@ vim.api.nvim_create_user_command("DiagnosticExtension", function(args)
 			vim.diagnostic.reset()
 		end,
 		shownamespace = function()
-			vim.pretty_print(vim.diagnostic.get_namespaces())
+			vim.print(vim.diagnostic.get_namespaces())
 		end,
 	}
 	if vim.tbl_contains(args_table, args.fargs[1]) then
@@ -270,7 +270,7 @@ vim.api.nvim_create_user_command("LspExtension", function(args)
 			end
 		end,
 		get_semantic_tokens_cursor = function()
-			vim.pretty_print(vim.lsp.semantic_tokens.get_at_pos())
+			vim.print(vim.lsp.semantic_tokens.get_at_pos())
 		end,
 		start_semantic_tokens = function()
 			for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
