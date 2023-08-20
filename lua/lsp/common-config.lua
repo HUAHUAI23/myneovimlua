@@ -85,6 +85,7 @@ if commConf.simple_mode then
 	M.navic = require("nvim-navic")
 	M.winbarrs = "%{%v:lua.require('nvim-navic').get_location()%}"
 else
+	-- M.winbarrs = ""
 	M.navic = require("nvim-navic")
 	M.winbarrs = "%{%v:lua.require('nvim-navic').get_location()%}"
 end
