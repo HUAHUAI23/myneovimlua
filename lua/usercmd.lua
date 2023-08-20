@@ -64,6 +64,43 @@ end, {
 -- 	end,
 -- })
 
+api.nvim_create_user_command("UTAutoSize", function(args)
+	vim.api.nvim_cmd(api.nvim_parse_cmd("UndotreeToggle", {}), {})
+	local windows = vim.api.nvim_list_wins()
+	if args.fargs[1] then
+		for _, winhandle in ipairs(windows) do
+			if
+				vim.api.nvim_win_is_valid(winhandle)
+				and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winhandle), "filetype") == "undotree"
+			then
+				vim.api.nvim_win_set_width(winhandle, math.floor(vim.o.columns * tonumber(args.fargs[1])))
+				return
+			end
+		end
+	end
+
+	for _, winhandle in ipairs(windows) do
+		if
+			vim.api.nvim_win_is_valid(winhandle)
+			and vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winhandle), "filetype") == "undotree"
+		then
+			vim.api.nvim_win_set_width(winhandle, math.floor(vim.o.columns * 0.3))
+			return
+		end
+	end
+end, {
+	desc = "auto size undo tree",
+	nargs = "?",
+	---@diagnostic disable-next-line: unused-local
+	complete = function(A, L, P)
+		return {
+			"0.4",
+			"0.5",
+			"0.6",
+		}
+	end,
+})
+
 -- command close dap
 -- refer: https://github.com/mfussenegger/nvim-dap/blob/master/doc/dap.txt
 api.nvim_create_user_command("DapCloseWin", function()
@@ -106,7 +143,7 @@ end, { desc = "close dap session" })
 -- TODO: add some description
 -- use vim.tbl.contains to simpfy this
 local ftAndCmandLeft = {
-	undotree = "UndotreeToggle",
+	undotree = "UTAutoSize",
 	NvimTree = "NvimTreeToggle",
 }
 local function leftSidebarAutoClose(ftAcmdLeft, currentSelfLeft)
@@ -127,7 +164,7 @@ end
 api.nvim_create_user_command("Ut", function()
 	vim.api.nvim_cmd(api.nvim_parse_cmd("CloseAllterm", {}), {})
 	leftSidebarAutoClose(ftAndCmandLeft, "undotree")
-	vim.api.nvim_cmd(api.nvim_parse_cmd("UndotreeToggle", {}), {})
+	vim.api.nvim_cmd(api.nvim_parse_cmd("UTAutoSize", {}), {})
 end, { desc = "undotree enhanced" })
 api.nvim_create_user_command("NvimTrr", function()
 	vim.api.nvim_cmd(api.nvim_parse_cmd("CloseAllterm", {}), {})
@@ -135,10 +172,12 @@ api.nvim_create_user_command("NvimTrr", function()
 	vim.api.nvim_cmd(api.nvim_parse_cmd("NvimTreeToggle", {}), {})
 end, { desc = "NvimTree enhanced" })
 
+-- filetype -> command
 local ftAndCmandRight = {
 	dapui_scopes = "DapCloseWin",
 	-- lspsagaoutline = "Lspsaga outline",
-	Outline = "SymbolsOutline",
+	-- Outline = "SymbolsOutline",
+	aerial = "AerialToggle",
 }
 local function rightSidebarAutoClose(ftAcmdRight, currentSelfRight)
 	local winList = vim.api.nvim_list_wins()
@@ -158,8 +197,8 @@ end
 
 api.nvim_create_user_command("LSoutline", function()
 	vim.api.nvim_cmd(api.nvim_parse_cmd("CloseAllterm", {}), {})
-	rightSidebarAutoClose(ftAndCmandRight, "Outline")
-	vim.api.nvim_cmd(api.nvim_parse_cmd("SymbolsOutline", {}), {})
+	rightSidebarAutoClose(ftAndCmandRight, "aerial")
+	vim.api.nvim_cmd(api.nvim_parse_cmd("AerialToggle", {}), {})
 end, { desc = "LSoutlineToggle enhanced" })
 api.nvim_create_user_command("DapContinuee", function()
 	vim.api.nvim_cmd(api.nvim_parse_cmd("CloseAllterm", {}), {})
