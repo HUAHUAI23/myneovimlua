@@ -400,6 +400,13 @@ return require("packer").startup({
 				require("lsp.symbols-outline")
 			end,
 		})
+		use({
+			"stevearc/aerial.nvim",
+			cmd = "AerialToggle",
+			config = function()
+				require("plugin-config.aerial")
+			end,
+		})
 		-- ui-breadcrumb
 		use({
 			"SmiteshP/nvim-navic",

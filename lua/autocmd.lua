@@ -135,7 +135,7 @@ autocmd("BufReadPost", {
 			require("illuminate.engine").toggle()
 			-- vim.cmd("setlocal spell spelllang=en_us")
 		else
-			vim.print("hhhhhh")
+			vim.print("now in large file mode,disable indentline,autopair,illuminate")
 			local luacache = (_G.__luacache or {}).cache
 			for pack, _ in pairs(package.loaded) do
 				if string.find(pack, "^" .. vim.pesc("indent_blankline")) then
@@ -199,8 +199,8 @@ autocmd("BufReadPre", {
 })
 
 -- NOTE: 大文件 treesitter 问题 主要有 treesiiter indentline autopair illuminate telescope cmp comment lsp null-ls
--- treesitter：的所有扩展在大文件中都会产生性能卡顿，尤其要注意 rainbow，rainbow 自带的大文件勾子
--- 是通过文件行数决定是否启用 rainbow，对于压缩的大文件可能只有一行，所以会被逃避掉。**已解决** {通过 autocmd解决}
+-- treesitter：的所有扩展在大文件中都会产生性能卡顿，
+-- rainbow 尤其要注意 rainbow，rainbow 自带的大文件勾子是通过文件行数决定是否启用 rainbow，对于压缩的大文件可能只有一行，所以会被逃避掉。**已解决**,通过添加一个获取文件大小函数解决
 -- indentline：会调用 treesitter 因此也会有大文件问题 **已解决** {通过 autocmd解决}
 -- autopair：会调用 treesitter 检查语法节点，决定在哪些节点中会使用或者不使用 autopair **已解决** {通过 autocmd解决}
 -- illuminate：illuminate的钩子是通过文件行决定的，也会被逃避掉 **已解决** {通过 autocmd解决}

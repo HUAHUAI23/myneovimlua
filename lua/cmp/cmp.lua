@@ -371,6 +371,8 @@ tabnine:setup({
 		-- lua = true
 		markdown = true,
 		html = true,
+		-- javascript = true,
+		-- lua = true,
 	},
 	-- show_prediction_strength = false
 })
