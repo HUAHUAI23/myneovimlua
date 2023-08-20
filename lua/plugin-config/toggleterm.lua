@@ -96,16 +96,24 @@ local lazygit = Terminal:new({
 	-- hidden = true,
 	float_opts = {
 		border = "rounded",
-		width = math.floor(vim.o.columns * 0.9),
-		height = math.floor(vim.o.lines * 0.9),
+		width = function()
+			return math.floor(vim.o.columns * 0.9)
+		end,
+		height = function()
+			return math.floor(vim.o.lines * 0.9)
+		end,
 	},
 	env = {
 		EDITOR = 'env VIMINIT="source ${HOME1}/.config/nvim/minimalStart/init.mini.dev.lua" nvim',
 	},
 	close_on_exit = true,
+	-- on_open = function(t)
+	-- 	vim.api.nvim_win_set_width(t.window, math.floor(vim.o.columns * 0.8))
+	-- 	vim.api.nvim_win_set_height(t.window, math.floor(vim.o.lines * 0.8))
+	-- end,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -117,11 +125,21 @@ local ta = Terminal:new({
 	direction = "float",
 	float_opts = {
 		border = "rounded",
+		width = function()
+			return math.floor(vim.o.columns * 0.8)
+		end,
+		height = function()
+			return math.floor(vim.o.lines * 0.6)
+		end,
 	},
 	close_on_exit = true,
+	-- on_open = function(t)
+	-- 	vim.api.nvim_win_set_width(t.window, math.floor(vim.o.columns * 0.8))
+	-- 	vim.api.nvim_win_set_height(t.window, math.floor(vim.o.lines * 0.8))
+	-- end,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -133,8 +151,8 @@ local tb = Terminal:new({
 	direction = "vertical",
 	close_on_exit = true,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -146,8 +164,8 @@ local tc = Terminal:new({
 	direction = "horizontal",
 	close_on_exit = true,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -162,8 +180,8 @@ local td = Terminal:new({
 		vim.api.nvim_win_set_width(t.window, math.floor(vim.o.columns * 0.8))
 	end,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -181,8 +199,8 @@ local tx = Terminal:new({
 		end, { buffer = t.bufnr })
 	end,
 	on_stderr = function(t, job, data, name)
-		vim.pretty_print(name)
-		vim.pretty_print(data)
+		vim.print(name)
+		vim.print(data)
 		vim.cmd("call jobstop(" .. job .. ")")
 		t:shutdown()
 	end,
@@ -422,8 +440,8 @@ vim.api.nvim_create_user_command("JobAndTerm", function(args)
 	}
 	local caselist = {
 		allterm = function()
-			vim.pretty_print(#Term.get_all(true))
-			vim.pretty_print(Term.get_all(true))
+			vim.print(#Term.get_all(true))
+			vim.print(Term.get_all(true))
 		end,
 		-- singleterm = function(term_id)
 		-- 	vim.pretty_print(Term.get(tonumber(term_id[2])))
@@ -432,7 +450,7 @@ vim.api.nvim_create_user_command("JobAndTerm", function(args)
 		singleterm = function(term_name)
 			for _, term in ipairs(Term.get_all(true)) do
 				if term.user_definename == term_name[2] then
-					vim.pretty_print(term)
+					vim.print(term)
 				end
 			end
 		end,
@@ -444,24 +462,24 @@ vim.api.nvim_create_user_command("JobAndTerm", function(args)
 			for _, term in ipairs(Term.get_all(true)) do
 				if term.user_definename == term_name[2] then
 					vim.cmd("call jobstop(" .. term.job_id .. ")")
-					vim.pretty_print(term:shutdown())
+					vim.print(term:shutdown())
 				end
 			end
 		end,
 		killallterm = function()
 			for _, term in ipairs(Term.get_all(true)) do
 				vim.cmd("call jobstop(" .. term.job_id .. ")")
-				vim.pretty_print(term:shutdown())
+				vim.print(term:shutdown())
 			end
 		end,
 		alljob = function()
-			vim.pretty_print(#vim.api.nvim_list_chans())
-			vim.pretty_print(vim.api.nvim_list_chans())
+			vim.print(#vim.api.nvim_list_chans())
+			vim.print(vim.api.nvim_list_chans())
 		end,
 		onejob = function(chan_id)
 			-- vim.pretty_print(vim.api.nvim_get_chan_info(tonumber(chan_id[2]) or chan_id[2]))
 			-- 整除法将字符串转换为integer 数字
-			vim.pretty_print(vim.api.nvim_get_chan_info(chan_id[2] / 1))
+			vim.print(vim.api.nvim_get_chan_info(chan_id[2] / 1))
 		end,
 		killjob = function(job_id)
 			-- error capture ?

@@ -87,7 +87,8 @@ end
 -- 	vim.cmd([[
 --     augroup wslYank
 --     autocmd!
---     autocmd TextYankPost * :echo v:event.regname
+--     " autocmd TextYankPost * :echo v:event.regname
+--     autocmd TextYankPost * :echo "11111"
 --     augroup END
 --     ]])
 -- end

@@ -7,6 +7,23 @@
 -- 	desc = "redirect messages",
 -- 	nargs = "?",
 -- })
+vim.api.nvim_create_user_command("MouseReset", function(args)
+	local horizontal = "1"
+	local vertical = "1"
+	if args.fargs[1] then
+		vertical = args.fargs[1]
+		vim.print("vertical " .. vertical)
+	end
+	if args.fargs[2] then
+		horizontal = args.fargs[2]
+		vim.print("horizontal " .. horizontal)
+	end
+	local settings = "ver:" .. vertical .. ",hor:" .. horizontal
+	vim.o.mousescroll = settings
+end, {
+	desc = "reset mouse",
+	nargs = "*",
+})
 
 vim.api.nvim_create_user_command("RecommandTo", function(args)
 	local cmd = ""
@@ -193,7 +210,7 @@ vim.api.nvim_create_user_command("DiagnosticExtension", function(args)
 			vim.diagnostic.reset()
 		end,
 		shownamespace = function()
-			vim.pretty_print(vim.diagnostic.get_namespaces())
+			vim.print(vim.diagnostic.get_namespaces())
 		end,
 	}
 	if vim.tbl_contains(args_table, args.fargs[1]) then
@@ -253,7 +270,7 @@ vim.api.nvim_create_user_command("LspExtension", function(args)
 			end
 		end,
 		get_semantic_tokens_cursor = function()
-			vim.pretty_print(vim.lsp.semantic_tokens.get_at_pos())
+			vim.print(vim.lsp.semantic_tokens.get_at_pos())
 		end,
 		start_semantic_tokens = function()
 			for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
