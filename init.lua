@@ -5,7 +5,10 @@
 
 if vim.g.neovide then
 	-- for macos
-	vim.g.neovide_input_macos_alt_is_meta = true
+
+	if string.find(vim.loop.os_uname().sysname:lower(), "darwin") then
+		vim.g.neovide_input_macos_alt_is_meta = true
+	end
 	-- for remote dev fix cmp highlight issue
 
 	local neovide_group = vim.api.nvim_create_augroup("neovide_group_unique", { clear = true })
@@ -74,7 +77,11 @@ if vim.g.neovide then
 
 	-- vim.g.neovide_input_use_logo = 1
 
-	vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h15" }
+	if string.find(vim.loop.os_uname().sysname:lower(), "darwin") then
+		vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h15" }
+	else
+		vim.opt.guifont = { "Consolas_Nerd_Font", "Hack_NFM", "3270Medium_NF", "SauceCodePro_NF", ":h11" }
+	end
 	vim.g.neovide_hide_mouse_when_typing = false
 	vim.g.neovide_underline_automatic_scaling = false
 	-- refresh rate when fouces on neovide
