@@ -654,7 +654,7 @@ local caseList = {
 		vim.api.nvim_set_hl(0, "Label", { fg = "#BD93BD", italic = true })
 		vim.api.nvim_set_hl(0, "Operator", { fg = "#83a598" })
 		vim.api.nvim_set_hl(0, "Keyword", { fg = "#fb4934" })
-		vim.api.nvim_set_hl(0, "Exception", { fg = "#fb4934", bold = true })
+		vim.api.nvim_set_hl(0, "Exception", { fg = "#fb4934", italic = true })
 		vim.api.nvim_set_hl(0, "Noise", { fg = "#fe8019" })
 		-- Metatextual Information
 		vim.api.nvim_set_hl(0, "PreProc", { fg = "#f4c069" })
