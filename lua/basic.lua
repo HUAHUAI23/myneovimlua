@@ -141,7 +141,9 @@ vim.o.showmode = false
 -- vim.o.mousemoveevent = true
 -- 鼠标支持 仅仅只在 normal 和 visual 模式下
 vim.o.mouse = "nv"
-vim.o.mousescroll = "ver:1,hor:0"
+if string.find(vim.loop.os_uname().sysname:lower(), "darwin") then
+	vim.o.mousescroll = "ver:1,hor:0"
+end
 -- 默认不要折叠
 -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
 vim.opt.foldlevel = 99
